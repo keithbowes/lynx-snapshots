@@ -179,6 +179,7 @@ void HTFormatInit(void)
      * text/html
      */
     SET_INTERNL("application/xhtml+xml", "www/present", HTMLPresent, 1.0);
+    SET_INTERNL("application/xhtml+xml", "www/source", HTPlainPresent, 1.0);
     SET_INTERNL("text/css", "www/present", HTPlainPresent, 1.0);
     SET_INTERNL("text/html", "www/present", HTMLPresent, 1.0);
     SET_INTERNL("text/plain", "www/present", HTPlainPresent, 1.0);
