@@ -4306,7 +4306,7 @@ void HText_appendCharacter(HText *text, int ch)
 	      - ctrl_chars_on_this_line);
 
     if ((
-#ifndef USE_SLANG
+#if !defined(USE_SLANG) && !defined(PDCURSES)
 	    (text->permissible_split
 #ifdef USE_CURSES_PADS
 	     || !LYwideLines

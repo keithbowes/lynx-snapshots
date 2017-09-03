@@ -2165,7 +2165,8 @@ static int handle_LYK_DOWNLOAD(int *cmd,
 		    }
 		    return 0;
 		}
-		if (isLYNXOPTIONS(links[curdoc.link].l_form->submit_action)) {
+		if (isEmpty(links[curdoc.link].l_form->submit_action) ||
+		    isLYNXOPTIONS(links[curdoc.link].l_form->submit_action)) {
 		    if (*old_c != real_c) {
 			*old_c = real_c;
 			HTUserMsg(NO_DOWNLOAD_SPECIAL);
@@ -6725,7 +6726,7 @@ int mainloop(void)
 		    p = links[curdoc.link].lname;
 		}
 
-		if (strlen(p) < (sizeof(sjis_buff) / 10)) {
+		if (strlen(p) < ((sizeof(sjis_buff) / 2)-1)) {
 		    strcpy(temp_buff, p);
 		    if (StrChr(temp_buff, '%')) {
 			HTUnEscape(temp_buff);

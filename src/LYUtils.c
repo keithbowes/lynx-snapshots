@@ -7099,6 +7099,25 @@ void LYAddHtmlSep0(char *path)
 }
 
 /*
+ * Rename a file
+ */
+int LYRenameFile(char *src,
+		char *dst)
+{
+#ifdef DOSPATH
+    /*
+     * If dest_file exists prior to calling rename(), rename() will fail on Windows and DOS platforms.
+     * https://www.securecoding.cert.org/confluence/display/c/FIO10-C.+Take+care+when+using+the+rename%28%29+function
+     */
+    struct stat st;
+    if (stat(dst, &st) == 0) {
+	unlink(dst);
+    }
+#endif
+    return rename(src, dst);
+}
+
+/*
  * Copy a file
  */
 int LYCopyFile(char *src,
