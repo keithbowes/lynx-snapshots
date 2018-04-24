@@ -1,13 +1,13 @@
 # Esperanto translation of Lynx.
 # This file is distributed under the same license as the lynx package.
 # Translators:
-# Keith Bowes <zooplah@gmail.com>, 2011, 2014, 2015, 2016, 2017.
+# Keith Bowes <zooplah@gmail.com>, 2011, 2014, 2015, 2016, 2017, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: lynx 2.8.9-dev15\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-13 12:43-0400\n"
-"PO-Revision-Date: 2017-07-13 16:06-0400\n"
+"PO-Revision-Date: 2018-01-11 20:09-0500\n"
 "Last-Translator: Keith Bowes <zooplah@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -91,7 +91,7 @@ msgstr "sekva ekranpleno"
 # Ĉu komando al komputilo aŭ al uzanto?
 #: LYMessages.c:44
 msgid "HELP!"
-msgstr "Helpu min!"
+msgstr "Helpu al min!"
 
 #: LYMessages.c:45
 msgid ", help on "
@@ -6076,7 +6076,7 @@ msgstr ""
 "unukolora terminalo se kolora kapablo ne estas decidita dum plenumo\n"
 "bazita sur la terminala tipo, aŭ la komandlinia parametro -color, aŭ\n"
 "la medivariablo COLORTERM estas valorizita. La aŭtomata konduto ĉiam estas\n"
-"uzita en sennomaj kontoj aŭ se la malhelpo \"option_save\" estas valorizita.\n"
+"uzita en sennomaj kontoj aŭ se la limigo \"option_save\" estas valorizita.\n"
 "La efikon de la konservita voloro oni povas nuligi per\n"
 "la komandliniaj parametroj -color kaj -nocolor.\n"
 "La reĝimo aŭtomata je plenumo povos ŝanĝita per la agordaĵo \"montri kolorojn\" en\n"
@@ -6152,7 +6152,7 @@ msgid ""
 msgstr ""
 "user_mode specifas la scinivelon de la uzanto. La aŭtomata valoro\n"
 "estas \"NOVICE\", kiu montras du aldonajn liniojn de helpo ĉe la\n"
-"malsupro de la ekrano por helpi la uzanton lerni la fundamentajn\n"
+"malsupro de la ekrano por helpi al la uzanto lerni la fundamentajn\n"
 "komandoj de Lynx. Valoro de \"INTERMEDIATE\" malŝaltas la aldonajn\n"
 "informojn. \"Advanced\" montras la URL-on de la nuna ligilo ĉe la\n"
 "malsupro de la ekrano.\n"
