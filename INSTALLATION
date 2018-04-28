@@ -133,12 +133,16 @@ II. Compile instructions -- UNIX
     NOTE:  Lynx is a curses-based application, so you must have a curses
     library available to link to.  Native curses (on the system when it was
     installed) are often broken, so you may get superior performance if you
-    have either "ncurses" ("ftp://invisible-island.net/ncurses") or "slang"
-    ("ftp://space.mit.edu/pub/davis/slang").  If you install these libraries
-    in your home directory or a non-default location, you may need to set the
-    CPPFLAGS (full path to include files) and LIBS (full path to library files)
-    environment variables BEFORE running configure.  See "1d. Environment".
-    Use the "--with-screen=ncurses" or "--with-screen=slang" option.
+    have either
+    
+	    "ncurses" ("ftp://ftp.invisible-island.net/ncurses") or
+	    "slang"   ("ftp://space.mit.edu/pub/davis/slang").
+    
+    If you install these libraries in your home directory or a non-default
+    location, you may need to set the CPPFLAGS (full path to include files) and
+    LIBS (full path to library files) environment variables BEFORE running
+    configure.  See "1d.  Environment".  Use the "--with-screen=ncurses" or
+    "--with-screen=slang" option.
 
     Note that while lynx will build with a variety of versions of curses and
     ncurses, some will be less satisfactory.  Versions of ncurses before
@@ -735,9 +739,7 @@ II. Compile instructions -- UNIX
 	servers.  Also, instead of SOCKSifying lynx for use behind a firewall,
 	you are better off if you make it normally, and set it up to use a
 	proxy server.  You can SOCKSify the proxy server, and it will handle
-	all clients, not just Lynx.  If your SOCKS server was compiled to use
-	the short version of Rbind, also include -DSHORTENED_RBIND in your
-	SITE_LYDEFS and SITE_DEFS.  If you do SOCKSify lynx, you can turn off
+	all clients, not just Lynx.  If you do SOCKSify lynx, you can turn off
 	SOCKS proxy usage via a -nosocks command line switch.
 
   --with-ssl[=XXX]			(define USE_SSL)
@@ -1482,4 +1484,4 @@ VIII. Acknowledgment
 
 -- 1999/04/24 - H. Nelson <lynx-admin@irm.nara.kindai.ac.jp>
 -- vile:txtmode
--- $LynxId: INSTALLATION,v 1.127 2017/07/10 08:55:07 tom Exp $
+-- $LynxId: INSTALLATION,v 1.129 2018/03/11 22:29:22 tom Exp $

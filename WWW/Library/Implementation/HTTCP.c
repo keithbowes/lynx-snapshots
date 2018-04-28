@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTTCP.c,v 1.138 2017/04/30 17:52:00 tom Exp $
+ * $LynxId: HTTCP.c,v 1.144 2018/03/30 00:13:21 tom Exp $
  *
  *			Generic Communication Code		HTTCP.c
  *			==========================
@@ -32,6 +32,11 @@
 #ifdef NSL_FORK
 #include <signal.h>
 #include <www_wait.h>
+#define FREE_NSL_FORK(p) { FREE(p); }
+#elif defined(_WINDOWS_NSL)
+#define FREE_NSL_FORK(p) if ((p) == gbl_phost) { FREE(p); }
+#else
+#define FREE_NSL_FORK(p)	/* nothing */
 #endif /* NSL_FORK */
 
 #ifdef HAVE_RESOLV_H
@@ -1115,7 +1120,7 @@ static void really_gethostbyname(const char *host,
  *	HT_ERROR		Resolver error, reason not known
  *	HT_INTERNAL		Internal error
  */
-LYNX_HOSTENT *LYGetHostByName(char *host)
+static LYNX_HOSTENT *LYGetHostByName(char *host)
 {
     static const char *this_func = "LYGetHostByName";
 
@@ -1259,6 +1264,15 @@ LYNX_HOSTENT *LYGetHostByName(char *host)
     return NULL;
 }
 
+BOOLEAN LYCheckHostByName(char *host)
+{
+    LYNX_HOSTENT *data = LYGetHostByName(host);
+    BOOLEAN result = (data != NULL);
+
+    FREE_NSL_FORK(data);
+    return result;
+}
+
 /*	Parse a network node address and port
  *	-------------------------------------
  *
@@ -1356,9 +1370,6 @@ static int HTParseInet(SockA * soc_in, const char *str)
      */
     if (dotcount_ip == 3)	/* Numeric node address: */
     {
-#ifdef DGUX_OLD
-	soc_in->sin_addr.s_addr = inet_addr(host).s_addr;	/* See arpa/inet.h */
-#else
 #ifdef GUSI
 	soc_in->sin_addr = inet_addr(host);	/* See netinet/in.h */
 #else
@@ -1372,7 +1383,6 @@ static int HTParseInet(SockA * soc_in, const char *str)
 	soc_in->sin_addr.s_addr = inet_addr(host);	/* See arpa/inet.h */
 #endif /* HAVE_INET_ATON */
 #endif /* GUSI */
-#endif /* DGUX_OLD */
 	FREE(host);
     } else {			/* Alphanumeric node name: */
 
@@ -1385,6 +1395,7 @@ static int HTParseInet(SockA * soc_in, const char *str)
 	if (!gbl_phost)
 	    goto failed;
 	MemCpy((void *) &soc_in->sin_addr, gbl_phost->h_addr_list[0], gbl_phost->h_length);
+	FREE(gbl_phost);
 #else /* !_WINDOWS_NSL */
 	{
 	    LYNX_HOSTENT *phost;
@@ -1397,6 +1408,7 @@ static int HTParseInet(SockA * soc_in, const char *str)
 		HTAlwaysAlert(host, gettext("Address length looks invalid"));
 	    }
 	    MemCpy((void *) &soc_in->sin_addr, phost->h_addr_list[0], phost->h_length);
+	    FREE_NSL_FORK(phost);
 	}
 #endif /* _WINDOWS_NSL */
 
@@ -1593,12 +1605,12 @@ static void really_getaddrinfo(const char *host,
 	    statuses->h_length = (int) (((LYNX_ADDRINFO *) (*result))->ai_addrlen);
 	}
     }
-    free(res);
+    freeaddrinfo(res);
 }
 #endif /* NSL_FORK */
 
-LYNX_ADDRINFO *HTGetAddrInfo(const char *str,
-			     const int defport)
+static LYNX_ADDRINFO *HTGetAddrInfo(const char *str,
+				    const int defport)
 {
 #ifdef NSL_FORK
     /* for transfer of result between from child to parent: */
@@ -1657,6 +1669,15 @@ LYNX_ADDRINFO *HTGetAddrInfo(const char *str,
     dump_addrinfo("HTGetAddrInfo", res);
 #endif
     return res;
+}
+
+BOOLEAN HTCheckAddrInfo(const char *str, const int defport)
+{
+    LYNX_ADDRINFO *data = HTGetAddrInfo(str, defport);
+    BOOLEAN result = (data != 0);
+
+    FREE_NSL_FORK(data);
+    return result;
 }
 #endif /* INET6 */
 
@@ -1931,9 +1952,6 @@ int HTDoConnect(const char *url,
 #else
 	    status = Rconnect(*s, (struct sockaddr *) &soc_address,
 			      sizeof(soc_address));
-#ifndef SHORTENED_RBIND
-	    socks_bind_remoteAddr = soc_address.sin_addr.s_addr;
-#endif
 #endif /* INET6 */
 	} else
 #endif /* SOCKS */
@@ -1972,7 +1990,9 @@ int HTDoConnect(const char *url,
 	    int tries = 0;
 
 #ifdef SOCKET_DEBUG_TRACE
-	    HTInetStatus("this socket's first connect");
+	    if (SOCKET_ERRNO != EINPROGRESS) {
+		HTInetStatus("this socket's first connect");
+	    }
 #endif /* SOCKET_DEBUG_TRACE */
 	    ret = 0;
 	    while (ret <= 0) {
@@ -2009,7 +2029,9 @@ int HTDoConnect(const char *url,
 
 #ifdef SOCKET_DEBUG_TRACE
 		if (tries == 1) {
-		    HTInetStatus("this socket's first select");
+		    if (SOCKET_ERRNO != EINPROGRESS) {
+			HTInetStatus("this socket's first select");
+		    }
 		}
 #endif /* SOCKET_DEBUG_TRACE */
 		/*
@@ -2037,6 +2059,11 @@ int HTDoConnect(const char *url,
 		 */
 		if ((ret < 0) && (SOCKET_ERRNO != EALREADY)) {
 		    status = ret;
+		    break;
+		} else if (((SOCKET_ERRNO == EALREADY) ||
+			    (SOCKET_ERRNO == EINPROGRESS)) &&
+			   HTCheckForInterrupt()) {
+		    status = HT_INTERRUPTED;
 		    break;
 		} else if (ret > 0) {
 		    /*
@@ -2139,7 +2166,8 @@ int HTDoConnect(const char *url,
 	if (status < 0) {
 	    NETCLOSE(*s);
 	    *s = -1;
-	    continue;
+	    if (status != HT_INTERRUPTED)
+		continue;
 	}
 	break;
     }
@@ -2178,7 +2206,9 @@ int HTDoConnect(const char *url,
 
 #ifdef INET6
     FREE(line);
-#ifndef NSL_FORK
+#ifdef NSL_FORK
+    FREE_NSL_FORK(res0);
+#else
     if (res0)
 	freeaddrinfo(res0);
 #endif

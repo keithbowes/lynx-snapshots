@@ -1,4 +1,4 @@
-/* $LynxId: LYStrings.c,v 1.268 2017/05/10 22:11:33 tom Exp $ */
+/* $LynxId: LYStrings.c,v 1.271 2018/03/18 19:14:44 tom Exp $ */
 #include <HTUtils.h>
 #include <HTCJK.h>
 #include <UCAux.h>
@@ -811,10 +811,6 @@ static int myGetChar(void)
     return c;
 }
 #define GetChar() myGetChar()
-#endif
-
-#if !defined(GetChar) && defined(SNAKE)
-#define GetChar() wgetch(LYwin)
 #endif
 
 #if !defined(GetChar) && defined(VMS)
@@ -1834,7 +1830,6 @@ static int LYgetch_for(int code)
 #endif /* !USE_SLANG || VMS */
 
     CTRACE((tfp, "GETCH%d: Got %#x.\n", code, c));
-#ifdef MISC_EXP
     if (LYNoZapKey > 1 && errno != EINTR &&
 	(c == EOF
 #ifdef USE_SLANG
@@ -1855,8 +1850,6 @@ static int LYgetch_for(int code)
 	    goto re_read;
 	}
     }
-#endif /* MISC_EXP */
-
 #ifdef USE_GETCHAR
     if (c == EOF && errno == EINTR)	/* Ctrl-Z causes EINTR in getchar() */
 	goto re_read;
@@ -3323,8 +3316,8 @@ int LYDoEdit(FieldEditor * edit, int ch,
 	 */
 	if (!IS_CJK_TTY && LYlowest_eightbit[current_char_set] > 0x97)
 	    return (ch);
-	/* FALLTHRU */
 #endif
+	/* FALLTHRU */
     case LYE_CHAR:
 	uch = UCH(ch);
 	LYEditInsert(edit, &uch, 1, map_active, maxMessage);
@@ -5265,8 +5258,8 @@ int LYgetBString(bstring **inputline,
 		LYLineEdit(edit, ch, FALSE);
 		break;
 	    }
-	    /* FALLTHRU */
 #endif
+	    /* FALLTHRU */
 	case LYE_ENTER:
 	    BStrCopy0(*inputline, Buffer);
 	    if (!hidden)
@@ -6120,7 +6113,7 @@ void LYOpenCmdLogfile(int argc,
 {
     int n;
 
-    if (lynx_cmd_logfile != 0) {
+    if (non_empty(lynx_cmd_logfile)) {
 	cmd_logfile = LYNewTxtFile(lynx_cmd_logfile);
 	if (cmd_logfile != 0) {
 	    fprintf(cmd_logfile, "# Command logfile created by %s %s (%s)\n",
@@ -6139,7 +6132,7 @@ BOOL LYHaveCmdScript(void)
 
 void LYOpenCmdScript(void)
 {
-    if (lynx_cmd_script != 0) {
+    if (non_empty(lynx_cmd_script)) {
 	cmd_script = fopen(lynx_cmd_script, TXT_R);
 	CTRACE((tfp, "LYOpenCmdScript(%s) %s\n",
 		lynx_cmd_script,

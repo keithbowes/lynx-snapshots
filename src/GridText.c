@@ -1,5 +1,5 @@
 /*
- * $LynxId: GridText.c,v 1.302 2017/07/04 17:27:07 tom Exp $
+ * $LynxId: GridText.c,v 1.311 2018/04/01 14:22:01 tom Exp $
  *
  *		Character grid hypertext object
  *		===============================
@@ -89,6 +89,8 @@ static void HText_trimHightext(HText *text, int final, int stop_before);
 HTkcode last_kcode = NOKANJI;	/* 1997/11/14 (Fri) 09:09:26 */
 #endif
 
+#undef  CHAR_WIDTH
+
 #ifdef CJK_EX
 #define CHAR_WIDTH 6
 #else
@@ -158,10 +160,19 @@ static void *LY_check_calloc(size_t nmemb, size_t size);
 #define ALIGN_SIZE      sizeof(double)
 #endif
 
+#define BITS_DIR	2
+#define BITS_POS	14
+
+#define MASK_DIR	((1U << BITS_DIR) - 1)
+#define CAST_DIR(n)	((MASK_DIR) & (unsigned)(n))
+
+#define MASK_POS	((1U << BITS_POS) - 1)
+#define CAST_POS(n)	((MASK_POS) & (unsigned)(n))
+
 typedef struct {
-    unsigned int sc_direction:2;	/* on or off */
-    unsigned int sc_horizpos:14;	/* horizontal position of this change */
-    unsigned int sc_style:16;	/* which style to change to */
+    unsigned sc_direction:BITS_DIR;	/* on or off */
+    unsigned sc_horizpos:BITS_POS;	/* horizontal position of this change */
+    unsigned sc_style:16;	/* which style to change to */
 } HTStyleChange;
 
 #if defined(USE_COLOR_STYLE)
@@ -2483,16 +2494,15 @@ void HText_beginAppend(HText *text)
 
 }
 
-/* LYcols_cu is the notion that the display library has of the screen
-   width.  Normally it is the same as LYcols, but there may be a
-   difference via SLANG_MBCS_HACK.  Checks of the line length (as the
-   non-UTF-8-aware display library would see it) against LYcols_cu are
-   is used to try to prevent that lines with UTF-8 chars get wrapped
-   by the library when they shouldn't.
-   If there is no display library involved, i.e. dump_output_immediately,
-   no such limit should be imposed.  MAX_COLS should be just as good
-   as any other large value.  (But don't use INT_MAX or something close
-   to it to, avoid over/underflow.) - kw */
+/*
+ * LYcols_cu is the notion that the display library has of the screen width. 
+ * Checks of the line length (as the non-UTF-8-aware display library would see
+ * it) against LYcols_cu are used to try to prevent lines with UTF-8 chars from
+ * being wrapped by the library when they shouldn't.  If there is no display
+ * library involved, i.e., dump_output_immediately, no such limit should be
+ * imposed.  MAX_COLS should be just as good as any other large value.  (But
+ * don't use INT_MAX or something close to it to, avoid over/underflow.) - kw
+ */
 #ifdef USE_SLANG
 #define LYcols_cu(text) (dump_output_immediately ? MAX_COLS : SLtt_Screen_Cols)
 #else
@@ -2696,7 +2706,7 @@ static HTLine *insert_blanks_in_line(HTLine *line, int line_number,
 	     istyle < line->numstyles && (int) NStyle.sc_horizpos < curlim;
 	     istyle++)
 	    /* Should not we include OFF-styles at curlim? */
-	    NStyle.sc_horizpos += shift;
+	    NStyle.sc_horizpos = CAST_POS(NStyle.sc_horizpos + shift);
 #endif
 	while (copied < pre)	/* Copy verbatim to byte == pre */
 	    *t++ = *copied++;
@@ -2774,14 +2784,14 @@ static HTStyleChange *skip_matched_and_correct_offsets(HTStyleChange *end,
 	    }
 	}
 	if (tmp->sc_horizpos > split_pos) {
-	    tmp->sc_horizpos = split_pos;
+	    tmp->sc_horizpos = CAST_POS(split_pos);
 	}
     }
     return result;
 }
 #endif /* USE_COLOR_STYLE */
 
-#define reset_horizpos(value) value = 0, value = ~value
+#define reset_horizpos(value) value = 0, value ^= MASK_POS
 
 static void split_line(HText *text, unsigned split)
 {
@@ -3031,11 +3041,16 @@ static void split_line(HText *text, unsigned split)
 	while (from >= previous->styles && to >= line->styles) {
 	    *to = *from;
 	    if ((int) to->sc_horizpos > s_post) {
-		to->sc_horizpos += -s_post + SpecialAttrChars;
+		to->sc_horizpos = CAST_POS(to->sc_horizpos
+					   + SpecialAttrChars
+					   - s_post);
 	    } else if ((int) to->sc_horizpos > s_pre &&
 		       (to->sc_direction == STACK_ON ||
 			to->sc_direction == ABS_ON)) {
-		to->sc_horizpos = ((int) to->sc_horizpos < s) ? 0 : SpecialAttrChars;
+		if ((int) to->sc_horizpos < s)
+		    to->sc_horizpos = 0;
+		else
+		    to->sc_horizpos = CAST_POS(SpecialAttrChars);
 	    } else {
 		break;
 	    }
@@ -3078,7 +3093,7 @@ static void split_line(HText *text, unsigned split)
 		    at_end++;
 		    at_end->sc_direction = STACK_OFF;
 		    at_end->sc_style = scan->sc_style;
-		    at_end->sc_horizpos = s_pre;
+		    at_end->sc_horizpos = CAST_POS(s_pre);
 		    CTRACE_STYLE((tfp,
 				  "split_line, %d:style[%d] %d (dir=%d)\n",
 				  s_pre,
@@ -3093,7 +3108,7 @@ static void split_line(HText *text, unsigned split)
 		    to++;
 		else if (to >= line->styles) {
 		    *to = *scan;
-		    to->sc_horizpos = SpecialAttrChars;
+		    to->sc_horizpos = CAST_POS(SpecialAttrChars);
 		    to--;
 		} else {
 		    CTRACE((tfp, "BUG: style overflow after split_line.\n"));
@@ -3101,7 +3116,7 @@ static void split_line(HText *text, unsigned split)
 		}
 	    }
 	    if ((int) scan->sc_horizpos > s_pre) {
-		scan->sc_horizpos = s_pre;
+		scan->sc_horizpos = CAST_POS(s_pre);
 	    }
 	    scan--;
 	}
@@ -4533,7 +4548,7 @@ void _internal_HTC(HText *text, int style, int dir)
 	     */
 	    line->numstyles--;
 	} else if (line->numstyles < MAX_STYLES_ON_LINE) {
-	    line->styles[line->numstyles].sc_horizpos = line->size;
+	    line->styles[line->numstyles].sc_horizpos = CAST_POS(line->size);
 	    /*
 	     * Special chars for bold and underlining usually don't
 	     * occur with color style, but soft hyphen can.
@@ -4541,10 +4556,12 @@ void _internal_HTC(HText *text, int style, int dir)
 	     * counted as ctrl_chars.  - kw
 	     */
 	    if ((int) line->styles[line->numstyles].sc_horizpos >= ctrl_chars_on_this_line) {
-		line->styles[line->numstyles].sc_horizpos -= ctrl_chars_on_this_line;
+		line->styles[line->numstyles].sc_horizpos =
+		    CAST_POS(line->styles[line->numstyles].sc_horizpos
+			     - ctrl_chars_on_this_line);
 	    }
 	    line->styles[line->numstyles].sc_style = (unsigned short) style;
-	    line->styles[line->numstyles].sc_direction = dir;
+	    line->styles[line->numstyles].sc_direction = CAST_DIR(dir);
 	    CTRACE_STYLE((tfp, "internal_HTC %d:style[%d] %d (dir=%d)\n",
 			  line->size,
 			  line->numstyles,
@@ -7056,7 +7073,6 @@ const char *HText_getServer(void)
 	    HTAnchor_server(HTMainText->node_anchor) : 0);
 }
 
-#ifdef EXP_HTTP_HEADERS
 /*
  * Returns the full text of HTTP headers, if available, for the current
  * document.
@@ -7066,7 +7082,6 @@ const char *HText_getHttpHeaders(void)
     return (HTMainText ?
 	    HTAnchor_http_headers(HTMainText->node_anchor) : 0);
 }
-#endif
 
 /*
  * HText_pageDisplay displays a screen of text
@@ -10085,8 +10100,9 @@ int HText_beginInput(HText *text,
     /*
      * Set up VALUE.
      */
-    if (I->value)
+    if (I->value) {
 	StrAllocCopy(IValue, I->value);
+    }
     if (IValue &&
 	IS_CJK_TTY &&
 	((I->type == NULL) || strcasecomp(I->type, "hidden"))) {
@@ -10420,6 +10436,8 @@ int HText_beginInput(HText *text,
 	 * Save value for submit/reset buttons so they
 	 * will be visible when printing the page.  - LE
 	 */
+	if (f->type == F_SUBMIT_TYPE)
+	    FREE(I->value);
 	I->value = f->value;
 	break;
 
@@ -10648,7 +10666,7 @@ static const char *guess_content_type(const char *filename)
 
     return (format != 0 && non_empty(format->name))
 	? format->name
-	: "text/plain";
+	: STR_PLAINTEXT;
 }
 #endif /* USE_FILE_UPLOAD */
 
@@ -10819,7 +10837,7 @@ static char *escape_or_quote_name(const char *name,
 	StrAllocCopy(escaped1, "Content-Disposition: form-data");
 	HTSprintf(&escaped1, "; name=\"%s\"", name);
 	if (MultipartContentType)
-	    HTSprintf(&escaped1, MultipartContentType, "text/plain");
+	    HTSprintf(&escaped1, MultipartContentType, STR_PLAINTEXT);
 	if (quoting == QUOTE_BASE64)
 	    StrAllocCat(escaped1, "\r\nContent-Transfer-Encoding: base64");
 	StrAllocCat(escaped1, "\r\n\r\n");
@@ -10971,7 +10989,7 @@ int HText_SubmitForm(FormInfo * submit_item, DocInfo *doc,
      * Check the ENCTYPE and set up the appropriate variables.  -FM
      */
     if (submit_item->submit_enctype &&
-	!strncasecomp(submit_item->submit_enctype, "text/plain", 10)) {
+	!strncasecomp(submit_item->submit_enctype, STR_PLAINTEXT, 10)) {
 	/*
 	 * Do not hex escape, and use physical newlines
 	 * to separate name=value pairs.  -FM
@@ -11163,7 +11181,7 @@ int HText_SubmitForm(FormInfo * submit_item, DocInfo *doc,
 			 "application/sgml-form-urlencoded");
 	} else if (PlainText == TRUE) {
 	    StrAllocCopy(content_type_out,
-			 "text/plain");
+			 STR_PLAINTEXT);
 	} else if (Boundary != NULL) {
 	    StrAllocCopy(content_type_out,
 			 "multipart/form-data");

@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTFTP.c,v 1.129 2017/07/02 20:42:32 tom Exp $
+ * $LynxId: HTFTP.c,v 1.132 2018/03/28 08:51:10 Gisle.Vanem Exp $
  *
  *			File Transfer Protocol (FTP) Client
  *			for a WorldWideWeb browser
@@ -1245,11 +1245,7 @@ static int get_listen_socket(void)
 		if ((status = Rbind(new_socket,
 				    (struct sockaddr *) &soc_address,
 		/* Cast to generic sockaddr */
-				    SOCKADDR_LEN(soc_address)
-#ifndef SHORTENED_RBIND
-				    ,socks_bind_remoteAddr
-#endif /* !SHORTENED_RBIND */
-		     )) == 0) {
+				    SOCKADDR_LEN(soc_address))) == 0) {
 		    break;
 		} else
 #endif /* SOCKS */
@@ -1299,11 +1295,7 @@ static int get_listen_socket(void)
 	    status = Rbind(new_socket,
 			   (struct sockaddr *) &soc_address,
 	    /* Cast to generic sockaddr */
-			   sizeof(soc_address)
-#ifndef SHORTENED_RBIND
-			   ,socks_bind_remoteAddr
-#endif /* !SHORTENED_RBIND */
-		);
+			   sizeof(soc_address));
 	else
 #endif /* SOCKS */
 	    status = bind(new_socket,
@@ -1478,6 +1470,11 @@ typedef struct _EntryInfo {
 static void free_entryinfo_struct_contents(EntryInfo *entry_info)
 {
     if (entry_info) {
+#ifdef LONG_LIST
+	FREE(entry_info->file_mode);
+	FREE(entry_info->file_user);
+	FREE(entry_info->file_group);
+#endif
 	FREE(entry_info->filename);
 	FREE(entry_info->linkname);
 	FREE(entry_info->type);
@@ -2556,7 +2553,7 @@ static EntryInfo *parse_dir_entry(char *entry,
 	    if ((server_type != UNIX_SERVER) ||
 		(cp > (entry_info->filename + 3) &&
 		 0 == strncasecomp((cp - 4), "read.me", 7))) {
-		StrAllocCopy(entry_info->type, "text/plain");
+		StrAllocCopy(entry_info->type, STR_PLAINTEXT);
 	    }
 	}
     }

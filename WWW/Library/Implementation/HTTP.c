@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTTP.c,v 1.163 2016/11/24 23:56:50 tom Exp $
+ * $LynxId: HTTP.c,v 1.174 2018/03/30 09:12:37 tom Exp $
  *
  * HyperText Tranfer Protocol	- Client implementation		HTTP.c
  * ==========================
@@ -46,13 +46,44 @@
 #include <LYCurses.h>
 
 #ifdef USE_SSL
+
 #ifdef USE_OPENSSL_INCL
 #include <openssl/x509v3.h>
 #endif
+
+#if defined(LIBRESSL_VERSION_NUMBER)
+/* OpenSSL and LibreSSL version numbers do not correspond */
+
+#if LIBRESSL_VERSION_NUMBER >= 0x2060100fL
+#define SSL_set_no_TLSV1()		SSL_set_min_proto_version(handle, TLS1_1_VERSION)
+#endif
+
+#elif defined(OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x10100000L)
+
+#define SSLEAY_VERSION_NUMBER		OPENSSL_VERSION_NUMBER
+#undef  SSL_load_error_strings
+#undef  SSLeay_add_ssl_algorithms
+#define ASN1_STRING_data		ASN1_STRING_get0_data
+#define TLS_client_method()		SSLv23_client_method()
+#define SSL_load_error_strings()	/* nothing */
+#define SSLeay_add_ssl_algorithms()	/* nothing */
+#define SSL_set_no_TLSV1()		SSL_set_min_proto_version(handle, TLS1_1_VERSION)
+
+#elif defined(SSLEAY_VERSION_NUMBER)
+
+#define TLS_client_method()		SSLv23_client_method()
+
+#endif
+
+#ifndef SSL_set_no_TLSV1
+#define SSL_set_no_TLSV1()		SSL_set_options(handle, SSL_OP_NO_TLSv1)
+#endif
+
 #ifdef USE_GNUTLS_INCL
 #include <gnutls/x509.h>
 #endif
-#endif
+
+#endif /* USE_SSL */
 
 BOOLEAN reloading = FALSE;	/* Reloading => send no-cache pragma to proxy */
 char *redirecting_url = NULL;	/* Location: value. */
@@ -174,7 +205,7 @@ SSL *HTGetSSLHandle(void)
 	}
 #else
 	SSLeay_add_ssl_algorithms();
-	if ((ssl_ctx = SSL_CTX_new(SSLv23_client_method())) != NULL) {
+	if ((ssl_ctx = SSL_CTX_new(TLS_client_method())) != NULL) {
 #ifdef SSL_OP_NO_SSLv2
 	    SSL_CTX_set_options(ssl_ctx, SSL_OP_ALL | SSL_OP_NO_SSLv2);
 #else
@@ -414,7 +445,7 @@ int ws_netread(int fd, char *buf, int len)
 #define TICK	5
 #define STACK_SIZE	0x2000uL
 
-    InitializeCriticalSection(&critSec_READ);
+    EnterCriticalSection(&critSec_READ);
 
     para.fd = fd;
     para.buf = buf;
@@ -926,11 +957,7 @@ static int HTLoadHTTP(const char *arg,
 #elif SSLEAY_VERSION_NUMBER >= 0x0900
 #ifndef USE_NSS_COMPAT_INCL
 	if (!try_tls) {
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L
-	    SSL_set_min_proto_version(handle, TLS1_1_VERSION);
-#else
-	    SSL_set_options(handle, SSL_OP_NO_TLSv1);
-#endif
+	    SSL_set_no_TLSV1();
 	    CTRACE((tfp, "...adding SSL_OP_NO_TLSv1\n"));
 	}
 #if OPENSSL_VERSION_NUMBER >= 0x0090806fL && !defined(OPENSSL_NO_TLSEXT)
@@ -1253,6 +1280,8 @@ static int HTLoadHTTP(const char *arg,
 		   SSL_get_cipher(handle));
 	_HTProgress(msg);
 	FREE(msg);
+	FREE(ssl_all_cns);
+	FREE(ssl_host);
     }
 #endif /* USE_SSL */
 
@@ -1400,11 +1429,11 @@ static int HTLoadHTTP(const char *arg,
 	    }
 	}
 
-	if (language && *language) {
+	if (non_empty(language)) {
 	    HTBprintf(&command, "Accept-Language: %s%c%c", language, CR, LF);
 	}
 
-	if (pref_charset && *pref_charset) {
+	if (non_empty(pref_charset)) {
 	    BStrCat0(command, "Accept-Charset: ");
 	    StrAllocCopy(linebuf, pref_charset);
 	    if (linebuf[strlen(linebuf) - 1] == ',')
@@ -1472,7 +1501,7 @@ static int HTLoadHTTP(const char *arg,
 	    }
 	}
 
-	if (personal_mail_address && !LYNoFromHeader) {
+	if (non_empty(personal_mail_address) && !LYNoFromHeader) {
 	    HTBprintf(&command, "From: %s%c%c", personal_mail_address, CR, LF);
 	}
 
@@ -1949,7 +1978,8 @@ static int HTLoadHTTP(const char *arg,
 
 	CTRACE((tfp, "HTTP: Scanned %d fields from line_buffer\n", fields));
 
-	if (http_error_file) {	/* Make the status code externally available */
+	if (non_empty(http_error_file)) {
+	    /* Make the status code externally available */
 	    FILE *error_file;
 
 #ifdef SERVER_STATUS_ONLY
@@ -1987,7 +2017,7 @@ static int HTLoadHTTP(const char *arg,
 	     * Treat all plain text as HTML.  This sucks but its the only
 	     * solution without without looking at content.
 	     */
-	    if (!StrNCmp(HTAtom_name(format_in), "text/plain", 10)) {
+	    if (!StrNCmp(HTAtom_name(format_in), STR_PLAINTEXT, 10)) {
 		CTRACE((tfp, "HTTP: format_in being changed to text/HTML\n"));
 		format_in = WWW_HTML;
 	    }
@@ -2534,7 +2564,7 @@ static int HTLoadHTTP(const char *arg,
 #else
 	length = rawlength;
 #endif
-	format_in = HTAtom_for("text/plain");
+	format_in = HTAtom_for(STR_PLAINTEXT);
 
     } else if (doing_redirect) {
 

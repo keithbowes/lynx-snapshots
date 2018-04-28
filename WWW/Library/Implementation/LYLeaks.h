@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYLeaks.h,v 1.14 2012/02/10 00:15:56 tom Exp $
+ * $LynxId: LYLeaks.h,v 1.17 2018/03/30 00:35:10 tom Exp $
  */
 #ifndef __LYLEAKS_H
 /*
@@ -77,7 +77,8 @@ extern "C" {
 #endif				/* VMS */
 /*
  * Data structures
- */ typedef struct SourceLocation_tag {
+ */
+    typedef struct SourceLocation_tag {
 	/*
 	 * The file name and line number of where an event took place.
 	 */
@@ -119,6 +120,7 @@ extern "C" {
 /*
  *  Global variable declarations
  */
+    extern char LYLeaksPath[];
 
 /*
  *  Macros
@@ -152,6 +154,11 @@ extern "C" {
 #undef free
 #endif				/* free */
 #define free(vp_alloced) LYLeakFree(vp_alloced, __FILE__, __LINE__)
+
+#ifdef strdup
+#undef strdup
+#endif				/* free */
+#define strdup(vp_alloced) LYLeakStrdup(vp_alloced, __FILE__, __LINE__)
 
 /*
  * Added the following two defines to track Lynx's frequent use of those
@@ -247,6 +254,9 @@ extern "C" {
     extern void LYLeakFree(void *vp_alloced,
 			   const char *cp_File,
 			   const short ssi_Line);
+    extern char *LYLeakStrdup(const char *src,
+			      const char *cp_File,
+			      const short ssi_Line);
     extern char *LYLeakSACopy(char **dest,
 			      const char *src,
 			      const char *cp_File,

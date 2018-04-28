@@ -1,12 +1,12 @@
 /*
- * $LynxId: userdefs.h,v 1.329 2017/07/06 00:50:59 tom Exp $
+ * $LynxId: userdefs.h,v 1.335 2018/03/27 08:22:59 tom Exp $
  *
  * Lynx - Hypertext navigation system
  *
  *   (c) Copyright 1992, 1993, 1994 University of Kansas
  *	 1995, 1996: GNU General Public License
  *
- *   Copyright 1996-2016,2017 Thomas E. Dickey and Lynx Developers Group
+ *   Copyright 1996-2017,2018 Thomas E. Dickey and Lynx Developers Group
  *   Note: GNU General Public License is not a copyright.
  */
 
@@ -1445,11 +1445,11 @@
  * the version definition with the Project Version on checkout.  Just
  * ignore it. - kw */
 /* $Format: "#define LYNX_VERSION \"$ProjectVersion$\""$ */
-#define LYNX_VERSION "2.8.9dev.16"
+#define LYNX_VERSION "2.8.9dev.18"
 #define LYNX_WWW_HOME "http://lynx.invisible-island.net/"
 #define LYNX_WWW_DIST "http://lynx.invisible-island.net/current/"
 /* $Format: "#define LYNX_DATE \"$ProjectDate$\""$ */
-#define LYNX_DATE "Wed, 05 Jul 2017 16:13:35 -0400"
+#define LYNX_DATE "Tue, 27 Mar 2018 04:22:59 -0400"
 #define LYNX_DATE_OFF 5		/* truncate the automatically-generated date */
 #define LYNX_DATE_LEN 11	/* truncate the automatically-generated date */
 
@@ -1547,6 +1547,10 @@
 
 #ifndef USE_BLAT_MAILER
 #define USE_BLAT_MAILER 1
+#endif
+
+#ifndef LYNX_CFG_PATH
+#define LYNX_CFG_PATH "."
 #endif
 
 #else

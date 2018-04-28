@@ -1,4 +1,4 @@
-/* $LynxId: LYCurses.c,v 1.184 2017/04/30 17:52:12 tom Exp $ */
+/* $LynxId: LYCurses.c,v 1.194 2018/03/19 22:38:49 tom Exp $ */
 #include <HTUtils.h>
 #include <HTAlert.h>
 
@@ -97,13 +97,6 @@ static int Masked_Attr;
 unsigned Lynx_Color_Flags = 0;
 BOOLEAN FullRefresh = FALSE;
 int curscr = 0;
-
-#ifdef SLANG_MBCS_HACK
-/*
- * Will be set by size_change.  - KW
- */
-int PHYSICAL_SLtt_Screen_Cols = 10;
-#endif /* SLANG_MBCS_HACK */
 
 void LY_SLrefresh(void)
 {
@@ -417,12 +410,10 @@ void setHashStyle(int style,
 	    (tfp, "CSS(SET): <%s> hash=%d, ca=%#x, ma=%#x\n",
 	     element, style, color, mono));
 
+    ds->used = TRUE;
     ds->color = color;
     ds->cattr = cattr;
     ds->mono = mono;
-    ds->code = style;
-    FREE(ds->name);
-    StrAllocCopy(ds->name, element);
 }
 
 /*
@@ -454,22 +445,11 @@ static void LYAttrset(WINDOW * win, int color,
 void curses_w_style(WINDOW * win, int style,
 		    int dir)
 {
-#if OMIT_SCN_KEEPING
-# define SPECIAL_STYLE /*(CSHASHSIZE+1) */ 88888
-/* if TRACEs are not compiled in, this macro is redundant - we needn't valid
-'ds' to stack off. */
-#endif
-
     int YP, XP;
     bucket *ds;
     BOOL free_ds = TRUE;
 
     switch (style) {
-#if OMIT_SCN_KEEPING
-    case SPECIAL_STYLE:
-	ds = special_bucket();
-	break;
-#endif
     case NOSTYLE:
 	ds = nostyle_bucket();
 	break;
@@ -479,18 +459,16 @@ void curses_w_style(WINDOW * win, int style,
 	break;
     }
 
-    if (!ds->name) {
+    if (!ds->used) {
 	CTRACE2(TRACE_STYLE, (tfp, "CSS.CS:Style %d not configured\n", style));
-#if !OMIT_SCN_KEEPING
 	if (free_ds)
 	    free(ds);
 	return;
-#endif
     }
 
-    CTRACE2(TRACE_STYLE, (tfp, "CSS.CS:<%s%s> style %d code %#x, color %#x\n",
+    CTRACE2(TRACE_STYLE, (tfp, "CSS.CS:<%s%s> style %d color %#x\n",
 			  (dir ? "" : "/"),
-			  ds->name, style, ds->code, ds->color));
+			  ds->name, style, ds->color));
 
     getyx(win, YP, XP);
 
@@ -524,15 +502,6 @@ void curses_w_style(WINDOW * win, int style,
 	}
 	last_styles[last_colorattr_ptr++] = (int) LYgetattrs(win);
 	/* don't cache style changes for active links */
-#if OMIT_SCN_KEEPING
-	/* since we don't compute the hcode to stack off in HTML.c, we
-	 * don't know whether this style is configured.  So, we
-	 * shouldn't simply return on stacking on unconfigured
-	 * styles, we should push curr attrs on stack.  -HV
-	 */
-	if (!ds->name)
-	    break;
-#endif
 	/* FALL THROUGH */
     case ABS_ON:		/* change without remembering the previous style */
 	/* don't cache style changes for active links and edits */
@@ -566,7 +535,7 @@ void wcurses_css(WINDOW * win, char *name,
     int try_again = 1;
 
     while (try_again) {
-	int tmpHash = hash_code(name);
+	int tmpHash = color_style_1(name);
 
 	CTRACE2(TRACE_STYLE, (tfp, "CSSTRIM:trying to set [%s] style - ", name));
 	if (tmpHash == NOSTYLE) {
@@ -578,8 +547,8 @@ void wcurses_css(WINDOW * win, char *name,
 	    else
 		try_again = 0;
 	} else {
-	    CTRACE2(TRACE_STYLE, (tfp, "ok (%d)\n", hash_code(name)));
-	    curses_w_style(win, hash_code(name), dir);
+	    CTRACE2(TRACE_STYLE, (tfp, "ok (%d)\n", tmpHash));
+	    curses_w_style(win, tmpHash, dir);
 	    try_again = 0;
 	}
     }
@@ -971,7 +940,7 @@ int saved_scrsize_y2 = 0;
 int saved_winpos_x2 = 0;
 int saved_winpos_y2 = 0;
 
-int LYresize_term(int nlines, int ncols)
+static int LYresize_term(int nlines, int ncols)
 {
 #ifdef _WINDOWS
     HANDLE hConsole;
@@ -980,10 +949,10 @@ int LYresize_term(int nlines, int ncols)
 
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     GetConsoleScreenBufferInfo(hConsole, &csbi);
-    srWindowRect.Right  = min(ncols , csbi.dwSize.X) - 1;
+    srWindowRect.Right = min(ncols, csbi.dwSize.X) - 1;
     srWindowRect.Bottom = min(nlines, csbi.dwSize.Y) - 1;
-    srWindowRect.Left   = srWindowRect.Top = (SHORT)0;
-    SetConsoleWindowInfo( hConsole, TRUE, &srWindowRect);
+    srWindowRect.Left = srWindowRect.Top = (SHORT) 0;
+    SetConsoleWindowInfo(hConsole, TRUE, &srWindowRect);
 #endif
     return resize_term(nlines, ncols);
 }
@@ -1096,7 +1065,7 @@ void maxmizeWindowSize(void)
 {
     RECT winrect;
     HANDLE hConsole;
-    COORD coordScreen;    
+    COORD coordScreen;
 
     setCurrentWindowHandle();
     if (currentWindowHandle == NULL) {
@@ -1109,20 +1078,20 @@ void maxmizeWindowSize(void)
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     coordScreen = GetLargestConsoleWindowSize(hConsole);
 
-    LYcols  = scrsize_x = coordScreen.X - 1;
+    LYcols = scrsize_x = coordScreen.X - 1;
     LYlines = scrsize_y = coordScreen.Y - 1;
-		LYlines--;
-		CTRACE((tfp, "Request maximum screen size: %dx%d\n",
+    LYlines--;
+    CTRACE((tfp, "Request maximum screen size: %dx%d\n",
 	    scrsize_x, scrsize_y));
     LYresize_term(scrsize_y, scrsize_x);
-		Sleep(100);
-		moveWindowHXY(currentWindowHandle, 0, 0);
-		LYlines = LYscreenHeight();
-		LYcols = LYscreenWidth();
-		CTRACE((tfp, "...actual maximum screen size: %dx%d\n",
+    Sleep(100);
+    moveWindowHXY(currentWindowHandle, 0, 0);
+    LYlines = LYscreenHeight();
+    LYcols = LYscreenWidth();
+    CTRACE((tfp, "...actual maximum screen size: %dx%d\n",
 	    LYcols, LYlines));
-		LYStatusLine = -1;
-		recent_sizechange = TRUE;
+    LYStatusLine = -1;
+    recent_sizechange = TRUE;
 }
 
 void recoverWindowSize(void)
@@ -1851,7 +1820,9 @@ BOOLEAN setup(char *terminal)
      */
     term[0] = '\0';
     longname(dummy, term);
-    if (term[0] == '\0' && (form_get_data || form_post_data)) {
+    if (term[0] == '\0' &&
+	(non_empty(form_get_data) ||
+	 non_empty(form_post_data))) {
 	/*
 	 * Some yoyo used these under conditions which require -dump, so force
 	 * that mode here.  - FM
@@ -2291,11 +2262,16 @@ int LYstrExtent0(const char *string,
 		 int maxCells GCC_UNUSED,
 		 int retCellNum GCC_UNUSED)
 {
-    int used = (len < 0 ? (int) strlen(string) : len);
-    int result = used;
+    int used, result;
 
+    if (isEmpty(string)) {
+	used = ((len > 0) ? len : 0);
+    } else {
+	used = ((len < 0) ? (int) strlen(string) : len);
+    }
+    result = used;
 #ifdef WIDEC_CURSES
-    if (used > 0 && lynx_called_initscr) {
+    if (non_empty(string) && used > 0 && lynx_called_initscr) {
 	static WINDOW *fake_win;
 	static int fake_max;
 

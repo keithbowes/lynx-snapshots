@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYBookmark.c,v 1.76 2013/11/28 11:17:59 tom Exp $
+ * $LynxId: LYBookmark.c,v 1.78 2018/03/18 19:27:30 tom Exp $
  */
 #include <HTUtils.h>
 #include <HTAlert.h>
@@ -250,7 +250,7 @@ void save_bookmark_link(const char *address,
      * If BookmarkPage is NULL, something went wrong, so ignore the request.  -
      * FM
      */
-    if (BookmarkPage == NULL) {
+    if (isEmpty(BookmarkPage)) {
 	FREE(bookmark_URL);
 	return;
     }
@@ -261,9 +261,9 @@ void save_bookmark_link(const char *address,
      */
     if (LYMultiBookmarks != MBM_OFF) {
 	const char *url = HTLoadedDocumentURL();
-	const char *page = (*BookmarkPage == '.')
-	? (BookmarkPage + 1)
-	: BookmarkPage;
+	const char *page = ((*BookmarkPage == '.')
+			    ? (BookmarkPage + 1)
+			    : BookmarkPage);
 
 	if (strstr(url, page) != NULL) {
 	    LYMBM_statusline(MULTIBOOKMARKS_SELF);
@@ -368,7 +368,7 @@ void save_bookmark_link(const char *address,
 	else
 	    fprintf(fp, "<META %s %s>\n",
 		    "http-equiv=\"content-type\"",
-		    "content=\"text/html;charset=iso-2022-jp\"");
+		    "content=\"" STR_HTML ";charset=iso-2022-jp\"");
 #else
 	LYAddMETAcharsetToFD(fp, -1);
 #endif /* !_WINDOWS */
@@ -898,7 +898,7 @@ int select_menu_multi_bookmarks(void)
 		/*
 		 * See if we have a bookmark like that.
 		 */
-		if (MBM_A_subbookmark[d] != NULL)
+		if (non_empty(MBM_A_subbookmark[d]))
 		    return (d);
 
 		show_bookmark_not_defined();
@@ -1116,7 +1116,7 @@ static char *title_convert8bit(const char *Title)
 void set_default_bookmark_page(char *value)
 {
     if (value != 0) {
-	if (bookmark_page == 0
+	if (bookmark_page == NULL
 	    || strcmp(bookmark_page, value)) {
 	    StrAllocCopy(bookmark_page, value);
 	}

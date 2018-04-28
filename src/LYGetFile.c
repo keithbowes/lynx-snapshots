@@ -1,4 +1,4 @@
-/* $LynxId: LYGetFile.c,v 1.94 2016/11/24 15:35:29 tom Exp $ */
+/* $LynxId: LYGetFile.c,v 1.96 2018/04/01 15:27:18 tom Exp $ */
 #include <HTUtils.h>
 #include <HTTP.h>
 #include <HTAnchor.h>		/* Anchor class */
@@ -199,15 +199,16 @@ int getfile(DocInfo *doc, int *target)
 		  url_type == LYNXMESSAGES_URL_TYPE ||
 		  (url_type == LYNXOPTIONS_URL_TYPE &&
 		   WWWDoc.post_data) ||
-		  0 == STRNADDRCOMP(WWWDoc.address, helpfilepath,
-				    strlen(helpfilepath)) ||
-		  (lynxlistfile != NULL &&
+		  (non_empty(helpfilepath) &&
+		   0 == STRNADDRCOMP(WWWDoc.address, helpfilepath,
+				     strlen(helpfilepath))) ||
+		  (non_empty(lynxlistfile) &&
 		   0 == STRNADDRCOMP(WWWDoc.address, lynxlistfile,
 				     strlen(lynxlistfile))) ||
-		  (lynxlinksfile != NULL &&
+		  (non_empty(lynxlinksfile) &&
 		   0 == STRNADDRCOMP(WWWDoc.address, lynxlinksfile,
 				     strlen(lynxlinksfile))) ||
-		  (lynxjumpfile != NULL &&
+		  (non_empty(lynxjumpfile) &&
 		   0 == STRNADDRCOMP(WWWDoc.address, lynxjumpfile,
 				     strlen(lynxjumpfile))))) {
 		HTUserMsg(NOT_HTTP_URL_OR_ACTION);
@@ -1295,11 +1296,11 @@ static struct trust *get_trust(struct trust **table, const char *src, int type)
 }
 
 #ifdef LY_FIND_LEAKS
-static void free_data(struct trust *cur)
+static void free_data(struct trust **data)
 {
+    struct trust *cur = (*data);
     struct trust *next;
 
-    cur = trusted_exec;
     while (cur) {
 	FREE(cur->src);
 	FREE(cur->path);
@@ -1307,13 +1308,14 @@ static void free_data(struct trust *cur)
 	FREE(cur);
 	cur = next;
     }
+    *data = NULL;
 }
 
 static void LYTrusted_free(void)
 {
-    free_data(trusted_exec);
-    free_data(always_trusted_exec);
-    free_data(trusted_cgi);
+    free_data(&trusted_exec);
+    free_data(&always_trusted_exec);
+    free_data(&trusted_cgi);
 
     return;
 }

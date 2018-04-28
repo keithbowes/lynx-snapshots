@@ -1,4 +1,4 @@
-dnl $LynxId: configure.in,v 1.292 2017/07/06 00:48:30 tom Exp $
+dnl $LynxId: configure.in,v 1.298 2018/03/27 08:22:59 tom Exp $
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
@@ -7,7 +7,7 @@ dnl by T.E.Dickey <dickey@invisible-island.net>
 dnl and Jim Spath <jspath@mail.bcpl.lib.md.us>
 dnl
 dnl ---------------------------------------------------------------------------
-dnl Copyright 1997-2016,2017 by Thomas E. Dickey
+dnl Copyright 1997-2017,2018 by Thomas E. Dickey
 dnl
 dnl Permission to use, copy, modify, and distribute this software and its
 dnl documentation for any purpose and without fee is hereby granted,
@@ -29,7 +29,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl ask PRCS to plug-in the project-version for the configure-script.
 dnl $Format: "AC_REVISION($ProjectVersion$)"$
-AC_REVISION(2.8.9dev.16)
+AC_REVISION(2.8.9dev.18)
 
 # Save the original $CFLAGS so we can distinguish whether the user set those
 # in the environment, or whether autoconf added -O and -g options:
@@ -64,7 +64,7 @@ AC_ARG_PROGRAM
 PACKAGE=lynx
 dnl ask PRCS to plug-in the project-version for the packages.
 # $Format: "VERSION=$ProjectVersion$"$
-VERSION=2.8.9dev.16
+VERSION=2.8.9dev.18
 
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
@@ -245,11 +245,8 @@ case $host_os in
 	TRY_CFLAGS="$TRY_CFLAGS -DWIN_EX -D_WINDOWS_NSL"
 	LIBS="$LIBS -luser32"
 	;;
-(dgux*)
-	TRY_CFLAGS="$TRY_CFLAGS -DDGUX"
-	;;
 (hpux*)
-	TRY_CFLAGS="$TRY_CFLAGS -DSNAKE -D_XOPEN_SOURCE_EXTENDED"
+	TRY_CFLAGS="$TRY_CFLAGS -D_XOPEN_SOURCE_EXTENDED"
 	test -z "$GCC" && TRY_CFLAGS="$TRY_CFLAGS -Wp,-H600000 -DSYS_HPUX"
 	;;
 (isc*)
@@ -271,12 +268,13 @@ case $host_os in
 (mingw*)
 	# put these directly in CPPFLAGS since they will not work in lynx_cfg.h
 	CF_ADD_CFLAGS(\
-		-DWIN32_LEAN_AND_MEAN \
 		-DDOSPATH \
 		-DNOSIGHUP \
 		-DNOUSERS \
+		-DWIN32_LEAN_AND_MEAN \
 		-DWIN_EX \
 		-D_CONSOLE \
+		-D_GNU_SOURCE \
 		-D_MBCS \
 		-D_WINDOWS \
 		-D_WIN_CC \
@@ -560,6 +558,8 @@ case $cf_cv_screen in
 	dft_color_style=no
 	;;
 esac
+
+CF_TRY_RPATH
 
 CF_CURSES_CHTYPE
 

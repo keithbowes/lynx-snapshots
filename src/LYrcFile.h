@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYrcFile.h,v 1.49 2017/07/03 23:20:33 tom Exp $
+ * $LynxId: LYrcFile.h,v 1.51 2018/03/27 23:03:51 tom Exp $
  */
 #ifndef LYRCFILE_H
 #define LYRCFILE_H
@@ -99,6 +99,7 @@
 #define RC_GOPHER_PROXY                 "gopher_proxy"
 #define RC_GOTOBUFFER                   "gotobuffer"
 #define RC_GZIP_PATH                    "gzip_path"
+#define RC_GUESS_SCHEME                 "guess_scheme"
 #define RC_HELPFILE                     "helpfile"
 #define RC_HIDDENLINKS                  "hiddenlinks"
 #define RC_HIDDEN_LINK_MARKER           "hidden_link_marker"
@@ -188,6 +189,7 @@
 #define RC_PERSONAL_MAIL_NAME           "personal_mail_name"
 #define RC_POSITIONABLE_EDITOR          "positionable_editor"
 #define RC_PREFERRED_CHARSET            "preferred_charset"
+#define RC_PREFERRED_CONTENT_TYPE       "preferred_content_type"
 #define RC_PREFERRED_ENCODING           "preferred_encoding"
 #define RC_PREFERRED_LANGUAGE           "preferred_language"
 #define RC_PREFERRED_MEDIA_TYPES        "preferred_media_types"
@@ -290,6 +292,7 @@
 extern Config_Enum tbl_force_prompt[];
 extern Config_Enum tbl_keypad_mode[];
 extern Config_Enum tbl_multi_bookmarks[];
+extern Config_Enum tbl_preferred_content[];
 extern Config_Enum tbl_preferred_encoding[];
 extern Config_Enum tbl_preferred_media[];
 extern Config_Enum tbl_transfer_rate[];

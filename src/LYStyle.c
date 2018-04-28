@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYStyle.c,v 1.97 2016/10/12 00:50:05 tom Exp $
+ * $LynxId: LYStyle.c,v 1.109 2018/03/10 01:54:30 tom Exp $
  *
  * character level styles for Lynx
  * (c) 1996 Rob Partington -- donated to the Lyncei (if they want it :-)
@@ -125,13 +125,6 @@ static bucket *new_bucket(const char *name)
     return result;
 }
 
-#if OMIT_SCN_KEEPING
-bucket *special_bucket(void)
-{
-    return new_bucket("<special>");
-}
-#endif
-
 bucket *nostyle_bucket(void)
 {
     return new_bucket("<NOSTYLE>");
@@ -192,7 +185,7 @@ static void parse_attributes(const char *mono,
     int fA = default_fg;
     int bA = default_bg;
     int cA = A_NORMAL;
-    int newstyle = hash_code(element);
+    int newstyle = color_style_1(element);
     int colored_attr;
 
     CTRACE2(TRACE_STYLE, (tfp, "CSS(PA):style d=%d / h=%d, e=%s\n",
@@ -366,8 +359,10 @@ where OBJECT is one of EM,STRONG,B,I,U,BLINK etc.\n\n"), buffer);
     }
 
     CTRACE2(TRACE_STYLE, (tfp, "CSSPARSE:%s => %d %s\n",
-			  element, hash_code(element),
-			  (hashStyles[hash_code(element)].name ? "used" : "")));
+			  element, color_style_1(element),
+			  (hashStyles[color_style_1(element)].used)
+			  ? "used"
+			  : ""));
 
     /*
      * We use some pseudo-elements, so catch these first
@@ -376,7 +371,7 @@ where OBJECT is one of EM,STRONG,B,I,U,BLINK etc.\n\n"), buffer);
 	if (!strcasecomp(element, table[n].name)) {
 	    parse_attributes(mono, fg, bg, table[n].style, table[n].name);
 	    if (table[n].set_hash != 0)
-		*(table[n].set_hash) = hash_code(table[n].name);
+		*(table[n].set_hash) = color_style_1(table[n].name);
 	    found = TRUE;
 	    break;
 	}
@@ -386,7 +381,7 @@ where OBJECT is one of EM,STRONG,B,I,U,BLINK etc.\n\n"), buffer);
 	if (!strcasecomp(element, "normal")) {
 	    /* added - kw */
 	    parse_attributes(mono, fg, bg, DSTYLE_NORMAL, "html");
-	    s_normal = hash_code("html");	/* rather bizarre... - kw */
+	    s_normal = color_style_1("html");	/* rather bizarre... - kw */
 
 	    LYnormalColor();
 	}
@@ -419,11 +414,10 @@ static void free_lss_list(void)
     LSS_NAMES *obj;
 
     while ((obj = HTList_objectAt(list_of_lss_files, 0)) != 0) {
-	if (HTList_unlinkObject(list_of_lss_files, obj)) {
-	    FREE(obj->given);
-	    FREE(obj->actual);
-	    FREE(obj);
-	} else {
+	FREE(obj->given);
+	FREE(obj->actual);
+	FREE(obj);
+	if (!HTList_removeObject(list_of_lss_files, obj)) {
 	    break;
 	}
     }
@@ -432,7 +426,11 @@ static void free_lss_list(void)
 
 static void free_colorstylestuff(void)
 {
+    if (TRACE_STYLE) {
+	report_hashStyles();
+    }
     style_initialiseHashTable();
+    free_hashStyles();
     style_deleteStyleList();
     memset(our_pairs, 0, sizeof(our_pairs));
     FreeCachedStyles();
@@ -442,34 +440,28 @@ static void free_colorstylestuff(void)
 static void style_initialiseHashTable(void)
 {
     int i;
-    static int firsttime = 1;
+    static BOOL firsttime = TRUE;
 
     for (i = 0; i < CSHASHSIZE; i++) {
-	if (firsttime)
-	    hashStyles[i].name = NULL;
-	else
-	    FREE(hashStyles[i].name);
-	hashStyles[i].color = 0;
-	hashStyles[i].cattr = 0;
-	hashStyles[i].mono = 0;
+	hashStyles[i].used = FALSE;
     }
     if (firsttime) {
-	firsttime = 0;
+	firsttime = FALSE;
 #ifdef LY_FIND_LEAKS
 	atexit(free_colorstylestuff);
 	atexit(free_colorstyle_leaks);
 #endif
     }
-    s_alink = hash_code("alink");
-    s_a = hash_code("a");
-    s_status = hash_code("status");
-    s_alert = hash_code("alert");
-    s_title = hash_code("title");
+    s_alink = color_style_1("alink");
+    s_a = color_style_1("a");
+    s_status = color_style_1("status");
+    s_alert = color_style_1("alert");
+    s_title = color_style_1("title");
 #ifdef USE_SCROLLBAR
-    s_sb_bar = hash_code("scroll.bar");
-    s_sb_bg = hash_code("scroll.back");
-    s_sb_aa = hash_code("scroll.arrow");
-    s_sb_naa = hash_code("scroll.noarrow");
+    s_sb_bar = color_style_1("scroll.bar");
+    s_sb_bg = color_style_1("scroll.back");
+    s_sb_aa = color_style_1("scroll.arrow");
+    s_sb_naa = color_style_1("scroll.noarrow");
 #endif
 }
 
@@ -714,7 +706,7 @@ void TrimColorClass(const char *tagname,
 	if (end)
 	    *end = '\0';
     }
-    *phcode = hash_code(lookfrom && *lookfrom ? lookfrom : &tmp[1]);
+    *phcode = color_style_1(lookfrom && *lookfrom ? lookfrom : &tmp[1]);
 }
 
 /* This function is designed as faster analog to TrimColorClass.
@@ -745,7 +737,7 @@ void FastTrimColorClass(const char *tag_name,
 	*pstylename_end = tag_start;
     }
     CTRACE2(TRACE_STYLE, (tfp, found ? "success.\n" : "failed.\n"));
-    *phcode = hash_code(tag_start + 1);
+    *phcode = color_style_1(tag_start + 1);
 }
 
 /* This is called each time lss styles are read. It will fill
@@ -753,13 +745,10 @@ void FastTrimColorClass(const char *tag_name,
  */
 void cache_tag_styles(void)
 {
-    char buf[200];
     int i;
 
     for (i = 0; i < HTML_ELEMENTS; ++i) {
-	LYStrNCpy(buf, HTML_dtd.tags[i].name, sizeof(buf) - 1);
-	LYLowerCase(buf);
-	cached_tag_styles[i] = hash_code(buf);
+	cached_tag_styles[i] = color_style_1(HTML_dtd.tags[i].name);
     }
 }
 
@@ -926,8 +915,10 @@ void init_color_styles(char **from_cmdline, const char *default_styles)
 	    char *target;
 
 	    target = find_lss_file(LYPathLeaf(cp));
-	    if (target != 0)
+	    if (target != 0) {
 		add_to_lss_list(cp, target);
+		FREE(target);
+	    }
 	}
 	FREE(source);
     }
@@ -963,22 +954,9 @@ void init_color_styles(char **from_cmdline, const char *default_styles)
 
 void reinit_color_styles(void)
 {
+#ifdef USE_PRETTYSRC
     int cs;
 
-    for (cs = 0; cs < CSHASHSIZE; ++cs) {
-	bucket *style = &hashStyles[cs];
-
-	while (style != 0) {
-	    bucket *next = style->next;
-
-	    if (next != 0) {
-		hashStyles[cs] = *next;
-		free(next);
-	    }
-	    style = hashStyles[cs].next;
-	}
-    }
-#ifdef USE_PRETTYSRC
     for (cs = 0; cs < HTL_num_lexemes; ++cs) {
 	html_src_clean_item((HTlexeme) cs);
     }

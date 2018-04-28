@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTAnchor.c,v 1.77 2016/11/24 15:29:50 tom Exp $
+ * $LynxId: HTAnchor.c,v 1.81 2018/03/11 18:34:50 tom Exp $
  *
  *	Hypertext "Anchor" Object				HTAnchor.c
  *	==========================
@@ -16,7 +16,7 @@
  *	(c) Copyright CERN 1991 - See Copyright.html
  */
 
-#define HASH_SIZE 1001		/* Arbitrary prime.  Memory/speed tradeoff */
+#define HASH_SIZE 997		/* Arbitrary prime.  Memory/speed tradeoff */
 
 #include <HTUtils.h>
 #include <HTAnchor.h>
@@ -31,29 +31,15 @@
 #include <LYUtils.h>
 #include <LYLeaks.h>
 
-#define HASH_TYPE unsigned short
+#define HASH_OF(h, v) ((HASH_TYPE)((h) * 3 + UCH(v)) % HASH_SIZE)
 
-#ifdef NOT_DEFINED
-/*
- *	This is the hashing function used to determine which list in the
- *		adult_table a parent anchor should be put in.  This is a
- *		much simpler function than the original used.
- */
-#define HASH_FUNCTION(cp_address) \
-	( (HASH_TYPE)strlen(cp_address) *\
-	  (HASH_TYPE)TOUPPER(*cp_address) % HASH_SIZE )
-#endif /* NOT_DEFINED */
-
-/*
- *	This is the original function.	We'll use it again. - FM
- */
-static HASH_TYPE HASH_FUNCTION(const char *cp_address)
+static HASH_TYPE anchor_hash(const char *cp_address)
 {
     HASH_TYPE hash;
-    const unsigned char *p;
+    const char *p;
 
-    for (p = (const unsigned char *) cp_address, hash = 0; *p; p++)
-	hash = (HASH_TYPE) (hash * 3 + (*(const unsigned char *) p)) % HASH_SIZE;
+    for (p = cp_address, hash = 0; *p; p++)
+	hash = HASH_OF(hash, *p);
 
     return (hash);
 }
@@ -446,7 +432,7 @@ static HTParentAnchor0 *HTAnchor_findAddress_in_adult_table(const DocAddress *ne
     /*
      * Select list from hash table,
      */
-    hash = HASH_FUNCTION(newdoc->address);
+    hash = anchor_hash(newdoc->address);
     adults = &(adult_table[hash]);
 
     /*
@@ -776,9 +762,7 @@ static void HTParentAnchor_free(HTParentAnchor *me)
     }
     FREE(me->SugFname);
     FREE(me->cache_control);
-#ifdef EXP_HTTP_HEADERS
     HTChunkClear(&(me->http_headers));
-#endif
     FREE(me->content_type_params);
     FREE(me->content_type);
     FREE(me->content_language);
@@ -1081,14 +1065,12 @@ const char *HTAnchor_SugFname(HTParentAnchor *me)
     return (me ? me->SugFname : NULL);
 }
 
-#ifdef EXP_HTTP_HEADERS
 /*	HTTP Headers.
 */
 const char *HTAnchor_http_headers(HTParentAnchor *me)
 {
     return (me ? me->http_headers.data : NULL);
 }
-#endif
 
 /*	Content-Type handling (parameter list).
 */

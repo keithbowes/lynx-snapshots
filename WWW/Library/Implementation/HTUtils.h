@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTUtils.h,v 1.125 2017/07/07 20:49:16 Martijn.Dekker Exp $
+ * $LynxId: HTUtils.h,v 1.128 2018/03/17 15:56:11 tom Exp $
  *
  * Utility macros for the W3 code library
  * MACROS FOR GENERAL USE
@@ -23,7 +23,9 @@
 #else
 # ifdef _MSC_VER
 #  include <malloc.h>
-#  define alloca(size) _alloca(size)
+#  ifndef alloca
+#   define alloca(size) _alloca(size)
+#  endif
 # else
 #  if HAVE_ALLOCA_H
 #   include <alloca.h>
@@ -625,6 +627,16 @@ extern int WWW_TraceMask;
 #endif
 
 /*
+ * MinGW-32 uses only 32-bit DLL, which limits printing.
+ */
+#if defined(__MINGW32__)
+#undef  PRI_off_t
+#undef  CAST_off_t
+#define PRI_off_t	"ld"
+#define CAST_off_t(n)	(long)(n)
+#endif
+
+/*
  * Printing-format for "time_t", as well as cast needed to fit.
  */
 #if defined(HAVE_LONG_LONG) && defined(HAVE_INTTYPES_H) && defined(SIZEOF_TIME_T)
@@ -733,8 +745,6 @@ extern int WWW_TraceMask;
 #endif
 
 #endif /* USE_SOCKS5 */
-
-#define SHORTENED_RBIND		/* FIXME: do this in configure-script */
 
 #ifdef USE_SSL
 

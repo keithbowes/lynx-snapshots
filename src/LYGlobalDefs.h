@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYGlobalDefs.h,v 1.142 2017/07/03 23:10:31 tom Exp $
+ * $LynxId: LYGlobalDefs.h,v 1.146 2018/03/27 23:05:13 tom Exp $
  *
  * global variable definitions
  */
@@ -300,6 +300,8 @@ extern "C" {
 
     extern int LYAcceptEncoding;
     extern int LYAcceptMedia;
+    extern int LYContentType;
+    extern const char *ContentTypes[];
     extern int LYTransferRate;	/* see enum TransferRate */
     extern int display_lines;	/* number of lines in the display */
     extern int dump_output_width;
@@ -395,6 +397,7 @@ extern "C" {
     extern char *personal_extension_map;
     extern char *LYHostName;
     extern char *LYLocalDomain;
+    extern BOOLEAN LYGuessScheme;
     extern BOOLEAN unique_urls;
     extern BOOLEAN use_underscore;
     extern BOOLEAN no_list;
@@ -586,9 +589,7 @@ extern "C" {
     extern int ssl_noprompt;
 #endif
 
-#ifdef MISC_EXP
     extern int LYNoZapKey;	/* 0: off (do 'z' checking), 1: full, 2: initially */
-#endif
 
 #ifdef USE_JUSTIFY_ELTS
     extern BOOLEAN ok_justify;
@@ -667,7 +668,6 @@ extern "C" {
     extern BOOLEAN system_is_NT;
     extern char windows_drive[4];
     extern int lynx_timeout;
-    extern CRITICAL_SECTION critSec_DNS;
     extern CRITICAL_SECTION critSec_READ;
 #endif				/* _WINDOWS */
 

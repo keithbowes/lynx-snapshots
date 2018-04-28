@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYMain.c,v 1.265 2017/07/03 23:31:21 tom Exp $
+ * $LynxId: LYMain.c,v 1.280 2018/04/01 20:48:44 tom Exp $
  */
 #include <HTUtils.h>
 #include <HTTP.h>
@@ -158,12 +158,7 @@ BOOLEAN track_internal_links = TRUE;
 BOOLEAN track_internal_links = FALSE;
 #endif
 
-#ifdef REVERSE_CLEAR_SCREEN_PROBLEM
-BOOLEAN enable_scrollback = TRUE;
-
-#else
 BOOLEAN enable_scrollback = FALSE;
-#endif /* REVERSE_CLEAR_SCREEN_PROBLEM */
 
 char empty_string[] =
 {'\0'};
@@ -192,6 +187,7 @@ int LYrcShowColor = SHOW_COLOR_UNKNOWN;		/* ... last used */
 BOOLEAN LYUseFormsOptions = TRUE;	/* use forms-based options menu */
 #endif
 
+BOOLEAN LYGuessScheme = FALSE;
 BOOLEAN LYJumpFileURL = FALSE;	/* always FALSE the first time */
 BOOLEAN LYPermitURL = FALSE;
 BOOLEAN LYRestricted = FALSE;	/* whether we have -anonymous option */
@@ -346,7 +342,6 @@ char windows_drive[4];		/* 1998/01/13 (Tue) 21:13:24 */
 #ifdef _WINDOWS
 #define	TIMEOUT	180		/* 1998/03/30 (Mon) 14:50:44 */
 int lynx_timeout = TIMEOUT;
-CRITICAL_SECTION critSec_DNS;	/* 1998/09/03 (Thu) 22:01:56 */
 CRITICAL_SECTION critSec_READ;	/* 1998/09/03 (Thu) 22:01:56 */
 #endif /* _WINDOWS */
 
@@ -548,6 +543,13 @@ BOOLEAN LYShowTransferRate = TRUE;
 int LYTransferRate = rateKB;
 int LYAcceptEncoding = encodingALL;
 int LYAcceptMedia = mediaOpt1;
+int LYContentType = contentTEXT;
+const char *ContentTypes[] =
+{
+    STR_BINARY,
+    STR_PLAINTEXT,
+    STR_HTML
+};
 char *LYTransferName = NULL;
 
 char *XLoadImageCommand = NULL;	/* Default image viewer for X */
@@ -568,6 +570,10 @@ FILE *LYTraceLogFP = NULL;	/* Pointer for TRACE log  */
 #endif
 char *LYTraceLogPath = NULL;	/* Path for TRACE log      */
 BOOLEAN LYUseTraceLog = USE_TRACE_LOG;	/* Use a TRACE log?        */
+
+#ifdef LY_FIND_LEAKS
+char LYLeaksPath[LY_MAXPATH];
+#endif
 
 BOOLEAN LYSeekFragMAPinCur = TRUE;
 BOOLEAN LYSeekFragAREAinCur = TRUE;
@@ -633,9 +639,7 @@ BOOLEAN LYNonRestartingSIGWINCH = FALSE;
 BOOLEAN LYReuseTempfiles = FALSE;
 BOOLEAN LYUseBuiltinSuffixes = TRUE;
 
-#ifdef MISC_EXP
 int LYNoZapKey = 0;		/* 0: off (do z checking), 1: full, 2: initially */
-#endif
 
 #ifndef DISABLE_NEWS
 #include <HTNews.h>
@@ -750,6 +754,9 @@ static void free_lynx_globals(void)
 {
     int i;
 
+#if defined(USE_COLOR_STYLE)
+    clear_lss_list();
+#endif
     FREE(ftp_format);
 #ifndef VMS
     FREE(list_format);
@@ -765,6 +772,8 @@ static void free_lynx_globals(void)
 
 #ifdef VMS
     Define_VMSLogical("LYNX_VERSION", "");
+#else
+    (void) putenv("LYNX_VERSION=" LYNX_VERSION);
 #endif /* VMS */
 #ifndef VMS
     FREE(lynx_version_putenv_command);
@@ -843,6 +852,8 @@ static void free_lynx_globals(void)
     FREE(LYTraceLogPath);
     FREE(lynx_cfg_file);
     FREE(SSL_cert_file);
+    FREE(SSL_client_cert_file);
+    FREE(SSL_client_key_file);
 #if defined(USE_COLOR_STYLE)
     FREE(lynx_lss_file2);
     FREE(lynx_lss_file);
@@ -1045,6 +1056,8 @@ int main(int argc,
      * Register the function which will free our allocated globals.
      */
     atexit(free_lynx_globals);
+
+    LYAddPathToHome(LYLeaksPath, (size_t) LY_MAXPATH, LEAKAGE_SINK);
 #endif /* LY_FIND_LEAKS */
 
 #ifdef    NOT_ASCII
@@ -1078,7 +1091,6 @@ int main(int argc,
     }
 
     /* 1998/09/03 (Thu) 22:02:32 */
-    InitializeCriticalSection(&critSec_DNS);
     InitializeCriticalSection(&critSec_READ);
 
 #endif /* _WINDOWS */
@@ -1193,8 +1205,8 @@ int main(int argc,
     /*
      * Zero the MultiBookmark arrays.
      */
-    memset((void *) MBM_A_subbookmark, 0, sizeof(char) * (MBM_V_MAXFILES + 1));
-    memset((void *) MBM_A_subdescript, 0, sizeof(char) * (MBM_V_MAXFILES + 1));
+    memset((void *) MBM_A_subbookmark, 0, sizeof(char *) * (MBM_V_MAXFILES + 1));
+    memset((void *) MBM_A_subdescript, 0, sizeof(char *) * (MBM_V_MAXFILES + 1));
 
 #ifndef VMS
     StrAllocCopy(list_format, LIST_FORMAT);
@@ -1445,14 +1457,14 @@ int main(int argc,
     /*
      * Open command-script, if specified
      */
-    if (lynx_cmd_script != 0) {
+    if (non_empty(lynx_cmd_script)) {
 	LYTildeExpand(&lynx_cmd_script, TRUE);
 	LYOpenCmdScript();
     }
     /*
      * Open command-logging, if specified
      */
-    if (lynx_cmd_logfile != 0) {
+    if (non_empty(lynx_cmd_logfile)) {
 	LYTildeExpand(&lynx_cmd_logfile, TRUE);
 	LYOpenCmdLogfile(argc, argv);
     }
@@ -1478,13 +1490,13 @@ int main(int argc,
      * If no alternate configuration file was specified on the command line,
      * see if it's in the environment.
      */
-    if (!lynx_cfg_file) {
+    if (isEmpty(lynx_cfg_file)) {
 	if (((cp = LYGetEnv("LYNX_CFG")) != NULL) ||
 	    (cp = LYGetEnv("lynx_cfg")) != NULL)
 	    StrAllocCopy(lynx_cfg_file, cp);
     }
 #ifdef USE_PROGRAM_DIR
-    if (!lynx_cfg_file) {
+    if (isEmpty(lynx_cfg_file)) {
 	HTSprintf0(&lynx_cfg_file, "%s\\lynx.cfg", program_dir);
 	if (!LYCanReadFile(lynx_cfg_file)) {
 	    FREE(lynx_cfg_file);
@@ -1497,7 +1509,7 @@ int main(int argc,
      * If we still don't have a configuration file, use the userdefs.h
      * definition.
      */
-    if (!lynx_cfg_file)
+    if (isEmpty(lynx_cfg_file))
 	StrAllocCopy(lynx_cfg_file, LYNX_CFG_FILE);
 
 #ifndef _WINDOWS		/* avoid the whole ~ thing for now */
@@ -1745,7 +1757,7 @@ int main(int argc,
     }
 
     /* tilde-expand LYCookieSaveFile */
-    if (LYCookieSaveFile != NULL) {
+    if (non_empty(LYCookieSaveFile)) {
 	LYTildeExpand(&LYCookieSaveFile, FALSE);
     }
 #ifdef USE_PROGRAM_DIR
@@ -1798,10 +1810,10 @@ int main(int argc,
     /*
      * We have a save space path, make sure it's valid.  - FM
      */
-    if (lynx_save_space && *lynx_save_space == '\0') {
+    if (isEmpty(lynx_save_space)) {
 	FREE(lynx_save_space);
     }
-    if (lynx_save_space) {
+    if (non_empty(lynx_save_space)) {
 	LYTildeExpand(&lynx_save_space, TRUE);
 #ifdef VMS
 	LYLowerCase(lynx_save_space);
@@ -2049,10 +2061,10 @@ int main(int argc,
 #ifdef USE_PRETTYSRC
     if (!dump_output_immediately) {
 	HTMLSRC_init_caches(FALSE);	/* do it before terminal is initialized */
-#ifdef LY_FIND_LEAKS
-	atexit(html_src_clean_data);
-#endif
     }
+#ifdef LY_FIND_LEAKS
+    atexit(html_src_clean_data);
+#endif
 #endif
 
     if (!dump_output_immediately) {
@@ -2069,7 +2081,7 @@ int main(int argc,
      * force in "//localhost", and if it's not an absolute URL, make it one.  -
      * FM
      */
-    if (homepage) {
+    if (non_empty(homepage)) {
 	LYEnsureAbsoluteURL(&homepage, "HOMEPAGE", FALSE);
     }
 
@@ -2614,7 +2626,6 @@ static int color_fun(char *next_arg GCC_UNUSED)
 }
 #endif
 
-#ifdef MISC_EXP
 /* -convert_to */
 static int convert_to_fun(char *next_arg)
 {
@@ -2656,7 +2667,6 @@ static int convert_to_fun(char *next_arg)
     }
     return 0;
 }
-#endif
 
 /* -crawl */
 static int crawl_fun(char *next_arg GCC_UNUSED)
@@ -2907,7 +2917,6 @@ static int nounderline_fun(char *next_arg GCC_UNUSED)
     return 0;
 }
 
-#ifdef MISC_EXP
 /* -nozap */
 static int nozap_fun(char *next_arg)
 {
@@ -2919,7 +2928,6 @@ static int nozap_fun(char *next_arg)
     }
     return 0;
 }
-#endif /* MISC_EXP */
 
 /* -pauth */
 static int pauth_fun(char *next_arg)
@@ -3356,7 +3364,7 @@ static Config_Type Arg_Table [] =
    ),
    PARSE_FUN(
       "base",		4|FUNCTION_ARG,		base_fun,
-      "prepend a request URL comment and BASE tag to text/html\n\
+      "prepend a request URL comment and BASE tag to " STR_HTML "\n\
 outputs for -source dumps"
    ),
 #ifndef DISABLE_BIBP
@@ -3427,12 +3435,10 @@ outputs for -source dumps"
       "connect_timeout", 4|NEED_INT_ARG,	connect_timeout,
       "=N\nset the N-second connection timeout"
    ),
-#ifdef MISC_EXP
    PARSE_FUN(
       "convert_to",	4|FUNCTION_ARG,		convert_to_fun,
       "=FORMAT\nconvert input, FORMAT is in MIME type notation\n(experimental)"
    ),
-#endif
 #ifdef USE_PERSISTENT_COOKIES
    PARSE_STR(
       "cookie_file",	4|LYSTRING_ARG,		LYCookieFile,
@@ -3757,12 +3763,10 @@ soon as they are seen)"
       "nounderline",	4|FUNCTION_ARG,		nounderline_fun,
       "disable underline video-attribute"
    ),
-#ifdef MISC_EXP
    PARSE_FUN(
       "nozap",		4|FUNCTION_ARG,		nozap_fun,
       "=DURATION (\"initially\" or \"full\") disable checks for 'z' key"
    ),
-#endif
    PARSE_SET(
       "number_fields",	4|SET_ARG,		number_fields,
       "force numbering of links as well as form input fields"
@@ -3804,7 +3808,7 @@ terminated by '---' on a line"
    ),
    PARSE_SET(
       "preparsed",	4|SET_ARG,		LYPreparsedSource,
-      "show parsed text/html with -source and in source view\n\
+      "show parsed " STR_HTML " with -source and in source view\n\
 to visualize how lynx behaves with invalid HTML"
    ),
 #ifdef USE_PRETTYSRC

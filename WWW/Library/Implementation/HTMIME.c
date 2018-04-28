@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTMIME.c,v 1.95 2017/07/02 19:40:06 tom Exp $
+ * $LynxId: HTMIME.c,v 1.100 2018/03/11 21:32:38 tom Exp $
  *
  *			MIME Message Parse			HTMIME.c
  *			==================
@@ -32,6 +32,7 @@
 #include <LYCharUtils.h>
 #include <LYStrings.h>
 #include <LYUtils.h>
+#include <LYGlobalDefs.h>
 #include <LYLeaks.h>
 
 /*		MIME Object
@@ -1078,7 +1079,9 @@ static int dispatchField(HTStream *me)
  */
 static void HTMIME_put_character(HTStream *me, int c)
 {
-    /* MUST BE FAST */
+    if (me->anchor->inHEAD) {
+	me->anchor->header_length++;
+    }
     switch (me->state) {
       begin_transparent:
     case MIME_TRANSPARENT:
@@ -1308,6 +1311,9 @@ static void HTMIME_put_character(HTStream *me, int c)
 
 	case '\n':		/* Blank line: End of Header! */
 	    {
+		me->anchor->inHEAD = FALSE;
+		CTRACE((tfp, "HTMIME length %" PRI_off_t "\n",
+			CAST_off_t (me->anchor->header_length)));
 		me->net_ascii = NO;
 		pumpData(me);
 	    }
@@ -2045,7 +2051,6 @@ static void HTMIME_put_character(HTStream *me, int c)
 
     }				/* switch on state */
 
-#ifdef EXP_HTTP_HEADERS
     HTChunkPutc(&me->anchor->http_headers, UCH(c));
     if (me->state == MIME_TRANSPARENT) {
 	HTChunkTerminate(&me->anchor->http_headers);
@@ -2056,7 +2061,6 @@ static void HTMIME_put_character(HTStream *me, int c)
 	CTRACE((tfp, "Server Content-Type:%s\n",
 		me->anchor->content_type_params));
     }
-#endif
     return;
 
   value_too_long:
@@ -2065,12 +2069,9 @@ static void HTMIME_put_character(HTStream *me, int c)
   bad_field_name:		/* Ignore it */
     me->state = miJUNK_LINE;
 
-#ifdef EXP_HTTP_HEADERS
     HTChunkPutc(&me->anchor->http_headers, UCH(c));
-#endif
 
     return;
-
 }
 
 /*	String handling
@@ -2165,6 +2166,7 @@ HTStream *HTMIMEConvert(HTPresentation *pres,
 {
     HTStream *me;
 
+    CTRACE((tfp, "HTMIMEConvert\n"));
     me = typecalloc(HTStream);
 
     if (me == NULL)
@@ -2175,13 +2177,14 @@ HTStream *HTMIMEConvert(HTPresentation *pres,
     me->anchor = anchor;
     me->anchor->safe = FALSE;
     me->anchor->no_cache = FALSE;
+
     FREE(me->anchor->cache_control);
     FREE(me->anchor->SugFname);
     FREE(me->anchor->charset);
-#ifdef EXP_HTTP_HEADERS
+
     HTChunkClear(&me->anchor->http_headers);
     HTChunkInit(&me->anchor->http_headers, 128);
-#endif
+
     FREE(me->anchor->content_type_params);
     FREE(me->anchor->content_language);
     FREE(me->anchor->content_encoding);
@@ -2189,35 +2192,22 @@ HTStream *HTMIMEConvert(HTPresentation *pres,
     FREE(me->anchor->content_disposition);
     FREE(me->anchor->content_location);
     FREE(me->anchor->content_md5);
+
+    me->anchor->inHEAD = TRUE;
+    me->anchor->header_length = 0;
     me->anchor->content_length = 0;
+
     FREE(me->anchor->date);
     FREE(me->anchor->expires);
     FREE(me->anchor->last_modified);
     FREE(me->anchor->ETag);
     FREE(me->anchor->server);
+
     me->target = NULL;
     me->state = miBEGINNING_OF_LINE;
-    /*
-     * Sadly enough, change this to always default to WWW_HTML to parse all
-     * text as HTML for the users.
-     * GAB 06-30-94
-     * Thanks to Robert Rowland robert@cyclops.pei.edu
-     *
-     * After discussion of the correct handline, should be application/octet-
-     * stream or unknown; causing servers to send a correct content type.
-     *
-     * The consequence of using WWW_UNKNOWN is that you end up downloading as a
-     * binary file what 99.9% of the time is an HTML file, which should have
-     * been rendered or displayed.  So sadly enough, I'm changing it back to
-     * WWW_HTML, and it will handle the situation like Mosaic does, and as
-     * Robert Rowland suggested, because being functionally correct 99.9% of
-     * the time is better than being technically correct but functionally
-     * nonsensical.  - FM
-     */
-    /***
-    me->format	  =	WWW_UNKNOWN;
-    ***/
-    me->format = WWW_HTML;
+    me->format = HTAtom_for(ContentTypes[LYContentType]);
+
+    CTRACE((tfp, "default Content-Type is %s\n", HTAtom_name(me->format)));
     me->targetRep = pres->rep_out;
     me->boundary = NULL;	/* Not set yet */
     me->set_cookie = NULL;	/* Not set yet */
@@ -2226,6 +2216,7 @@ HTStream *HTMIMEConvert(HTPresentation *pres,
     me->c_t_encoding = 0;	/* Not set yet */
     me->compression_encoding = NULL;	/* Not set yet */
     me->net_ascii = NO;		/* Local character set */
+
     HTAnchor_setUCInfoStage(me->anchor, current_char_set,
 			    UCT_STAGE_STRUCTURED,
 			    UCT_SETBY_DEFAULT);
