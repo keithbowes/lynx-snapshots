@@ -1,7 +1,19 @@
--- $LynxId: CHANGES,v 1.974 2018/05/06 20:06:36 tom Exp $
+-- $LynxId: CHANGES,v 1.983 2018/05/17 23:29:45 tom Exp $
 ===============================================================================
 Changes since Lynx 2.8 release
 ===============================================================================
+
+2018-05-17 (2.8.9dev.19)
+* update test-packages to use current ncurses test-packages -TD
+* improve portability for sockaddr structures used in HTTP and FTP, for
+  IPv6 and SOCKS configurations -TD
+* fix several minor warnings reported by Coverity -TD
+* build-fix overlooked in 2.8.9dev.3 when INACTIVE_INPUT_STYLE_VH is defined,
+  for problem introduced by 2.8.8dev.17 code-cleanup -GV
+* trim unnecessary intllib symbols from src/chrtrans/makefile.in -TD
+* when cross-compiling, trim LDFLAGS from makefile rule linking makeuctb,
+  because it is a build tool, which should generally use BUILD_LDFLAGS
+  (patch by Thomas Petazzoni)
 
 2018-05-06 (2.8.9dev.18)
 * ignore content-encoding in HTContentToCompressType() if the content-type is
