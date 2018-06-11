@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lynx 2.8.9-dev15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 10:07-0400\n"
-"PO-Revision-Date: 2018-03-29 10:10-0400\n"
+"POT-Creation-Date: 2018-06-11 12:21-0400\n"
+"PO-Revision-Date: 2018-06-11 12:21-0400\n"
 "Last-Translator: Keith Bowes <zooplah@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -3021,43 +3021,43 @@ msgstr "Spurado ne komprenita"
 msgid "\tIndents: first=%.0f others=%.0f, Height=%.1f Desc=%.1f\n"
 msgstr "\tDeŝovoj: ununaj=%.0f aliaj=%.0f, Alto=%.lf Pri=%.lf\n"
 
-#: WWW/Library/Implementation/HTAABrow.c:569
+#: WWW/Library/Implementation/HTAABrow.c:575
 #, c-format
 msgid "username for realm %s changed from %s to %s"
 msgstr "salutnomo por regno %s ŝanĝiĝis de %s al %s"
 
-#: WWW/Library/Implementation/HTAABrow.c:585
+#: WWW/Library/Implementation/HTAABrow.c:591
 #, c-format
 msgid "password for realm %s user %s changed"
 msgstr "ŝanĝiĝis pasvorto por regno %s de uzanto %s"
 
-#: WWW/Library/Implementation/HTAABrow.c:697
+#: WWW/Library/Implementation/HTAABrow.c:703
 #, c-format
 msgid "Username for '%s' at %s '%s%s':"
 msgstr "Salutnomo por '%s' ĉe %s '%s%s':"
 
-#: WWW/Library/Implementation/HTAABrow.c:970
+#: WWW/Library/Implementation/HTAABrow.c:976
 msgid ""
 "This client doesn't know how to compose proxy authorization information for "
 "scheme"
 msgstr ""
 "Ĉi tiu kliento ne scias kiel komponi prokurilajn atesto-informojn por skemo"
 
-#: WWW/Library/Implementation/HTAABrow.c:1047
+#: WWW/Library/Implementation/HTAABrow.c:1053
 msgid ""
 "This client doesn't know how to compose authorization information for scheme"
 msgstr "Ĉi tiu kliento ne scias kiel komponi atesto-informojn por skemo"
 
-#: WWW/Library/Implementation/HTAABrow.c:1156
+#: WWW/Library/Implementation/HTAABrow.c:1162
 #, c-format
 msgid "Invalid header '%s%s%s%s%s'"
 msgstr "Nevalida kapo '%s%s%s%s%s'"
 
-#: WWW/Library/Implementation/HTAABrow.c:1260
+#: WWW/Library/Implementation/HTAABrow.c:1266
 msgid "Proxy authorization required -- retrying"
 msgstr "Prokurila atestado bezonita -- reprovanta"
 
-#: WWW/Library/Implementation/HTAABrow.c:1316
+#: WWW/Library/Implementation/HTAABrow.c:1322
 msgid "Access without authorization denied -- retrying"
 msgstr "Atingo sen atestado rifuzata -- reprovanta"
 
@@ -3065,19 +3065,19 @@ msgstr "Atingo sen atestado rifuzata -- reprovanta"
 msgid "Access forbidden by rule"
 msgstr "Atingo malpermesita laŭ regulo"
 
-#: WWW/Library/Implementation/HTAccess.c:793
+#: WWW/Library/Implementation/HTAccess.c:795
 msgid "Document with POST content not found in cache.  Resubmit?"
 msgstr "Dokumento kun kaŝita enhavo ne trovita en tenejo. Resendi?"
 
-#: WWW/Library/Implementation/HTAccess.c:947
+#: WWW/Library/Implementation/HTAccess.c:949
 msgid "Loading failed, use a previous copy."
 msgstr "Ŝargo malsukcesis, uzu antaŭan ekzempleron."
 
-#: WWW/Library/Implementation/HTAccess.c:1056 src/GridText.c:8880
+#: WWW/Library/Implementation/HTAccess.c:1058 src/GridText.c:8880
 msgid "Loading incomplete."
 msgstr "Ŝargo nekompleta."
 
-#: WWW/Library/Implementation/HTAccess.c:1087
+#: WWW/Library/Implementation/HTAccess.c:1089
 #, c-format
 msgid ""
 "**** HTAccess: socket or file number returned by obsolete load routine!\n"
@@ -3085,7 +3085,7 @@ msgstr ""
 "**** HTAccess: konektingo aŭ dosiernomo returnita de malaktuala ŝargo-"
 "funkcio!\n"
 
-#: WWW/Library/Implementation/HTAccess.c:1089
+#: WWW/Library/Implementation/HTAccess.c:1091
 #, c-format
 msgid ""
 "**** HTAccess: Internal software error.  Please mail lynx-dev@nongnu.org!\n"
@@ -3093,7 +3093,7 @@ msgstr ""
 "**** HTAccess: Interna programa eraro. Bonvolu sendi retleteron al lynx-"
 "dev@nongnu.org!\n"
 
-#: WWW/Library/Implementation/HTAccess.c:1090
+#: WWW/Library/Implementation/HTAccess.c:1092
 #, c-format
 msgid "**** HTAccess: Status returned was: %d\n"
 msgstr "**** HTAccess: Statuso returnita estis: %d\n"
@@ -3102,11 +3102,11 @@ msgstr "**** HTAccess: Statuso returnita estis: %d\n"
 #. * hack: if we fail in HTAccess.c
 #. * avoid duplicating URL, oh.
 #.
-#: WWW/Library/Implementation/HTAccess.c:1096 src/LYMainLoop.c:8076
+#: WWW/Library/Implementation/HTAccess.c:1098 src/LYMainLoop.c:8076
 msgid "Can't Access"
 msgstr "Ne eblas atingi"
 
-#: WWW/Library/Implementation/HTAccess.c:1104
+#: WWW/Library/Implementation/HTAccess.c:1106
 msgid "Unable to access document."
 msgstr "Ne eblas atingi dokumenton."
 
@@ -3123,24 +3123,24 @@ msgstr "Ne eblas konektiĝi al FTP-retnodo."
 msgid "close master socket"
 msgstr "fermu estran konektingon"
 
-#: WWW/Library/Implementation/HTFTP.c:1199
+#: WWW/Library/Implementation/HTFTP.c:1194
 msgid "socket for master socket"
 msgstr "konektingo por estra konektingo"
 
-#: WWW/Library/Implementation/HTFTP.c:2940
+#: WWW/Library/Implementation/HTFTP.c:2922
 msgid "Receiving FTP directory."
 msgstr "Ricevanta FTP-dosierujon."
 
-#: WWW/Library/Implementation/HTFTP.c:3078
+#: WWW/Library/Implementation/HTFTP.c:3060
 #, c-format
 msgid "Transferred %d bytes (%5d)"
 msgstr "Transigis %d bajtojn (%5d)"
 
-#: WWW/Library/Implementation/HTFTP.c:3436
+#: WWW/Library/Implementation/HTFTP.c:3417
 msgid "connect for data"
 msgstr "konekti por datumoj"
 
-#: WWW/Library/Implementation/HTFTP.c:4118
+#: WWW/Library/Implementation/HTFTP.c:4094
 msgid "Receiving FTP file."
 msgstr "Ricevanta FTP-dosieron."
 
@@ -3291,16 +3291,16 @@ msgstr "Leganta novaĵgrupan artiklon."
 msgid "Sorry, could not load requested news."
 msgstr "Bedaŭrinde ne povis ŝarĝi la peton."
 
-#: WWW/Library/Implementation/HTTCP.c:1323
+#: WWW/Library/Implementation/HTTCP.c:1339
 msgid "Address has invalid port"
 msgstr "URL havas nevalidan pordon"
 
-#: WWW/Library/Implementation/HTTCP.c:1393
+#: WWW/Library/Implementation/HTTCP.c:1410
 msgid "Address length looks invalid"
 msgstr "URL-longo ŝajnas nevalida"
 
-#: WWW/Library/Implementation/HTTCP.c:1835
-#: WWW/Library/Implementation/HTTCP.c:1853
+#: WWW/Library/Implementation/HTTCP.c:1862
+#: WWW/Library/Implementation/HTTCP.c:1880
 #, c-format
 msgid "Unable to locate remote host %s."
 msgstr "Ne eblas loki foran retnodon %s."
@@ -3309,39 +3309,39 @@ msgstr "Ne eblas loki foran retnodon %s."
 #. * but not HTAlert, because typically there will be other
 #. * alerts from the callers.  - kw
 #.
-#: WWW/Library/Implementation/HTTCP.c:1850
+#: WWW/Library/Implementation/HTTCP.c:1877
 #: WWW/Library/Implementation/HTTelnet.c:115
 #, c-format
 msgid "Invalid hostname %s"
 msgstr "Nevalida retnodonomo %s"
 
-#: WWW/Library/Implementation/HTTCP.c:1864
+#: WWW/Library/Implementation/HTTCP.c:1891
 #, c-format
 msgid "Making %s connection to %s"
 msgstr "Faranta konekto-tipon %s al %s"
 
-#: WWW/Library/Implementation/HTTCP.c:1875
+#: WWW/Library/Implementation/HTTCP.c:1902
 msgid "socket failed."
 msgstr "konektingo malsukcesis."
 
-#: WWW/Library/Implementation/HTTCP.c:1889
+#: WWW/Library/Implementation/HTTCP.c:1916
 #, c-format
 msgid "socket failed: family %d addr %s port %s."
 msgstr "konektingo malsukcesis: familio %d adreso %s pordo %s."
 
-#: WWW/Library/Implementation/HTTCP.c:1913
+#: WWW/Library/Implementation/HTTCP.c:1940
 msgid "Could not make connection non-blocking."
 msgstr "Ne eblas fari konekton senbloka."
 
-#: WWW/Library/Implementation/HTTCP.c:1978
+#: WWW/Library/Implementation/HTTCP.c:2006
 msgid "Connection failed (too many retries)."
 msgstr "Konekto malsukcesis (tro da reprovoj.)"
 
-#: WWW/Library/Implementation/HTTCP.c:2167
+#: WWW/Library/Implementation/HTTCP.c:2201
 msgid "Could not restore socket to blocking."
 msgstr "Ne povis restarigi konektingon je bloka."
 
-#: WWW/Library/Implementation/HTTCP.c:2235
+#: WWW/Library/Implementation/HTTCP.c:2271
 msgid "Socket read failed (too many tries)."
 msgstr "Legado de konektingo malsukcesis (tro da provoj)."
 
@@ -3350,105 +3350,105 @@ msgstr "Legado de konektingo malsukcesis (tro da provoj)."
 msgid "SSL callback:%s, preverify_ok=%d, ssl_okay=%d"
 msgstr "SSL-revoko: %s, prevarify_ok=%d, ssl_okay=%d"
 
-#: WWW/Library/Implementation/HTTP.c:660
+#: WWW/Library/Implementation/HTTP.c:668
 #, c-format
 msgid "User/password contains only punctuation: %s"
 msgstr "Salutnomo/pasvorto enhavas nur interpunkcion: %s"
 
-#: WWW/Library/Implementation/HTTP.c:664
+#: WWW/Library/Implementation/HTTP.c:672
 #, c-format
 msgid "User/password may be confused with hostname: '%s' (e.g, '%s')"
 msgstr "Salutnomo/pasvorton konfuzeblas kun retnodnomon: '%s' (ekz-e '%s')"
 
-#: WWW/Library/Implementation/HTTP.c:725
+#: WWW/Library/Implementation/HTTP.c:733
 #, c-format
 msgid "Certificate issued by: %s"
 msgstr "Atestilo eldonita de %s"
 
-#: WWW/Library/Implementation/HTTP.c:912
+#: WWW/Library/Implementation/HTTP.c:920
 msgid "This client does not contain support for HTTPS URLs."
 msgstr "Ĉi tiu kliento ne enhavas regon por URL-oj de HTTPS."
 
-#: WWW/Library/Implementation/HTTP.c:937
+#: WWW/Library/Implementation/HTTP.c:945
 msgid "Unable to connect to remote host."
 msgstr "Ne eblas konektiĝi al fora retnodo."
 
-#: WWW/Library/Implementation/HTTP.c:980
+#: WWW/Library/Implementation/HTTP.c:988
 msgid "Retrying connection without TLS."
 msgstr "Reprovanta konekton sen TLS."
 
-#: WWW/Library/Implementation/HTTP.c:1032
+#: WWW/Library/Implementation/HTTP.c:1040
 msgid "GnuTLS error when trying to verify certificate."
 msgstr "GNUTLS-eraro dum provi kontroli atestilon."
 
-#: WWW/Library/Implementation/HTTP.c:1045
+#: WWW/Library/Implementation/HTTP.c:1053
 msgid "the certificate has no known issuer"
 msgstr "la atestilo havas neniun konatan eldoninton"
 
-#: WWW/Library/Implementation/HTTP.c:1047
+#: WWW/Library/Implementation/HTTP.c:1055
 msgid "no issuer was found"
 msgstr "neniu eldoninto troviĝis"
 
-#: WWW/Library/Implementation/HTTP.c:1049
+#: WWW/Library/Implementation/HTTP.c:1057
 msgid "issuer is not a CA"
 msgstr "eldoninto ne oficiala"
 
-#: WWW/Library/Implementation/HTTP.c:1051
+#: WWW/Library/Implementation/HTTP.c:1059
 msgid "the certificate has been revoked"
 msgstr "la atestilo estas forprenita"
 
-#: WWW/Library/Implementation/HTTP.c:1053
+#: WWW/Library/Implementation/HTTP.c:1061
 msgid "the certificate is not trusted"
 msgstr "la atestilo ne estas fidinda"
 
-#: WWW/Library/Implementation/HTTP.c:1128
+#: WWW/Library/Implementation/HTTP.c:1136
 #, c-format
 msgid "Verified connection to %s (cert=%s)"
 msgstr "Kontrolita konekto al %s (cert=%s)"
 
-#: WWW/Library/Implementation/HTTP.c:1178
-#: WWW/Library/Implementation/HTTP.c:1220
+#: WWW/Library/Implementation/HTTP.c:1186
+#: WWW/Library/Implementation/HTTP.c:1228
 #, c-format
 msgid "Verified connection to %s (subj=%s)"
 msgstr "Kontrolita konekto al %s (subj=%s)"
 
-#: WWW/Library/Implementation/HTTP.c:1250
+#: WWW/Library/Implementation/HTTP.c:1258
 msgid "Can't find common name in certificate"
 msgstr "Ne eblas trovi komunan nomon en atestilo"
 
-#: WWW/Library/Implementation/HTTP.c:1253
+#: WWW/Library/Implementation/HTTP.c:1261
 #, c-format
 msgid "SSL error:host(%s)!=cert(%s)-Continue?"
 msgstr "SSL-eraro:retnodo(%s)!=cert(%s)-Ĉu daŭri?"
 
-#: WWW/Library/Implementation/HTTP.c:1260
+#: WWW/Library/Implementation/HTTP.c:1268
 msgid "SSL error"
 msgstr "SSL-eraro"
 
-#: WWW/Library/Implementation/HTTP.c:1268
+#: WWW/Library/Implementation/HTTP.c:1276
 #, c-format
 msgid "UNVERIFIED connection to %s (cert=%s)"
 msgstr "NEKONTROLITA konekto al %s (cert=%s)"
 
-#: WWW/Library/Implementation/HTTP.c:1277
+#: WWW/Library/Implementation/HTTP.c:1285
 #, c-format
 msgid "Secure %d-bit %s (%s) HTTP connection"
 msgstr "Sekura %d-bita HTTP-konekto de %s (%s)"
 
-#: WWW/Library/Implementation/HTTP.c:1745
+#: WWW/Library/Implementation/HTTP.c:1755
 msgid "Sending HTTP request."
 msgstr "Sendante HTTP-peton."
 
-#: WWW/Library/Implementation/HTTP.c:1787
+#: WWW/Library/Implementation/HTTP.c:1797
 msgid "Unexpected network write error; connection aborted."
 msgstr "Neatendita reta skriberaro; konekto ĉesigita."
 
-#: WWW/Library/Implementation/HTTP.c:1793
+#: WWW/Library/Implementation/HTTP.c:1803
 msgid "HTTP request sent; waiting for response."
 msgstr "HTTP-peto sendita; atendanta respondon."
 
-#: WWW/Library/Implementation/HTTP.c:1866
 #: WWW/Library/Implementation/HTTP.c:1876
+#: WWW/Library/Implementation/HTTP.c:1886
 msgid "Unexpected network read error; connection aborted."
 msgstr "Neatendita reta legeraro; konekto ĉesigita."
 
@@ -3461,7 +3461,7 @@ msgstr "Neatendita reta legeraro; konekto ĉesigita."
 #. * line and possibly other headers, so we'll deal with them by
 #. * showing the full header to the user as text/plain.  - FM
 #.
-#: WWW/Library/Implementation/HTTP.c:2079
+#: WWW/Library/Implementation/HTTP.c:2089
 msgid "Got unexpected Informational Status."
 msgstr "Ricevis neatenditan informan staton."
 
@@ -3471,7 +3471,7 @@ msgstr "Ricevis neatenditan informan staton."
 #. * content.  We'll instruct the user to do that, and
 #. * restore the current document.  - FM
 #.
-#: WWW/Library/Implementation/HTTP.c:2113
+#: WWW/Library/Implementation/HTTP.c:2123
 msgid "Request fulfilled.  Reset Content."
 msgstr "Peto plenumita. Enhavo restarigita."
 
@@ -3481,27 +3481,27 @@ msgstr "Peto plenumita. Enhavo restarigita."
 #. * status is inappropriate.  We'll deal with it by showing
 #. * the full header to the user as text/plain.  - FM
 #.
-#: WWW/Library/Implementation/HTTP.c:2230
+#: WWW/Library/Implementation/HTTP.c:2240
 msgid "Got unexpected 304 Not Modified status."
 msgstr "Ricevis neatenditan staton 304 Ne Modifita"
 
-#: WWW/Library/Implementation/HTTP.c:2293
+#: WWW/Library/Implementation/HTTP.c:2303
 msgid "Redirection of POST content requires user approval."
 msgstr "Alidirektado de kaŝita enhavo bezonas aprobon de uzanto."
 
-#: WWW/Library/Implementation/HTTP.c:2308
+#: WWW/Library/Implementation/HTTP.c:2318
 msgid "Have POST content.  Treating Permanent Redirection as Temporary.\n"
 msgstr "Havi kaŝitan enhavon. Traktanta ĉiaman alidirekton kiel provizoran.\n"
 
-#: WWW/Library/Implementation/HTTP.c:2354
+#: WWW/Library/Implementation/HTTP.c:2364
 msgid "Retrying with access authorization information."
 msgstr "Reprovante kun atingo-atestadaj informoj."
 
-#: WWW/Library/Implementation/HTTP.c:2366
+#: WWW/Library/Implementation/HTTP.c:2376
 msgid "Show the 401 message body?"
 msgstr "Ĉu montri la mesaĝan korpon?"
 
-#: WWW/Library/Implementation/HTTP.c:2410
+#: WWW/Library/Implementation/HTTP.c:2420
 msgid "Show the 407 message body?"
 msgstr "Ĉu montri la mesaĝan korpon?"
 
@@ -3509,7 +3509,7 @@ msgstr "Ĉu montri la mesaĝan korpon?"
 #. * Bad or unknown server_status number.  Take a chance and hope
 #. * there is something to display.  - FM
 #.
-#: WWW/Library/Implementation/HTTP.c:2510
+#: WWW/Library/Implementation/HTTP.c:2520
 msgid "Unknown status reply from server!"
 msgstr "Nekonata stata respondo el servilo!"
 
@@ -3705,6 +3705,16 @@ msgstr "Maltro da memoro, montrado interrompita!"
 msgid "Memory exhausted, will interrupt transfer!"
 msgstr "Maltro da memoro, interrompos transigon!"
 
+#: src/GridText.c:1698
+#, c-format
+msgid " (l%d of %d)"
+msgstr " (l%d el %d)"
+
+#: src/GridText.c:1707
+#, c-format
+msgid " (p%d of %d)"
+msgstr " (p%d el %d)"
+
 #: src/GridText.c:3681
 msgid " *** MEMORY EXHAUSTED ***"
 msgstr "*** MALTRO DA MEMORO ***"
@@ -3777,30 +3787,30 @@ msgstr "nekonata kampo"
 msgid "unknown field or link"
 msgstr "nekonata kampo aŭ ligilo"
 
-#: src/GridText.c:10648
+#: src/GridText.c:10651
 msgid "Can't open file for uploading"
 msgstr "Ne eblas malfermi dosieron por alŝuti"
 
-#: src/GridText.c:11836
+#: src/GridText.c:11839
 #, c-format
 msgid "Submitting %s"
 msgstr "Sendante je %s"
 
 #. ugliness has happened; inform user and do the best we can
-#: src/GridText.c:12906
+#: src/GridText.c:12909
 msgid "Hang Detect: TextAnchor struct corrupted - suggest aborting!"
 msgstr "Eraro: rikordo TextAnchor fuŝita - proponas ĉesigi!"
 
 #. don't show previous state
-#: src/GridText.c:13065
+#: src/GridText.c:13068
 msgid "Wrap lines to fit displayed area?"
 msgstr "Ĉu linifaldi por plenigi montritan regionon?"
 
-#: src/GridText.c:13695
+#: src/GridText.c:13698
 msgid "Very long lines have been truncated!"
 msgstr "Tre longaj linioj estis mallongigitaj!"
 
-#: src/HTAlert.c:164 src/LYShowInfo.c:387 src/LYShowInfo.c:391
+#: src/HTAlert.c:164 src/LYShowInfo.c:389 src/LYShowInfo.c:393
 msgid "bytes"
 msgstr "bajtoj"
 
@@ -3890,31 +3900,31 @@ msgstr "ne"
 msgid "Y/N/A/V"
 msgstr "J/N/A/E"
 
-#: src/HTML.c:5767
+#: src/HTML.c:5770
 msgid "Description:"
 msgstr "Priskribo:"
 
-#: src/HTML.c:5772
+#: src/HTML.c:5775
 msgid "(none)"
 msgstr "(neniu)"
 
-#: src/HTML.c:5776
+#: src/HTML.c:5779
 msgid "Filepath:"
 msgstr "Dosiervojo:"
 
-#: src/HTML.c:5782
+#: src/HTML.c:5785
 msgid "(unknown)"
 msgstr "(nekonata)"
 
-#: src/HTML.c:7220
+#: src/HTML.c:7223
 msgid "Document has only hidden links.  Use the 'l'ist command."
 msgstr "Dokumento havas nur kaŝitajn ligilojn. Uzu la komandon 'l'istigi."
 
-#: src/HTML.c:7722
+#: src/HTML.c:7725
 msgid "Source cache error - disk full?"
 msgstr "Eraro ĉe fontoteksta tenejo - ĉu disko plenigita?"
 
-#: src/HTML.c:7735
+#: src/HTML.c:7738
 msgid "Source cache error - not enough memory!"
 msgstr "Eraro ĉe fontoteksta tenejo - ne sufiĉo da memoro"
 
@@ -4032,27 +4042,27 @@ msgstr "Terminala restartigo malsukcesis - ĉu nekonata terminala tipo?"
 msgid "Terminal initialisation failed - unknown terminal type?"
 msgstr "Terminala startigo malsukcesis - ĉu nekonata terminala tipo?"
 
-#: src/LYCurses.c:1828
+#: src/LYCurses.c:1839
 msgid "Terminal ="
 msgstr "Terminalo ="
 
-#: src/LYCurses.c:1832
+#: src/LYCurses.c:1843
 msgid "You must use a vt100, 200, etc. terminal with this program."
 msgstr "Vi devas uzi terminalon vt100, 200 ktp kun ĉi tiu programo."
 
-#: src/LYCurses.c:1881
+#: src/LYCurses.c:1892
 msgid "Your Terminal type is unknown!"
 msgstr "Via terminala tipo estas nekonata!"
 
-#: src/LYCurses.c:1882
+#: src/LYCurses.c:1893
 msgid "Enter a terminal type:"
 msgstr "Enmetu terminalan tipon:"
 
-#: src/LYCurses.c:1896
+#: src/LYCurses.c:1907
 msgid "TERMINAL TYPE IS SET TO"
 msgstr "TERMINALA TIPO ESTAS AGORDITA AL"
 
-#: src/LYCurses.c:2455
+#: src/LYCurses.c:2466
 #, c-format
 msgid ""
 "\n"
@@ -4061,7 +4071,7 @@ msgstr ""
 "\n"
 "Paneanta eraro okazis en %s Eldono %s\n"
 
-#: src/LYCurses.c:2458
+#: src/LYCurses.c:2469
 #, c-format
 msgid ""
 "\n"
@@ -4092,39 +4102,39 @@ msgstr "Tekstoredaktilo ĉesigita per signalo"
 msgid "Editor returned with error status %s"
 msgstr "Tekstoredaktilo redonis erarstaton %s"
 
-#: src/LYDownload.c:509
+#: src/LYDownload.c:510
 msgid "Downloaded link:"
 msgstr "Elŝuta ligilo:"
 
-#: src/LYDownload.c:514
+#: src/LYDownload.c:515
 msgid "Suggested file name:"
 msgstr "Proponita dosiernomo:"
 
-#: src/LYDownload.c:519
+#: src/LYDownload.c:520
 msgid "Standard download options:"
 msgstr "Ordinaraj elŝutaj elektoj:"
 
-#: src/LYDownload.c:520
+#: src/LYDownload.c:521
 msgid "Download options:"
 msgstr "Elŝutaj elektoj:"
 
-#: src/LYDownload.c:536
+#: src/LYDownload.c:537
 msgid "Save to disk"
 msgstr "Konservi al disko"
 
-#: src/LYDownload.c:550
+#: src/LYDownload.c:551
 msgid "View temporary file"
 msgstr "Vidi provizoran dosieron"
 
-#: src/LYDownload.c:557
+#: src/LYDownload.c:558
 msgid "Save to disk disabled."
 msgstr "Konservado al disko malaktivigita."
 
-#: src/LYDownload.c:561 src/LYPrint.c:1331
+#: src/LYDownload.c:562 src/LYPrint.c:1331
 msgid "Local additions:"
 msgstr "Lokaj aldonoj:"
 
-#: src/LYDownload.c:572 src/LYUpload.c:206
+#: src/LYDownload.c:573 src/LYUpload.c:206
 msgid "No Name Given"
 msgstr "Neniu nomo donita"
 
@@ -4397,7 +4407,7 @@ msgstr "Ne eblas malfermi permesan dosieron"
 msgid "Specify permissions below:"
 msgstr "Specifi permesojn sube:"
 
-#: src/LYLocal.c:1406 src/LYShowInfo.c:289
+#: src/LYLocal.c:1406 src/LYShowInfo.c:291
 msgid "Owner:"
 msgstr "Estro:"
 
@@ -4535,21 +4545,21 @@ msgstr "La mesaĝo estis aŭtomate generita per"
 msgid "No system mailer configured"
 msgstr "Neniu sistema retpoŝto-servilo agordita"
 
-#: src/LYMain.c:1078
+#: src/LYMain.c:1087
 msgid "No Winsock found, sorry."
 msgstr "Bedaŭrinde neniu Winsock"
 
-#: src/LYMain.c:1268
+#: src/LYMain.c:1277
 msgid "You MUST define a valid TMP or TEMP area!"
 msgstr ""
 "Vi devas difini validan provizoran dosierujon per la medivariabloj TMP aŭ "
 "TEMP!"
 
-#: src/LYMain.c:1321 src/LYMainLoop.c:5285
+#: src/LYMain.c:1330 src/LYMainLoop.c:5285
 msgid "No such directory"
 msgstr "Ne ekzistas tiu dosiero"
 
-#: src/LYMain.c:1515
+#: src/LYMain.c:1524
 #, c-format
 msgid ""
 "\n"
@@ -4560,7 +4570,7 @@ msgstr ""
 "Agorda dosiero \"%s\" ne disponeblas.\n"
 "\n"
 
-#: src/LYMain.c:1525
+#: src/LYMain.c:1534
 #, c-format
 msgid ""
 "\n"
@@ -4571,54 +4581,54 @@ msgstr ""
 "Lynx-kodoprezentoj ne deklaritaj.\n"
 "\n"
 
-#: src/LYMain.c:1681
+#: src/LYMain.c:1690
 #, c-format
 msgid "Ignored %d characters from standard input.\n"
 msgstr "Ignoris %d signojn el la ĉefenigujo.\n"
 
-#: src/LYMain.c:1683
+#: src/LYMain.c:1692
 #, c-format
 msgid "Use \"-stdin\" or \"-\" to tell how to handle piped input.\n"
 msgstr ""
 "Uzu parametrojn \"-stdin\" aŭ \"-\" por specifi, kiel trakti enigojn "
 "tubajn.\n"
 
-#: src/LYMain.c:1841
+#: src/LYMain.c:1850
 msgid "Warning:"
 msgstr "Averto:"
 
-#: src/LYMain.c:2411
+#: src/LYMain.c:2421
 msgid "persistent cookies state will be changed in next session only."
 msgstr "stato de daŭrantaj kuketoj ŝanĝiĝos nur en la sekva seanco."
 
-#: src/LYMain.c:2647 src/LYMain.c:2691
+#: src/LYMain.c:2657 src/LYMain.c:2701
 #, c-format
 msgid "Lynx: ignoring unrecognized charset=%s\n"
 msgstr "Lynx: ignoranta nekonatan kodoprezenton=%s\n"
 
-#: src/LYMain.c:3208
+#: src/LYMain.c:3218
 #, c-format
 msgid "%s Version %s (%s)"
 msgstr "%s Versio %s (%s)"
 
-#: src/LYMain.c:3249
+#: src/LYMain.c:3259
 #, c-format
 msgid "Built on %s%s.\n"
 msgstr "Muntita je %s%s.\n"
 
-#: src/LYMain.c:3263
+#: src/LYMain.c:3273
 msgid "Copyrights held by the Lynx Developers Group,"
 msgstr "Kopirajtoj estas tenataj de la Grupo pri Lynx-disvolvado,"
 
-#: src/LYMain.c:3264
+#: src/LYMain.c:3274
 msgid "the University of Kansas, CERN, and other contributors."
 msgstr "la Universitato de Kansaso, CERN kaj aliaj kontribuintoj."
 
-#: src/LYMain.c:3265
+#: src/LYMain.c:3275
 msgid "Distributed under the GNU General Public License (Version 2)."
 msgstr "Distribuita laŭ la GPL de GNU (Eldono 2)."
 
-#: src/LYMain.c:3266
+#: src/LYMain.c:3276
 msgid ""
 "See http://lynx.invisible-island.net/ and the online help for more "
 "information."
@@ -4626,17 +4636,17 @@ msgstr ""
 "Vidu al http://lynx.invisible-island.net/ kaj la enretaj helpoj por pliaj "
 "informoj."
 
-#: src/LYMain.c:4113
+#: src/LYMain.c:4123
 #, c-format
 msgid "USAGE: %s [options] [file]\n"
 msgstr "UZO: %s [parametroj] [dosiero]\n"
 
-#: src/LYMain.c:4114
+#: src/LYMain.c:4124
 #, c-format
 msgid "Options are:\n"
 msgstr "Parametroj estas:\n"
 
-#: src/LYMain.c:4417
+#: src/LYMain.c:4427
 #, c-format
 msgid "%s: Invalid Option: %s\n"
 msgstr "%s: Nevalida parametro: %s\n"
@@ -4741,8 +4751,7 @@ msgstr "Lynx: ne eblas atingi hejmdosieron"
 
 #: src/LYMainLoop.c:8083
 msgid "lynx: Start file could not be found or is not "
-msgstr ""
-"Lynx: Hejmdosiero ne estis trovita aŭ ne estas "
+msgstr "Lynx: Hejmdosiero ne estis trovita aŭ ne estas "
 
 #: src/LYMainLoop.c:8085
 msgid "      Exiting..."
@@ -5561,253 +5570,253 @@ msgstr "Lynx: ne eblas starti, CERN-regula dosiero %s ne disponeblas\n"
 msgid "(no name)"
 msgstr "(neniu nomo)"
 
-#: src/LYReadCFG.c:2071
+#: src/LYReadCFG.c:2074
 #, c-format
 msgid "More than %d nested lynx.cfg includes -- perhaps there is a loop?!?\n"
 msgstr "Pli ol %d nestita inkludoj en lynx.cfg -- eble estas volvaĵo?\n"
 
-#: src/LYReadCFG.c:2073
+#: src/LYReadCFG.c:2076
 #, c-format
 msgid "Last attempted include was '%s',\n"
 msgstr "Lasta provita inkludo estis '%s',\n"
 
-#: src/LYReadCFG.c:2074
+#: src/LYReadCFG.c:2077
 #, c-format
 msgid "included from '%s'.\n"
 msgstr "inkluzivita el '%s'.\n"
 
-#: src/LYReadCFG.c:2477 src/LYReadCFG.c:2490 src/LYReadCFG.c:2548
+#: src/LYReadCFG.c:2480 src/LYReadCFG.c:2493 src/LYReadCFG.c:2551
 msgid "The following is read from your lynx.cfg file."
 msgstr "La jena estis legita el la dosiero lynx.cfg."
 
-#: src/LYReadCFG.c:2478 src/LYReadCFG.c:2491
+#: src/LYReadCFG.c:2481 src/LYReadCFG.c:2494
 msgid "Please read the distribution"
 msgstr "Bonvolu legi la distribuaĵon"
 
-#: src/LYReadCFG.c:2484 src/LYReadCFG.c:2494
+#: src/LYReadCFG.c:2487 src/LYReadCFG.c:2497
 msgid "for more comments."
 msgstr "por pliaj komentoj."
 
-#: src/LYReadCFG.c:2530
+#: src/LYReadCFG.c:2533
 msgid "RELOAD THE CHANGES"
 msgstr "REŜARGU LA ŜANĜOJ"
 
-#: src/LYReadCFG.c:2538
+#: src/LYReadCFG.c:2541
 msgid "Your primary configuration"
 msgstr "Via ĉefa agordo"
 
-#: src/LYShowInfo.c:114
+#: src/LYShowInfo.c:116
 msgid "URL:"
 msgstr "URL:"
 
-#: src/LYShowInfo.c:198
+#: src/LYShowInfo.c:200
 msgid "Directory that you are currently viewing"
 msgstr "Dosierujo, kiun vi nune estas rigardanta"
 
-#: src/LYShowInfo.c:201
+#: src/LYShowInfo.c:203
 msgid "Name:"
 msgstr "Nomo:"
 
-#: src/LYShowInfo.c:218
+#: src/LYShowInfo.c:220
 msgid "Directory that you have currently selected"
 msgstr "Dosiero, kiu estas nune elektita"
 
-#: src/LYShowInfo.c:220
+#: src/LYShowInfo.c:222
 msgid "File that you have currently selected"
 msgstr "Dosiero, kiu estas nune elektita"
 
-#: src/LYShowInfo.c:223
+#: src/LYShowInfo.c:225
 msgid "Symbolic link that you have currently selected"
 msgstr "Mola ligilo, kiu estas nune elektita"
 
-#: src/LYShowInfo.c:226
+#: src/LYShowInfo.c:228
 msgid "Item that you have currently selected"
 msgstr "Ero, kiu estas nune elektita"
 
-#: src/LYShowInfo.c:228
+#: src/LYShowInfo.c:230
 msgid "Full name:"
 msgstr "Plena nomo:"
 
-#: src/LYShowInfo.c:241
+#: src/LYShowInfo.c:243
 msgid "Unable to follow link"
 msgstr "Ne eblas sekvi ligilon"
 
-#: src/LYShowInfo.c:243
+#: src/LYShowInfo.c:245
 msgid "Points to file:"
 msgstr "Almontras al dosiero:"
 
-#: src/LYShowInfo.c:248
+#: src/LYShowInfo.c:250
 msgid "Name of owner:"
 msgstr "Nomo de estro:"
 
-#: src/LYShowInfo.c:251
+#: src/LYShowInfo.c:253
 msgid "Group name:"
 msgstr "Grupnomo:"
 
-#: src/LYShowInfo.c:253
+#: src/LYShowInfo.c:255
 msgid "File size:"
 msgstr "Dosiergrando"
 
-#: src/LYShowInfo.c:255
+#: src/LYShowInfo.c:257
 msgid "(bytes)"
 msgstr "(bajtoj)"
 
 #.
 #. * Include date and time information.
 #.
-#: src/LYShowInfo.c:260
+#: src/LYShowInfo.c:262
 msgid "Creation date:"
 msgstr "Krea dato:"
 
-#: src/LYShowInfo.c:263
+#: src/LYShowInfo.c:265
 msgid "Last modified:"
 msgstr "Laste modifita:"
 
-#: src/LYShowInfo.c:266
+#: src/LYShowInfo.c:268
 msgid "Last accessed:"
 msgstr "Laste atingita:"
 
-#: src/LYShowInfo.c:272
+#: src/LYShowInfo.c:274
 msgid "Access Permissions"
 msgstr "Atingaj permesoj"
 
-#: src/LYShowInfo.c:307
+#: src/LYShowInfo.c:309
 msgid "Group:"
 msgstr "Grupo:"
 
-#: src/LYShowInfo.c:327
+#: src/LYShowInfo.c:329
 msgid "World:"
 msgstr "Mondo:"
 
-#: src/LYShowInfo.c:334
+#: src/LYShowInfo.c:336
 msgid "File that you are currently viewing"
 msgstr "Dosiero, kiun vi estas nune rigardanta"
 
-#: src/LYShowInfo.c:342 src/LYShowInfo.c:442
+#: src/LYShowInfo.c:344 src/LYShowInfo.c:444
 msgid "Linkname:"
 msgstr "Ligilnomo:"
 
-#: src/LYShowInfo.c:348 src/LYShowInfo.c:363
+#: src/LYShowInfo.c:350 src/LYShowInfo.c:365
 msgid "Charset:"
 msgstr "Kodoprezento:"
 
-#: src/LYShowInfo.c:362
+#: src/LYShowInfo.c:364
 msgid "(assumed)"
 msgstr "(supozita)"
 
-#: src/LYShowInfo.c:369
+#: src/LYShowInfo.c:371
 msgid "Server:"
 msgstr "Servilo:"
 
-#: src/LYShowInfo.c:372
+#: src/LYShowInfo.c:374
 msgid "Date:"
 msgstr "Dato:"
 
-#: src/LYShowInfo.c:375
+#: src/LYShowInfo.c:377
 msgid "Last Mod:"
 msgstr "Lasta modifo:"
 
-#: src/LYShowInfo.c:379
+#: src/LYShowInfo.c:381
 msgid "Expires:"
 msgstr "Eksvalidiĝos:"
 
-#: src/LYShowInfo.c:382
+#: src/LYShowInfo.c:384
 msgid "Cache-Control:"
 msgstr "Tenejo-Kontrolo:"
 
-#: src/LYShowInfo.c:385
+#: src/LYShowInfo.c:387
 msgid "Content-Length:"
 msgstr "Enhavo-longo:"
 
-#: src/LYShowInfo.c:389
+#: src/LYShowInfo.c:391
 msgid "Length:"
 msgstr "Longo:"
 
-#: src/LYShowInfo.c:394
+#: src/LYShowInfo.c:396
 msgid "Language:"
 msgstr "Lingvo:"
 
-#: src/LYShowInfo.c:400
+#: src/LYShowInfo.c:402
 msgid "Post Data:"
 msgstr "Kaŝitaj datumoj"
 
-#: src/LYShowInfo.c:403
+#: src/LYShowInfo.c:405
 msgid "Post Content Type:"
 msgstr "Enhavo-tipo de kaŝitaj datumoj:"
 
-#: src/LYShowInfo.c:406
+#: src/LYShowInfo.c:408
 msgid "Owner(s):"
 msgstr "Estro(j):"
 
-#: src/LYShowInfo.c:411
+#: src/LYShowInfo.c:413
 msgid "size:"
 msgstr "Grando:"
 
-#: src/LYShowInfo.c:413
+#: src/LYShowInfo.c:415
 msgid "lines"
 msgstr "linioj"
 
-#: src/LYShowInfo.c:417
+#: src/LYShowInfo.c:419
 msgid "forms mode"
 msgstr "formularia reĝimo"
 
-#: src/LYShowInfo.c:419
+#: src/LYShowInfo.c:421
 msgid "source"
 msgstr "fontoteksto"
 
-#: src/LYShowInfo.c:420
+#: src/LYShowInfo.c:422
 msgid "normal"
 msgstr "kutima"
 
-#: src/LYShowInfo.c:422
+#: src/LYShowInfo.c:424
 msgid ", safe"
 msgstr ", sekura"
 
-#: src/LYShowInfo.c:424
+#: src/LYShowInfo.c:426
 msgid ", via internal link"
 msgstr ", per interna ligilo"
 
-#: src/LYShowInfo.c:428
+#: src/LYShowInfo.c:430
 msgid ", no-cache"
 msgstr ", sen tenejo"
 
-#: src/LYShowInfo.c:430
+#: src/LYShowInfo.c:432
 msgid ", ISMAP script"
 msgstr ", ISMAP-programeto"
 
-#: src/LYShowInfo.c:432
+#: src/LYShowInfo.c:434
 msgid ", bookmark file"
 msgstr ", legosigna dosiero"
 
-#: src/LYShowInfo.c:435
+#: src/LYShowInfo.c:437
 msgid "mode:"
 msgstr "Reĝimo:"
 
-#: src/LYShowInfo.c:441
+#: src/LYShowInfo.c:443
 msgid "Link that you currently have selected"
 msgstr "Ligilo, kiu estas nune elektita"
 
-#: src/LYShowInfo.c:450
+#: src/LYShowInfo.c:452
 msgid "Method:"
 msgstr "Metodo:"
 
-#: src/LYShowInfo.c:454
+#: src/LYShowInfo.c:456
 msgid "Enctype:"
 msgstr "Enctype:"
 
-#: src/LYShowInfo.c:460
+#: src/LYShowInfo.c:462
 msgid "Action:"
 msgstr "Ago:"
 
-#: src/LYShowInfo.c:466
+#: src/LYShowInfo.c:468
 msgid "(Form field)"
 msgstr "(Formulara kampo)"
 
-#: src/LYShowInfo.c:476
+#: src/LYShowInfo.c:478
 msgid "No Links on the current page"
 msgstr "Neniuj ligiloj en la nuna paĝo"
 
-#: src/LYShowInfo.c:481
+#: src/LYShowInfo.c:483
 msgid "Server Headers:"
 msgstr "Servilaj kapoj:"
 
@@ -5879,25 +5888,25 @@ msgstr "Elŝuti dokumentan URL-on en poŝo."
 msgid "Unexpected access protocol for this URL scheme."
 msgstr "Neatendita atingo-protokolo por tiu URL-skemo."
 
-#: src/LYUtils.c:3553
+#: src/LYUtils.c:3570
 msgid "Too many tempfiles"
 msgstr "Tro da provizoraj dosieroj"
 
-#: src/LYUtils.c:3853
+#: src/LYUtils.c:3870
 msgid "unknown restriction"
 msgstr "nekonata malhelpo"
 
-#: src/LYUtils.c:3884
+#: src/LYUtils.c:3901
 #, c-format
 msgid "No restrictions set.\n"
 msgstr "Neniuj malhelpoj elektitaj.\n"
 
-#: src/LYUtils.c:3887
+#: src/LYUtils.c:3904
 #, c-format
 msgid "Restrictions set:\n"
 msgstr "Malhelpoj elektitaj:\n"
 
-#: src/LYUtils.c:5262
+#: src/LYUtils.c:5201
 msgid "Cannot find HOME directory"
 msgstr "Ne eblas trovi la hejmdosierujon."
 
@@ -6407,7 +6416,7 @@ msgstr ""
 "La agordaĵo visited_links regas, kiel Lynx organizas la informojn\n"
 "en la paĝo 'Vizititaj Ligiloj'.\n"
 
-#: src/LYrcFile.c:899
+#: src/LYrcFile.c:901
 msgid ""
 "If keypad_mode is set to \"NUMBERS_AS_ARROWS\", then the numbers on\n"
 "your keypad when the numlock is on will act as arrow keys:\n"
@@ -6423,7 +6432,7 @@ msgstr ""
 "  4 = Maldekstra    6 = Dekstra\n"
 "            2 = Malsupra\n"
 
-#: src/LYrcFile.c:908
+#: src/LYrcFile.c:910
 msgid ""
 "If keypad_mode is set to \"LINKS_ARE_NUMBERED\", then numbers will\n"
 "appear next to each link and numbers are used to select links.\n"
@@ -6431,7 +6440,7 @@ msgstr ""
 "Se la valoro de keypad_mode estas \"LINKS_ARE_NUMBERED\", do ciferoj\n"
 "aperos apud ĉiu ligilo kaj ciferoj uziĝos por elekti ligilojn.\n"
 
-#: src/LYrcFile.c:912
+#: src/LYrcFile.c:914
 msgid ""
 "If keypad_mode is set to \"LINKS_AND_FORM_FIELDS_ARE_NUMBERED\", then\n"
 "numbers will appear next to each link and visible form input field.\n"
@@ -6449,7 +6458,7 @@ msgstr ""
 "ŝprucmenuoj, eĉ se la elekto ne estas videbla sur la ekrano. Referencaj\n"
 "listoj kaj eligoj de la lista komando ankaŭ nombras formulariajn aĵojn.\n"
 
-#: src/LYrcFile.c:921
+#: src/LYrcFile.c:923
 msgid ""
 "NOTE: Some fixed format documents may look disfigured when\n"
 "\"LINKS_ARE_NUMBERED\" or \"LINKS_AND_FORM_FIELDS_ARE_NUMBERED\" are\n"
@@ -6459,7 +6468,7 @@ msgstr ""
 "\"LINKS_ARE_NUMBERED\" aŭ \"LINKS_AND_FORM_FIELDS\" estas\n"
 "aktivaj.\n"
 
-#: src/LYrcFile.c:953
+#: src/LYrcFile.c:955
 msgid ""
 "Lynx User Defaults File\n"
 "\n"
@@ -6467,7 +6476,7 @@ msgstr ""
 "Dosiero pri propraj agordaĵoj de Lynx-uzanto\n"
 "\n"
 
-#: src/LYrcFile.c:962
+#: src/LYrcFile.c:964
 msgid ""
 "This file contains options saved from the Lynx Options Screen (normally\n"
 "with the 'o' key).  To save options with that screen, you must select the\n"
@@ -6478,7 +6487,7 @@ msgstr ""
 "elekti la\n"
 "markobutonon:\n"
 
-#: src/LYrcFile.c:969
+#: src/LYrcFile.c:971
 msgid ""
 "You must then save the settings using the link on the line above the\n"
 "checkbox:\n"
@@ -6486,7 +6495,7 @@ msgstr ""
 "Vi devas poste konservi la agordaĵojn per la ligilo en la linio supra\n"
 "al la markobutono:\n"
 
-#: src/LYrcFile.c:976
+#: src/LYrcFile.c:978
 msgid ""
 "You may also use the command-line option \"-forms_options\", which displays\n"
 "the simpler Options Menu instead.  Save options with that using the '>' "
@@ -6498,7 +6507,7 @@ msgstr ""
 "montras la pli mallongan menuon. Konservi agordaĵojn per la klavo '>'.\n"
 "\n"
 
-#: src/LYrcFile.c:983
+#: src/LYrcFile.c:985
 msgid ""
 "This file contains options saved from the Lynx Options Screen (normally\n"
 "with the '>' key).\n"
@@ -6508,7 +6517,7 @@ msgstr ""
 "(ordinare per la klavo '>').\n"
 "\n"
 
-#: src/LYrcFile.c:990
+#: src/LYrcFile.c:992
 msgid ""
 "There is normally no need to edit this file manually, since the defaults\n"
 "here can be controlled from the Options Screen, and the next time options\n"
