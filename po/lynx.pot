@@ -1,9 +1,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lynx 2.8.9dev.16\n"
+"Project-Id-Version: lynx 2.8.9pre.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-11 12:21-0400\n"
+"POT-Creation-Date: 2018-07-08 12:48-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3508,16 +3508,6 @@ msgstr ""
 msgid "Memory exhausted, will interrupt transfer!"
 msgstr ""
 
-#: src/GridText.c:1698
-#, c-format
-msgid " (l%d of %d)"
-msgstr ""
-
-#: src/GridText.c:1707
-#, c-format
-msgid " (p%d of %d)"
-msgstr ""
-
 #: src/GridText.c:3681
 msgid " *** MEMORY EXHAUSTED ***"
 msgstr ""
@@ -3829,34 +3819,34 @@ msgstr ""
 msgid "Terminal initialisation failed - unknown terminal type?"
 msgstr ""
 
-#: src/LYCurses.c:1839
+#: src/LYCurses.c:1828
 msgid "Terminal ="
 msgstr ""
 
-#: src/LYCurses.c:1843
+#: src/LYCurses.c:1832
 msgid "You must use a vt100, 200, etc. terminal with this program."
 msgstr ""
 
-#: src/LYCurses.c:1892
+#: src/LYCurses.c:1881
 msgid "Your Terminal type is unknown!"
 msgstr ""
 
-#: src/LYCurses.c:1893
+#: src/LYCurses.c:1882
 msgid "Enter a terminal type:"
 msgstr ""
 
-#: src/LYCurses.c:1907
+#: src/LYCurses.c:1896
 msgid "TERMINAL TYPE IS SET TO"
 msgstr ""
 
-#: src/LYCurses.c:2466
+#: src/LYCurses.c:2455
 #, c-format
 msgid ""
 "\n"
 "A Fatal error has occurred in %s Ver. %s\n"
 msgstr ""
 
-#: src/LYCurses.c:2469
+#: src/LYCurses.c:2458
 #, c-format
 msgid ""
 "\n"
@@ -4009,7 +3999,7 @@ msgstr ""
 msgid "this document:"
 msgstr ""
 
-#: src/LYList.c:98
+#: src/LYList.c:98 src/LYList.c:362
 msgid "Visible links:"
 msgstr ""
 
@@ -4019,10 +4009,6 @@ msgstr ""
 
 #: src/LYList.c:358
 msgid "References"
-msgstr ""
-
-#: src/LYList.c:362
-msgid "Visible links"
 msgstr ""
 
 #: src/LYLocal.c:289
@@ -4395,7 +4381,7 @@ msgstr ""
 
 #: src/LYMain.c:3276
 msgid ""
-"See http://lynx.invisible-island.net/ and the online help for more "
+"See https://lynx.invisible-island.net/ and the online help for more "
 "information."
 msgstr ""
 
@@ -4504,7 +4490,7 @@ msgstr ""
 msgid "No URL in the clipboard."
 msgstr ""
 
-#: src/LYMainLoop.c:7962 src/LYMainLoop.c:8134
+#: src/LYMainLoop.c:7962 src/LYMainLoop.c:8133
 msgid "-index-"
 msgstr ""
 
@@ -4513,14 +4499,14 @@ msgid "lynx: Can't access startfile"
 msgstr ""
 
 #: src/LYMainLoop.c:8083
-msgid "lynx: Start file could not be found or is not "
+msgid "lynx: Start file could not be found or is not text/html or text/plain"
 msgstr ""
 
-#: src/LYMainLoop.c:8085
+#: src/LYMainLoop.c:8084
 msgid "      Exiting..."
 msgstr ""
 
-#: src/LYMainLoop.c:8128
+#: src/LYMainLoop.c:8127
 msgid "-more-"
 msgstr ""
 
