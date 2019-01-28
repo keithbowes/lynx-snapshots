@@ -1,7 +1,51 @@
--- $LynxId: CHANGES,v 1.990 2018/07/08 16:51:50 tom Exp $
+-- $LynxId: CHANGES,v 1.1010 2019/01/27 16:23:02 tom Exp $
 ===============================================================================
 Changes since Lynx 2.8 release
 ===============================================================================
+
+2019-01-27 (2.9.0dev.1)
+* add/adapt changes from Keith Bowes' github:
+  * updated eo.po
+  * modify GridText to make page/line percentages translatable
+  + modify HTInit.c to make it possible to view the source of XHTML documents
+  + modify def7_uni.tbl adding ch, gh, hh, jh, sh to replace some single-chars
+* implement features of RFC 6265 (prompted by discussion on mailing list) -TD
+  * recognize but ignore "HttpOnly" attribute
+  * add COOKIE_VERSION to lynx.cfg, which can be used to specify older cookie
+    RFC; provide special cases for RFCs 2109, 2965 and 6265.
+  * add selection for cookie version in options menu.
+* add dummy "check" rule to makefile.in to help with testing Arch package -TD
+* modify tidy_tls.c to work with TLS 1.3 when built with gnutls 3.6.5 or later
+  (patch by Andreas Metzler).
+* add to experimental Japanese UTF-8 feature -KH
+  + fix JIS X 0201 Katakana conversion from Shift_JIS/EUC-JP to UTF-8.
+    http://www1.interq.or.jp/~deton/lynx-sjisjisx0201/
+  + add conversion from Japanese ISO-2022-JP html to UTF-8 display_charset.
+    http://www1.interq.or.jp/~deton/lynx-jis2utf8/
+* add configure option for experimental feature "--enable-wcwidth-support" -TD
+* use/adapt wcwidth from xterm -TD
+* add support for displaying double-cell characters -KH
+  Screen capture:
+    http://www1.interq.or.jp/~deton/lynx-wcwidth/
+  Known issues:
+  * Highlight is incorrect on selecting wrapped long wide-char link text.
+  * Whereis highlight position is incorrect after wide-char text.
+  * Does not support treating double-width for East Asian Ambiguous Width
+    characters (e.g., xterm -cjk_width).
+    TODO:
+      * Use mk_wcwidth_cjk() in http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
+      * Add cjk_width option to lynx
+* modify generated HTML when processing -source option for a Gopher menu to
+  convert literal "<", "&", and ">" to HTML named entities (report/testcase by
+  Zachary Lee Andrews) -TD
+* build-fix when persistent cookies are disabled (report by Juan Manuel
+  Guerrero) -TD
+* memory-leak and dead-code fixes from static analysis (patch by Kamil Dudka).
+* restore whitespace in info-page omitted in 2.8.9dev.17, useful for screen
+  readers (report by Dan Dunfee) -Chuck Martin
+* improve error-checks in parsdate.y (prompted by patch by TH) -TD
+* compiler-warning fixes for gcc8 and VS2015 -TD
+* fix overlooked "2.8.9" in README -Larry Hynes
 
 2018-07-08 (2.8.9rel.1)
 * documentation/metrics updates -TD
@@ -287,7 +331,7 @@ Changes since Lynx 2.8 release
   (suggested by TG) -TD
 * fix some typos found by lintian -Axel Beckert
 * correct buffer size in pretty_html() function of LYKeymap.c -TG
-* add support for some HTML5 elements -Kihara Hideto
+* add support for some HTML5 elements -KH
   Using this change, you can jump to <section id="speakers">.
   (The addition in src{0,1}_HTMLDTD.txt is copied from DIV.)
   <section>, <article>, <main>, <aside>, <header>, <footer>, <nav>, <figure>
@@ -736,7 +780,7 @@ Changes since Lynx 2.8 release
   TG) -TD
 
 2012-02-19 (2.8.8dev.11)
-* correct help-message for -html5_charset option -Kihara Hideto
+* correct help-message for -html5_charset option -KH
 * correct a typo in strtol change from dev.10 which caused hexadecimal numeric
   entities to be misrendered -TG
 * update eo.po, et.po and tr.po from
@@ -801,7 +845,7 @@ Changes since Lynx 2.8 release
   improperly terminated (report by Aki Helin) -TD
 * work around glibc bug in sscanf in SGML_character() using strtol() (report by
   Aki Helin) -TD
-* add check for charset attribute on meta element -Kihara Hideto
+* add check for charset attribute on meta element -KH
 * eliminate ON/OFF macros, using TRUE/FALSE both to work around breakage from
   zlib 1.2.5.1 changes as well as because they were unnecessary (GenToo
   #383113) -Nikos Chantziaras, TD

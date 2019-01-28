@@ -1,4 +1,4 @@
-dnl $LynxId: configure.in,v 1.302 2018/07/08 15:22:44 tom Exp $
+dnl $LynxId: configure.in,v 1.307 2018/12/28 22:29:13 tom Exp $
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
@@ -29,7 +29,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl ask PRCS to plug-in the project-version for the configure-script.
 dnl $Format: "AC_REVISION($ProjectVersion$)"$
-AC_REVISION(2.8.9rel.1)
+AC_REVISION(2.9.0dev.1)
 
 # Save the original $CFLAGS so we can distinguish whether the user set those
 # in the environment, or whether autoconf added -O and -g options:
@@ -64,7 +64,7 @@ AC_ARG_PROGRAM
 PACKAGE=lynx
 dnl ask PRCS to plug-in the project-version for the packages.
 # $Format: "VERSION=$ProjectVersion$"$
-VERSION=2.8.9pre.1
+VERSION=2.9.0dev.1
 
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
@@ -764,6 +764,7 @@ AC_CHECK_HEADERS( \
 	termios.h \
 	unistd.h \
 	vfork.h \
+	wchar.h \
 )
 CF_TERMIO_AND_TERMIOS
 CF_FUNC_SIGACTION
@@ -784,6 +785,7 @@ CF_TM_GMTOFF
 CF_CHECK_SIZEOF(int,4)
 CF_CHECK_SIZEOF(long,4)
 CF_CHECK_SIZEOF(off_t,4)
+CF_CHECK_SIZEOF(size_t,4)
 CF_CHECK_SIZEOF(time_t,4)
 AC_CHECK_TYPE(intptr_t, long)
 
@@ -822,6 +824,7 @@ AC_CHECK_FUNCS( \
 AC_REPLACE_FUNCS( \
 	mktime \
 	strstr \
+	wcwidth \
 )
 
 CF_SRAND(lynx_)
@@ -952,6 +955,16 @@ if test $use_ja_utf8 != no ; then
 	fi
 fi
 
+dnl --------------------------------------------------------------------------
+AC_MSG_CHECKING(if experimental wcwidth/UTF-8 logic should be used)
+CF_ARG_ENABLE(wcwidth-support,
+[  --enable-wcwidth-support use experimental wcwidth/UTF-8 logic],
+	[use_wcwidth=$enableval],
+	[use_wcwidth=no])
+AC_MSG_RESULT($use_wcwidth)
+test $use_wcwidth != no && AC_DEFINE(EXP_WCWIDTH_SUPPORT,1,[Define to 1 if experimental wcwidth/UTF-8 logic should be used])
+
+dnl --------------------------------------------------------------------------
 use_dft_colors=no
 case $cf_cv_screen in
 (curses|slang|ncurses*)
@@ -959,7 +972,6 @@ case $cf_cv_screen in
 	;;
 esac
 
-dnl --------------------------------------------------------------------------
 if test "$use_dft_colors" != no ; then
 AC_MSG_CHECKING(if you want to use default-colors)
 CF_ARG_ENABLE(default-colors,

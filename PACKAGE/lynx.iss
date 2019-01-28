@@ -1,4 +1,4 @@
-; $LynxId: lynx.iss,v 1.29 2018/03/21 14:56:20 tom Exp $
+; $LynxId: lynx.iss,v 1.32 2019/01/27 22:56:58 tom Exp $
 ; vile:ts=4 sw=4 notabinsert fk=8bit
 ;
 ; This is the BASE script for different flavors of the installer for Lynx.
@@ -19,11 +19,15 @@
 #define MyAppExeName "lynx.exe"
 #endif
 
+#if Ver < 0x5060100
 #define MySendTo '{sendto}\' + myAppName + '.lnk'
+#else
+#define MySendTo '{usersendto}\' + myAppName + '.lnk'
+#endif
 #define MyQuickLaunch '{userappdata}\Microsoft\Internet Explorer\Quick Launch\' + myAppName + '.lnk'
 
 #ifndef SourceExeName
-#define SourceExeName "lynx.exe"
+#define SourceExeName "lynx-default.exe"
 #endif
 
 #ifndef NoScreenDll
@@ -90,7 +94,7 @@ AppName={#MyAppName}
 #emit 'VersionInfoVersion=' + LYNX_TARGET1
 AppVerName={#MyAppVerName}
 AppPublisher={#MyAppPublisher}
-AppCopyright=© 1997-2017,2018, Thomas E. Dickey
+AppCopyright=© 1997-2018,2019, Thomas E. Dickey
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
@@ -510,7 +514,12 @@ begin
                 // new-ssl matches "libssl-x-x-z", s/libssl/libcrypto/
                 SslFilename := 'libcrypto' + Copy(SslFilename, 7, Length(SslFilename));
                 CopyFromTo( SslDirectory, TargetDir, SslFilename );
-            CopyFromTo( SslDirectory, TargetDir, 'msvcr120.dll' );
+            // older releases of OpenSSL bundled the Visual Studio runtime
+            SslFilename := SslDirectory + '\' + 'msvcr120.dll';
+            if FileExists(SslFilename) then
+                begin
+                CopyFromTo( SslDirectory, TargetDir, 'msvcr120.dll' );
+                end
             end
         else
             begin

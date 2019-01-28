@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTTP.c,v 1.175 2018/05/04 20:07:43 Elliot.Thomas Exp $
+ * $LynxId: HTTP.c,v 1.177 2019/01/25 01:37:35 tom Exp $
  *
  * HyperText Tranfer Protocol	- Client implementation		HTTP.c
  * ==========================
@@ -334,7 +334,7 @@ void HTSSLInitPRNG(void)
 	lynx_srand((unsigned) seed);
 	while (RAND_status() == 0) {
 	    /* Repeatedly seed the PRNG using the system's random number generator until it has been seeded with enough data */
-	    l = lynx_rand();
+	    l = (long) lynx_rand();
 	    RAND_seed((unsigned char *) &l, (int) sizeof(long));
 	}
 	/* Write a rand_file */
@@ -1637,7 +1637,7 @@ static int HTLoadHTTP(const char *arg,
 	     * If we do have a cookie set, add it to the request buffer.  - FM
 	     */
 	    if (cookie != NULL) {
-		if (*cookie != '$') {
+		if (*cookie != '$' && USE_RFC_2965) {
 		    /*
 		     * It's a historical cookie, so signal to the server that
 		     * we support modern cookies.  - FM

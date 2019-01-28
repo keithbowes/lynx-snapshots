@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYMain.c,v 1.282 2018/07/08 15:22:44 tom Exp $
+ * $LynxId: LYMain.c,v 1.285 2019/01/25 00:06:42 tom Exp $
  */
 #include <HTUtils.h>
 #include <HTTP.h>
@@ -587,6 +587,7 @@ BOOLEAN LYQuitDefaultYes = QUIT_DEFAULT_YES;
 BOOLEAN dont_wrap_pre = FALSE;
 
 int cookie_noprompt;
+int cookie_version = COOKIES_RFC_6265;
 
 #ifdef USE_SSL
 int ssl_noprompt = FORCE_PROMPT_DFT;
@@ -2361,9 +2362,9 @@ void reload_read_cfg(void)
 	FREE(tempfile);
 	return;			/* can not write the very own file :( */
     }
+#ifdef USE_PERSISTENT_COOKIES
     if (LYCookieFile != 0 && LYCookieSaveFile != 0) {
 	/* set few safe flags: */
-#ifdef USE_PERSISTENT_COOKIES
 	BOOLEAN persistent_cookies_flag = persistent_cookies;
 	char *LYCookieFile_flag = NULL;
 	char *LYCookieSaveFile_flag = NULL;
@@ -2372,8 +2373,6 @@ void reload_read_cfg(void)
 	    StrAllocCopy(LYCookieFile_flag, LYCookieFile);
 	    StrAllocCopy(LYCookieSaveFile_flag, LYCookieSaveFile);
 	}
-#endif
-
 #ifdef USE_CHARSET_CHOICE
 	custom_assumed_doc_charset = FALSE;
 	custom_display_charset = FALSE;
@@ -2414,7 +2413,6 @@ void reload_read_cfg(void)
 	 * a major problem: file paths
 	 * like lynx_save_space, LYCookieFile etc.
 	 */
-#ifdef USE_PERSISTENT_COOKIES
 	/* restore old settings */
 	if (persistent_cookies != persistent_cookies_flag) {
 	    persistent_cookies = persistent_cookies_flag;
@@ -2434,9 +2432,8 @@ void reload_read_cfg(void)
 	    FREE(LYCookieFile_flag);
 	    FREE(LYCookieSaveFile_flag);
 	}
-#endif
-
     }
+#endif /* USE_PERSISTENT_COOKIES */
 }
 #endif /* !NO_CONFIG_INFO */
 

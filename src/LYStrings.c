@@ -1,4 +1,4 @@
-/* $LynxId: LYStrings.c,v 1.273 2018/05/04 23:29:29 tom Exp $ */
+/* $LynxId: LYStrings.c,v 1.276 2019/01/02 23:42:50 tom Exp $ */
 #include <HTUtils.h>
 #include <HTCJK.h>
 #include <UCAux.h>
@@ -1003,6 +1003,7 @@ static const char *expand_tiname(const char *first, size_t len, char **result, c
     TERMTYPE *tp = (TERMTYPE *) (cur_term);
 
     LYStrNCpy(name, first, len);
+    **result = '\0';
     if ((code = lookup_tiname(name, strnames)) >= 0
 	|| (code = lookup_tiname(name, strfnames)) >= 0) {
 	if (tp->Strings[code] != 0) {
@@ -3226,9 +3227,11 @@ int LYEditInsert(FieldEditor * edit, unsigned const char *s,
 		} else
 		    utfbuf[0] = (char) ucode;
 	    }
-	    StrNCpy(Buffer + off, utfbuf, l);
-	    edited = 1;
-	    off += l;
+	    if ((size_t) (off + l) <= BufAlloc) {
+		memcpy(Buffer + off, utfbuf, (size_t) l);
+		edited = 1;
+		off += l;
+	    }
 	    s++;
 	}
 	if (tail)

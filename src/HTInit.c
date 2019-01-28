@@ -1,5 +1,5 @@
 /*
- * $LynxId: HTInit.c,v 1.90 2018/03/05 22:35:07 tom Exp $
+ * $LynxId: HTInit.c,v 1.91 2018/03/05 22:52:26 Keith.Bowes Exp $
  *
  *		Configuration-specific Initialization		HTInit.c
  *		----------------------------------------

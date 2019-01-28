@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYLeaks.c,v 1.41 2018/03/30 00:27:58 tom Exp $
+ * $LynxId: LYLeaks.c,v 1.43 2018/12/27 23:48:37 Kamil.Dudka Exp $
  *
  *	Copyright (c) 1994, University of Kansas, All Rights Reserved
  *	(this file was rewritten twice - 1998/1999 and 2003/2004)
@@ -1090,26 +1090,10 @@ static char *LYLeakSAVsprintf(char **dest,
 		mark_realloced(ALp_old, *dest, strlen(*dest) + 1, cp_File, ssi_Line);
 		return (*dest);
 	    }
-	    if (vp_realloced == vp_oldAlloced) {
-		ALp_new->SL_memory.cp_FileName = old_cp_File;
-		ALp_new->SL_memory.ssi_LineNumber = old_ssi_Line;
-		ALp_new->SL_realloc.cp_FileName = cp_File;
-		ALp_new->SL_realloc.ssi_LineNumber = ssi_Line;
-		return (*dest);
-	    }
-	    /* Look up again, list may have changed! - kw */
-	    ALp_old = FindInList(vp_oldAlloced);
-	    if (ALp_old == NULL) {
-		ALp_new->SL_memory.cp_FileName = old_cp_File;
-		ALp_new->SL_memory.ssi_LineNumber = old_ssi_Line;
-		ALp_new->SL_realloc.cp_FileName = cp_File;
-		ALp_new->SL_realloc.ssi_LineNumber = ssi_Line;
-	    } else {
-		ALp_new->SL_memory.cp_FileName = old_cp_File;
-		ALp_new->SL_memory.ssi_LineNumber = old_ssi_Line;
-		ALp_new->SL_realloc.cp_FileName = cp_File;
-		ALp_new->SL_realloc.ssi_LineNumber = ssi_Line;
-	    }
+	    ALp_new->SL_memory.cp_FileName = old_cp_File;
+	    ALp_new->SL_memory.ssi_LineNumber = old_ssi_Line;
+	    ALp_new->SL_realloc.cp_FileName = cp_File;
+	    ALp_new->SL_realloc.ssi_LineNumber = ssi_Line;
 	}
 	return (*dest);
     }
@@ -1117,7 +1101,7 @@ static char *LYLeakSAVsprintf(char **dest,
 
 /* Note: the following may need updating if HTSprintf in HTString.c
  * is changed. - kw */
-static char *LYLeakHTSprintf(char **pstr, const char *fmt,...)
+static char *LYLeakHTSprintf(char **pstr, const char *fmt, ...)
 {
     char *str;
     size_t inuse = 0;
@@ -1136,7 +1120,7 @@ static char *LYLeakHTSprintf(char **pstr, const char *fmt,...)
 
 /* Note: the following may need updating if HTSprintf0 in HTString.c
  * is changed. - kw */
-static char *LYLeakHTSprintf0(char **pstr, const char *fmt,...)
+static char *LYLeakHTSprintf0(char **pstr, const char *fmt, ...)
 {
     char *str;
     va_list ap;

@@ -1,4 +1,4 @@
-/* $LynxId: LYrcFile.c,v 1.102 2018/05/11 00:27:54 tom Exp $ */
+/* $LynxId: LYrcFile.c,v 1.104 2019/01/25 01:47:06 tom Exp $ */
 #include <HTUtils.h>
 #include <HTFTP.h>
 #include <LYUtils.h>
@@ -167,6 +167,13 @@ static Config_Enum tbl_visited_links[] = {
     { "LAST_REVERSED",	VISITED_LINKS_AS_LATEST | VISITED_LINKS_REVERSE },
     { "LAST",		VISITED_LINKS_AS_LATEST  },
     { NULL,		DEFAULT_VISITED_LINKS }
+};
+
+Config_Enum tbl_cookie_version[] = {
+    { "RFC-2109",	COOKIES_RFC_2109	},
+    { "RFC-2965",	COOKIES_RFC_2965	},
+    { "RFC-6265",	COOKIES_RFC_6265	},
+    { NULL,		-1			}
 };
 
 Config_Enum tbl_force_prompt[] = {
@@ -451,6 +458,8 @@ file lists such as FTP directories.  The options are:\n\
 ")),
 #endif
     MAYBE_ENU(RC_FORCE_COOKIE_PROMPT,   cookie_noprompt,    tbl_force_prompt,
+	      MSG_ENABLE_LYNXRC),
+    MAYBE_ENU(RC_COOKIE_VERSION,        cookie_version,     tbl_cookie_version,
 	      MSG_ENABLE_LYNXRC),
 #ifdef USE_SSL
     MAYBE_ENU(RC_FORCE_SSL_PROMPT,      ssl_noprompt,       tbl_force_prompt,
@@ -768,7 +777,7 @@ BOOL LYsetRcValue(const char *name, const char *param)
 
     case CONF_MBM:
 	for (n = 1; n <= MBM_V_MAXFILES; n++) {
-	    sprintf(MBM_line, "multi_bookmark%c", LYindex2MBM(n));
+	    sprintf(MBM_line, "multi_bookmark%c", UCH(LYindex2MBM(n)));
 
 	    if (!strcasecomp(name, MBM_line)) {
 		if ((notes = StrChr(value, ',')) != 0) {
@@ -1042,7 +1051,7 @@ It is not this file.\n\
 
 	case CONF_MBM:
 	    for (n = 1; n <= MBM_V_MAXFILES; n++) {
-		fprintf(fp, "multi_bookmark%c=", LYindex2MBM(n));
+		fprintf(fp, "multi_bookmark%c=", UCH(LYindex2MBM(n)));
 
 		fprintf(fp, "%s", NonNull(MBM_A_subbookmark[n]));
 		if (MBM_A_subdescript[n] != 0
