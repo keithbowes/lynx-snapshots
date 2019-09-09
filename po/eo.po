@@ -4,10 +4,10 @@
 # Keith Bowes <zooplah@gmail.com>, 2011, 2014, 2015, 2016, 2017, 2018, 2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: lynx 2.8.9-dev15\n"
+"Project-Id-Version: lynx 2.9.0-dev3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-28 12:37-0500\n"
-"PO-Revision-Date: 2019-05-12 18:54-0400\n"
+"POT-Creation-Date: 2019-01-27 11:15-0500\n"
+"PO-Revision-Date: 2019-09-05 23:34-0400\n"
 "Last-Translator: Keith Bowes <zooplah@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -2257,7 +2257,7 @@ msgstr "Dosieradministrilo ne disponeblas"
 
 #: LYMessages.c:692
 msgid "HREF in BASE tag is not an absolute URL."
-msgstr "Baza URL de la paĝo ne estas absoluta."
+msgstr "HREF en BASE-etikedo ne estas absoluta URL."
 
 #: LYMessages.c:693
 msgid "Location URL is not absolute."
@@ -2701,7 +2701,7 @@ msgid ""
 "This is a searchable Gopher index.\n"
 msgstr ""
 "\n"
-"Ĉi tiu estas serĉebla Gopher-indekso.\n"
+"Ĉi tio estas serĉebla Gopher-indekso.\n"
 
 #: LYMessages.c:802
 msgid "Gopher index"
@@ -2768,7 +2768,7 @@ msgstr "Ĉi tiu kliento ne regas afiŝi al novaĵgrupaj serviloj kun SSL."
 #: LYMessages.c:819
 #, c-format
 msgid "Style %d `%s' SGML:%s.  Font %s %.1f point.\n"
-msgstr "Silo %d '%s' SGML:%s. Tiparo %s %.lf punktoj.\n"
+msgstr "Stilo %d '%s' SGML:%s. Tiparo %s %.lf punktoj.\n"
 
 #: LYMessages.c:821
 #, c-format
