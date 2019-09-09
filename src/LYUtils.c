@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYUtils.c,v 1.293 2018/12/26 01:23:05 tom Exp $
+ * $LynxId: LYUtils.c,v 1.297 2019/08/25 22:54:34 tom Exp $
  */
 #include <HTUtils.h>
 #include <HTTCP.h>
@@ -2967,13 +2967,14 @@ BOOLEAN inlocaldomain(void)
 		    break;
 	    }
 	    if (ulen > strlen(LYLocalDomain) &&
-		STREQ(LYLocalDomain,
-		      me.ut_host + ulen - strlen(LYLocalDomain))) {
+		!memcmp(LYLocalDomain,
+			me.ut_host + ulen - strlen(LYLocalDomain),
+			ulen)) {
 		result = TRUE;
 	    }
 #ifdef LINUX
 	    /* Linux fix to check for local user. J.Cullen 11Jul94              */
-	    else if (strlen(me.ut_host) == 0) {
+	    else if (ulen == 0) {
 		result = TRUE;
 	    }
 #endif /* LINUX */
@@ -4955,7 +4956,7 @@ void LYTrimRelFromAbsPath(char *path)
     /*
      * Simplify the path and then do any necessary trimming.  - FM
      */
-    HTSimplify(path);
+    HTSimplify(path, TRUE);
     cp = path;
     while (cp[1] == '.') {
 	if (cp[2] == '\0') {
@@ -5094,7 +5095,7 @@ static char *CheckDir(char *path)
 	    || !S_ISDIR(stat_info.st_mode))) {
 	path = NULL;
     }
-    CTRACE((tfp, "CheckDir(%s) %s\n", path, path ? "OK" : "ERR"));
+    CTRACE((tfp, "CheckDir(%s) %s\n", NonNull(path), path ? "OK" : "ERR"));
     return path;
 }
 
@@ -5362,7 +5363,7 @@ BOOLEAN LYPathOffHomeOK(char *fbuffer,
     /*
      * Simplify it.  - FM
      */
-    HTSimplify(cp);
+    HTSimplify(cp, FALSE);
 
     /*
      * Check if it has a pointless "./".  - FM

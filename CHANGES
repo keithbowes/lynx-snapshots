@@ -1,7 +1,39 @@
--- $LynxId: CHANGES,v 1.1010 2019/01/27 16:23:02 tom Exp $
+-- $LynxId: CHANGES,v 1.1026 2019/08/28 23:17:32 tom Exp $
 ===============================================================================
 Changes since Lynx 2.8 release
 ===============================================================================
+
+2019-08-26 (2.9.0dev.5)
+* extend table/limit in parsdate.y to 2200 (report by Ian Collier) -TD
+* update fr.po from
+    http://translationproject.org/latest/lynx
+
+2019-08-26 (2.9.0dev.4)
+* revert change to port-handling in 2.9.0dev.3 changes for gophermap (report by
+  Martijn Dekker).
+* add ro.po, update de.po, et.po, tr.po, vi.po from
+    http://translationproject.org/latest/lynx
+
+2019-08-25 (2.9.0dev.3)
+* modify gophermap menu-parsing to handle "h" HTML selectors similarly to the
+  command-line parsing, which avoids hex-encoding the parameter delimiters
+  "?", "=", ";" as well as "#" (report by Tobias Girstmair) -TD
+* make redirection-limit configurable, defaulting to 10 -TD
+* remove alert when relative base href is seen, since HTML5 allows for this
+  (report by Sylvain Bertrand) -TD
+* modify lynx.iss to use statically-linked bzip2 and gzip programs, and to
+  eliminate a spurious warning when attempting to remove an optional DLL -TD
+* fix a few coverity warnings -TD
+* revise HTSimplify to eliminate a redundant "." segment at the beginning of a
+  path, referring to RFC 3986 5.2.4 (report by Alejandro Lieber) -TD
+
+2019-07-31 (2.9.0dev.2)
+* improved several configure macros, including workaround for non-POSIX
+  issue with BSDs.
+* fix typo in iso15_uni.tbl (Robert Bell)
+* update de.po from
+    http://translationproject.org/latest/lynx
+* update config.guess (2019-06-10), config.sub (2019-06-30)
 
 2019-01-27 (2.9.0dev.1)
 * add/adapt changes from Keith Bowes' github:
@@ -2011,8 +2043,8 @@ Changes since Lynx 2.8 release
   the same effect with the wide-character ncursesw (report by Karl-Heinz
   Weirich) -TD
 * fixes for de.po (Debian #313789, patch by Jens Seidel).
-* add a null pointer check for HTCurSelectedOptionValue in HText_setLastOptionValue()
-  to improve handling of this fragment:
+* add a null pointer check for HTCurSelectedOptionValue in
+  HText_setLastOptionValue() to improve handling of this fragment:
     <FORM><SELECT><OPTION><FORM><SELECT>
   (Alexey Dobriyan).
 * add a null pointer check in HTML_TAB case of HTML_start_element() to handle

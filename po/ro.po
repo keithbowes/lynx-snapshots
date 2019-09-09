@@ -1,16 +1,23 @@
-#, fuzzy
+# Mesajele în limba română pentru pachetul lynx
+# Copyright (C) 2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the lynx package.
+# Daniel Șerbănescu <daniel@serbanescu.dk>, 2019.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: lynx 2.9.0dev.3\n"
+"Project-Id-Version: lynx 2.9.0-dev3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-23 19:59-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2019-08-26 19:18+0200\n"
+"Last-Translator: Daniel Șerbănescu <daniel@serbanescu.dk>\n"
+"Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
+"Language: ro\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n%100<=19) ? 1 : 2);\n"
 
 #. ******************************************************************
 #. * The following definitions are for status line prompts, messages, or
@@ -29,19 +36,19 @@ msgstr ""
 #: LYMessages.c:28
 #, c-format
 msgid "Alert!: %s"
-msgstr ""
+msgstr "Atenție!: %s"
 
 #: LYMessages.c:29
 msgid "Welcome"
-msgstr ""
+msgstr "Bine ați venit"
 
 #: LYMessages.c:30
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Sigur doriți să ieșiți?"
 
 #: LYMessages.c:32
 msgid "Really exit from Lynx?"
-msgstr ""
+msgstr "Ieșiți din Lynx?"
 
 #: LYMessages.c:34
 msgid "Connection interrupted."
@@ -65,7 +72,7 @@ msgstr ""
 
 #: LYMessages.c:39
 msgid "OK"
-msgstr ""
+msgstr "v"
 
 #: LYMessages.c:40
 msgid "Done!"
@@ -93,23 +100,21 @@ msgstr ""
 
 #. #define HELP
 #: LYMessages.c:47
-msgid ""
-"Commands: Use arrow keys to move, '?' for help, 'q' to quit, '<-' to go back."
-msgstr ""
+msgid "Commands: Use arrow keys to move, '?' for help, 'q' to quit, '<-' to go back."
+msgstr "Comenzi: Utilizați săgețile pentru navigare, „?” pentru ajutor, „q” pentru ieșire, „<-” pentru navigare înapoi."
 
 #. #define MOREHELP
 #: LYMessages.c:49
-msgid ""
-"-- press space for more, use arrow keys to move, '?' for help, 'q' to quit."
-msgstr ""
+msgid "-- press space for more, use arrow keys to move, '?' for help, 'q' to quit."
+msgstr "-- apăsați spațiu pentru mai mult, utilizați săgețile pentru navigare, „?” pentru ajutor, „q” pentru ieșire."
 
 #: LYMessages.c:50
 msgid "-- press space for next page --"
-msgstr ""
+msgstr "-- apăsați spațiu pentru pagina următoare --"
 
 #: LYMessages.c:51
 msgid "URL too long"
-msgstr ""
+msgstr "URL prea lung"
 
 #. Inactive input fields, messages used with -tna option - kw
 #. #define FORM_LINK_TEXT_ADV_MSG_INA
@@ -137,8 +142,7 @@ msgstr ""
 #. #define FORM_LINK_TEXTAREA_ADV_MSG_INA_E
 #: LYMessages.c:65
 #, c-format
-msgid ""
-"(Textarea \"%s\"); Inactive.  Press <return> to activate (%s for editor)."
+msgid "(Textarea \"%s\"); Inactive.  Press <return> to activate (%s for editor)."
 msgstr ""
 
 #. #define FORM_LINK_TEXTAREA_MESSAGE_INA_E
@@ -155,15 +159,12 @@ msgstr ""
 #. #define FORM_TEXT_SUBMIT_MESSAGE_INA_X
 #: LYMessages.c:71
 #, c-format
-msgid ""
-"(Form field) Inactive.  Use <return> to edit (%s to submit with no cache)."
+msgid "(Form field) Inactive.  Use <return> to edit (%s to submit with no cache)."
 msgstr ""
 
 #. #define FORM_TEXT_RESUBMIT_MESSAGE_INA
 #: LYMessages.c:73
-msgid ""
-"(Form field) Inactive. Press <return> to edit, press <return> twice to "
-"submit."
+msgid "(Form field) Inactive. Press <return> to edit, press <return> twice to submit."
 msgstr ""
 
 #. #define FORM_TEXT_SUBMIT_MAILTO_MSG_INA
@@ -178,22 +179,19 @@ msgstr ""
 
 #. #define FORM_LINK_FILE_UNM_MSG
 #: LYMessages.c:80
-msgid ""
-"UNMODIFIABLE file entry field.  Use UP or DOWN arrows or tab to move off."
+msgid "UNMODIFIABLE file entry field.  Use UP or DOWN arrows or tab to move off."
 msgstr ""
 
 #. #define FORM_LINK_FILE_MESSAGE
 #: LYMessages.c:82
-msgid ""
-"(File entry field) Enter filename.  Use UP or DOWN arrows or tab to move off."
+msgid "(File entry field) Enter filename.  Use UP or DOWN arrows or tab to move off."
 msgstr ""
 
 #. #define FORM_LINK_TEXT_ADV_MSG
 #. #define FORM_LINK_TEXT_MESSAGE
 #: LYMessages.c:84 LYMessages.c:86
 #, c-format
-msgid ""
-"(Textfield \"%s\"); Enter text.  Use UP or DOWN arrows or tab to move off."
+msgid "(Textfield \"%s\"); Enter text.  Use UP or DOWN arrows or tab to move off."
 msgstr ""
 
 #. #define FORM_LINK_TEXTAREA_ADV_MSG
@@ -210,22 +208,18 @@ msgstr ""
 #. #define FORM_LINK_TEXTAREA_ADV_MSG_E
 #: LYMessages.c:92
 #, c-format
-msgid ""
-"(Textarea \"%s\"); Enter text. Use UP/DOWN arrows or TAB to move off (%s for "
-"editor)."
+msgid "(Textarea \"%s\"); Enter text. Use UP/DOWN arrows or TAB to move off (%s for editor)."
 msgstr ""
 
 #. #define FORM_LINK_TEXTAREA_MESSAGE_E
 #: LYMessages.c:94
 #, c-format
-msgid ""
-"(Textarea) Enter text. Use UP/DOWN arrows or TAB to move off (%s for editor)."
+msgid "(Textarea) Enter text. Use UP/DOWN arrows or TAB to move off (%s for editor)."
 msgstr ""
 
 #. #define FORM_LINK_TEXT_UNM_MSG
 #: LYMessages.c:96
-msgid ""
-"UNMODIFIABLE form text field.  Use UP or DOWN arrows or tab to move off."
+msgid "UNMODIFIABLE form text field.  Use UP or DOWN arrows or tab to move off."
 msgstr ""
 
 #. #define FORM_LINK_TEXT_SUBMIT_MESSAGE
@@ -241,8 +235,7 @@ msgstr ""
 
 #. #define FORM_LINK_TEXT_RESUBMIT_MESSAGE
 #: LYMessages.c:102
-msgid ""
-"(Form field) Enter text.  Use <return> to submit, arrows or tab to move off."
+msgid "(Form field) Enter text.  Use <return> to submit, arrows or tab to move off."
 msgstr ""
 
 #. #define FORM_LINK_TEXT_SUBMIT_UNM_MSG
@@ -252,8 +245,7 @@ msgstr ""
 
 #. #define FORM_LINK_TEXT_SUBMIT_MAILTO_MSG
 #: LYMessages.c:106
-msgid ""
-"(mailto form field) Enter text.  Use <return> to submit, arrows to move off."
+msgid "(mailto form field) Enter text.  Use <return> to submit, arrows to move off."
 msgstr ""
 
 #. #define FORM_LINK_TEXT_SUBMIT_MAILTO_DIS_MSG
@@ -263,8 +255,7 @@ msgstr ""
 
 #. #define FORM_LINK_PASSWORD_MESSAGE
 #: LYMessages.c:110
-msgid ""
-"(Password entry field) Enter text.  Use UP or DOWN arrows or tab to move off."
+msgid "(Password entry field) Enter text.  Use UP or DOWN arrows or tab to move off."
 msgstr ""
 
 #. #define FORM_LINK_PASSWORD_UNM_MSG
@@ -301,8 +292,7 @@ msgstr ""
 
 #. #define FORM_LINK_RADIO_UNM_MSG
 #: LYMessages.c:124
-msgid ""
-"UNMODIFIABLE form radio button.  Use UP or DOWN arrows or tab to move off."
+msgid "UNMODIFIABLE form radio button.  Use UP or DOWN arrows or tab to move off."
 msgstr ""
 
 #. #define FORM_LINK_SUBMIT_PREFIX
@@ -317,9 +307,7 @@ msgstr ""
 
 #. #define FORM_LINK_SUBMIT_MESSAGE
 #: LYMessages.c:130
-msgid ""
-"(Form submit button) Use right-arrow or <return> to submit ('x' for no "
-"cache)."
+msgid "(Form submit button) Use right-arrow or <return> to submit ('x' for no cache)."
 msgstr ""
 
 #. #define FORM_LINK_RESUBMIT_MESSAGE
@@ -349,8 +337,7 @@ msgstr ""
 
 #. #define FORM_LINK_RESET_MESSAGE
 #: LYMessages.c:142
-msgid ""
-"(Form reset button)   Use right-arrow or <return> to reset form to defaults."
+msgid "(Form reset button)   Use right-arrow or <return> to reset form to defaults."
 msgstr ""
 
 #. #define FORM_LINK_RESET_DIS_MSG
@@ -382,8 +369,7 @@ msgstr ""
 
 #. #define FORM_LINK_OPTION_LIST_MESSAGE
 #: LYMessages.c:154
-msgid ""
-"(Option list) Hit return and use arrow keys and return to select option."
+msgid "(Option list) Hit return and use arrow keys and return to select option."
 msgstr ""
 
 #. #define CHOICE_LIST_ADV_MSG
@@ -394,8 +380,7 @@ msgstr ""
 
 #. #define CHOICE_LIST_MESSAGE
 #: LYMessages.c:158
-msgid ""
-"(Choice list) Hit return and use arrow keys and return to select option."
+msgid "(Choice list) Hit return and use arrow keys and return to select option."
 msgstr ""
 
 #. #define MOUSE_CHOICE_MESSAGE
@@ -471,7 +456,7 @@ msgstr ""
 #: LYMessages.c:181
 #, c-format
 msgid "Illegal URL: %s"
-msgstr ""
+msgstr "URL nelegal: %s"
 
 #: LYMessages.c:182
 #, c-format
@@ -481,7 +466,7 @@ msgstr ""
 #: LYMessages.c:183
 #, c-format
 msgid "URL: %s"
-msgstr ""
+msgstr "URL: %s"
 
 #: LYMessages.c:184
 msgid "Unable to access WWW file!!!"
@@ -504,68 +489,53 @@ msgstr ""
 
 #. #define SOURCE_HELP
 #: LYMessages.c:190
-msgid ""
-"Currently viewing document source.  Press '\\' to return to rendered version."
+msgid "Currently viewing document source.  Press '\\' to return to rendered version."
 msgstr ""
 
 #. #define NOVICE_LINE_ONE
 #: LYMessages.c:192
-msgid ""
-"  Arrow keys: Up and Down to move.  Right to follow a link; Left to go "
-"back.  \n"
-msgstr ""
+msgid "  Arrow keys: Up and Down to move.  Right to follow a link; Left to go back.  \n"
+msgstr "  Tastele săgeți: Sus și Jos pentru navigare.  Dreapta pentru a urma o legătură; Stânga pentru a naviga înapoi.  \n"
 
 #. #define NOVICE_LINE_TWO
 #: LYMessages.c:194
-msgid ""
-" H)elp O)ptions P)rint G)o M)ain screen Q)uit /=search [delete]=history "
-"list \n"
-msgstr ""
+msgid " H)elp O)ptions P)rint G)o M)ain screen Q)uit /=search [delete]=history list \n"
+msgstr " Ajutor(H) O)pțiuni Ti(P)ărește Navi(G)hează Ecranul principal(M) Ieșire(Q) /=căutare [delete]=lista istoricului \n"
 
 #. #define NOVICE_LINE_TWO_A
 #: LYMessages.c:196
-msgid ""
-"  O)ther cmds  H)elp  K)eymap  G)oto  P)rint  M)ain screen  o)ptions  "
-"Q)uit  \n"
+msgid "  O)ther cmds  H)elp  K)eymap  G)oto  P)rint  M)ain screen  o)ptions  Q)uit  \n"
 msgstr ""
 
 #. #define NOVICE_LINE_TWO_B
 #: LYMessages.c:198
-msgid ""
-"  O)ther cmds  B)ack  E)dit  D)ownload ^R)eload ^W)ipe screen  search "
-"doc: / \n"
+msgid "  O)ther cmds  B)ack  E)dit  D)ownload ^R)eload ^W)ipe screen  search doc: / \n"
 msgstr ""
 
 #. #define NOVICE_LINE_TWO_C
 #: LYMessages.c:200
-msgid ""
-"O)ther cmds  C)omment  History: <backspace>  Bookmarks: V)iew, A)dd, "
-"R)emove \n"
+msgid "O)ther cmds  C)omment  History: <backspace>  Bookmarks: V)iew, A)dd, R)emove \n"
 msgstr ""
 
 #. #define FORM_NOVICELINE_ONE
 #: LYMessages.c:202
-msgid ""
-"            Enter text into the field by typing on the keyboard              "
+msgid "            Enter text into the field by typing on the keyboard              "
 msgstr ""
 
 #. #define FORM_NOVICELINE_TWO
 #: LYMessages.c:204
-msgid ""
-"    Ctrl-U to delete all text in field, [Backspace] to delete a character    "
+msgid "    Ctrl-U to delete all text in field, [Backspace] to delete a character    "
 msgstr ""
 
 #. #define FORM_NOVICELINE_TWO_DELBL
 #: LYMessages.c:206
-msgid ""
-"      Ctrl-U to delete text in field, [Backspace] to delete a character    "
+msgid "      Ctrl-U to delete text in field, [Backspace] to delete a character    "
 msgstr ""
 
 #. #define FORM_NOVICELINE_TWO_VAR
 #: LYMessages.c:208
 #, c-format
-msgid ""
-"    %s to delete all text in field, [Backspace] to delete a character    "
+msgid "    %s to delete all text in field, [Backspace] to delete a character    "
 msgstr ""
 
 #. #define FORM_NOVICELINE_TWO_DELBL_VAR
@@ -758,8 +728,7 @@ msgstr ""
 
 #. #define PSEUDO_INLINE_ALTS_ON
 #: LYMessages.c:277
-msgid ""
-"Pseudo_ALTs will be inserted for inlines without ALT strings!  Reloading..."
+msgid "Pseudo_ALTs will be inserted for inlines without ALT strings!  Reloading..."
 msgstr ""
 
 #. #define PSEUDO_INLINE_ALTS_OFF
@@ -1015,11 +984,11 @@ msgstr ""
 
 #: LYMessages.c:363
 msgid "You are already at the end of this document."
-msgstr ""
+msgstr "Sunteți deja la sfârșitul acestui document."
 
 #: LYMessages.c:364
 msgid "You are already at the beginning of this document."
-msgstr ""
+msgstr "Sunteți deja la începutul acestui document."
 
 #: LYMessages.c:365
 #, c-format
@@ -1213,8 +1182,7 @@ msgstr ""
 
 #. #define NOT_ISINDEX
 #: LYMessages.c:417
-msgid ""
-"Not a searchable indexed document -- press '/' to search for a text string"
+msgid "Not a searchable indexed document -- press '/' to search for a text string"
 msgstr ""
 
 #. #define NO_OWNER
@@ -1905,9 +1873,7 @@ msgstr ""
 
 #. #define UA_PLEASE_USE_LYNX
 #: LYMessages.c:619
-msgid ""
-"Use \"L_y_n_x\" or \"Lynx\" in User-Agent, or it looks like intentional "
-"deception!"
+msgid "Use \"L_y_n_x\" or \"Lynx\" in User-Agent, or it looks like intentional deception!"
 msgstr ""
 
 #. #define UA_CHANGE_DISABLED
@@ -2355,8 +2321,7 @@ msgstr ""
 
 #. #define DELETE_COOKIES_SET_ALLOW_OR_CANCEL
 #: LYMessages.c:749
-msgid ""
-"D)elete domain's cookies, set allow A)lways/P)rompt/neV)er, or C)ancel? "
+msgid "D)elete domain's cookies, set allow A)lways/P)rompt/neV)er, or C)ancel? "
 msgstr ""
 
 #. #define DELETE_DOMAIN_SET_ALLOW_OR_CANCEL
@@ -2791,9 +2756,7 @@ msgstr ""
 
 #. #define DIRED_NOVICELINE
 #: LYMessages.c:881
-msgid ""
-"  C)reate  D)ownload  E)dit  F)ull menu  M)odify  R)emove  T)ag  "
-"U)pload     \n"
+msgid "  C)reate  D)ownload  E)dit  F)ull menu  M)odify  R)emove  T)ag  U)pload     \n"
 msgstr ""
 
 #: LYMessages.c:882
@@ -2859,14 +2822,11 @@ msgid "Username for '%s' at %s '%s%s':"
 msgstr ""
 
 #: WWW/Library/Implementation/HTAABrow.c:976
-msgid ""
-"This client doesn't know how to compose proxy authorization information for "
-"scheme"
+msgid "This client doesn't know how to compose proxy authorization information for scheme"
 msgstr ""
 
 #: WWW/Library/Implementation/HTAABrow.c:1053
-msgid ""
-"This client doesn't know how to compose authorization information for scheme"
+msgid "This client doesn't know how to compose authorization information for scheme"
 msgstr ""
 
 #: WWW/Library/Implementation/HTAABrow.c:1162
@@ -2900,14 +2860,12 @@ msgstr ""
 
 #: WWW/Library/Implementation/HTAccess.c:1093
 #, c-format
-msgid ""
-"**** HTAccess: socket or file number returned by obsolete load routine!\n"
+msgid "**** HTAccess: socket or file number returned by obsolete load routine!\n"
 msgstr ""
 
 #: WWW/Library/Implementation/HTAccess.c:1095
 #, c-format
-msgid ""
-"**** HTAccess: Internal software error.  Please mail lynx-dev@nongnu.org!\n"
+msgid "**** HTAccess: Internal software error.  Please mail lynx-dev@nongnu.org!\n"
 msgstr ""
 
 #: WWW/Library/Implementation/HTAccess.c:1096
@@ -4387,9 +4345,7 @@ msgid "Distributed under the GNU General Public License (Version 2)."
 msgstr ""
 
 #: src/LYMain.c:3273
-msgid ""
-"See https://lynx.invisible-island.net/ and the online help for more "
-"information."
+msgid "See https://lynx.invisible-island.net/ and the online help for more information."
 msgstr ""
 
 #: src/LYMain.c:4120
@@ -5304,8 +5260,7 @@ msgstr ""
 
 #: src/LYReadCFG.c:817 src/LYReadCFG.c:829
 #, c-format
-msgid ""
-"setting of line-editor binding for key %s (0x%x) to 0x%x for %s failed\n"
+msgid "setting of line-editor binding for key %s (0x%x) to 0x%x for %s failed\n"
 msgstr ""
 
 #: src/LYReadCFG.c:833
@@ -6017,8 +5972,7 @@ msgstr ""
 #: src/LYrcFile.c:987
 msgid ""
 "You may also use the command-line option \"-forms_options\", which displays\n"
-"the simpler Options Menu instead.  Save options with that using the '>' "
-"key.\n"
+"the simpler Options Menu instead.  Save options with that using the '>' key.\n"
 "\n"
 msgstr ""
 
