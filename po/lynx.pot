@@ -1,9 +1,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lynx 2.9.0dev.3\n"
+"Project-Id-Version: lynx 2.9.0dev.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-23 19:59-0400\n"
+"POT-Creation-Date: 2020-01-20 19:20-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3109,8 +3109,17 @@ msgstr ""
 msgid "Address length looks invalid"
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:1862
-#: WWW/Library/Implementation/HTTCP.c:1880
+#: WWW/Library/Implementation/HTTCP.c:1866
+msgid "SOCKS5: hostname too long."
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:1884
+#, c-format
+msgid "(for %s at %s) SOCKS5"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:1911
+#: WWW/Library/Implementation/HTTCP.c:1928
 #, c-format
 msgid "Unable to locate remote host %s."
 msgstr ""
@@ -3119,39 +3128,85 @@ msgstr ""
 #. * but not HTAlert, because typically there will be other
 #. * alerts from the callers.  - kw
 #.
-#: WWW/Library/Implementation/HTTCP.c:1877
+#: WWW/Library/Implementation/HTTCP.c:1925
 #: WWW/Library/Implementation/HTTelnet.c:115
 #, c-format
 msgid "Invalid hostname %s"
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:1891
+#: WWW/Library/Implementation/HTTCP.c:1937
 #, c-format
 msgid "Making %s connection to %s"
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:1902
+#: WWW/Library/Implementation/HTTCP.c:1947
 msgid "socket failed."
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:1916
+#: WWW/Library/Implementation/HTTCP.c:1961
 #, c-format
 msgid "socket failed: family %d addr %s port %s."
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:1940
+#: WWW/Library/Implementation/HTTCP.c:1984
 msgid "Could not make connection non-blocking."
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:2006
+#: WWW/Library/Implementation/HTTCP.c:2050
 msgid "Connection failed (too many retries)."
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:2201
+#: WWW/Library/Implementation/HTTCP.c:2245
 msgid "Could not restore socket to blocking."
 msgstr ""
 
-#: WWW/Library/Implementation/HTTCP.c:2271
+#. RFC 1928: CONNECT request
+#: WWW/Library/Implementation/HTTCP.c:2277
+#, c-format
+msgid "SOCKS5: connecting to %s"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2306
+msgid "SOCKS server failure"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2309
+msgid "connection not allowed by ruleset"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2312
+msgid "network unreachable"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2315
+msgid "host unreachable"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2318
+msgid "connection refused"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2321
+msgid "TTL expired"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2324
+msgid "command not supported"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2327
+msgid "address type not supported"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2330
+msgid "unknown SOCKS error code"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2375
+msgid "unexpected reply\n"
+msgstr ""
+
+#: WWW/Library/Implementation/HTTCP.c:2452
 msgid "Socket read failed (too many tries)."
 msgstr ""
 
@@ -3826,34 +3881,34 @@ msgstr ""
 msgid "Terminal initialisation failed - unknown terminal type?"
 msgstr ""
 
-#: src/LYCurses.c:1828
+#: src/LYCurses.c:1839
 msgid "Terminal ="
 msgstr ""
 
-#: src/LYCurses.c:1832
+#: src/LYCurses.c:1843
 msgid "You must use a vt100, 200, etc. terminal with this program."
 msgstr ""
 
-#: src/LYCurses.c:1881
+#: src/LYCurses.c:1892
 msgid "Your Terminal type is unknown!"
 msgstr ""
 
-#: src/LYCurses.c:1882
+#: src/LYCurses.c:1893
 msgid "Enter a terminal type:"
 msgstr ""
 
-#: src/LYCurses.c:1896
+#: src/LYCurses.c:1907
 msgid "TERMINAL TYPE IS SET TO"
 msgstr ""
 
-#: src/LYCurses.c:2455
+#: src/LYCurses.c:2466
 #, c-format
 msgid ""
 "\n"
 "A Fatal error has occurred in %s Ver. %s\n"
 msgstr ""
 
-#: src/LYCurses.c:2458
+#: src/LYCurses.c:2469
 #, c-format
 msgid ""
 "\n"
@@ -4313,19 +4368,19 @@ msgstr ""
 msgid "No system mailer configured"
 msgstr ""
 
-#: src/LYMain.c:1088
+#: src/LYMain.c:1090
 msgid "No Winsock found, sorry."
 msgstr ""
 
-#: src/LYMain.c:1278
+#: src/LYMain.c:1280
 msgid "You MUST define a valid TMP or TEMP area!"
 msgstr ""
 
-#: src/LYMain.c:1331 src/LYMainLoop.c:5285
+#: src/LYMain.c:1333 src/LYMainLoop.c:5285
 msgid "No such directory"
 msgstr ""
 
-#: src/LYMain.c:1525
+#: src/LYMain.c:1527
 #, c-format
 msgid ""
 "\n"
@@ -4333,7 +4388,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/LYMain.c:1535
+#: src/LYMain.c:1537
 #, c-format
 msgid ""
 "\n"
@@ -4341,68 +4396,68 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/LYMain.c:1691
+#: src/LYMain.c:1693
 #, c-format
 msgid "Ignored %d characters from standard input.\n"
 msgstr ""
 
-#: src/LYMain.c:1693
+#: src/LYMain.c:1695
 #, c-format
 msgid "Use \"-stdin\" or \"-\" to tell how to handle piped input.\n"
 msgstr ""
 
-#: src/LYMain.c:1851
+#: src/LYMain.c:1853
 msgid "Warning:"
 msgstr ""
 
-#: src/LYMain.c:2419
+#: src/LYMain.c:2421
 msgid "persistent cookies state will be changed in next session only."
 msgstr ""
 
-#: src/LYMain.c:2654 src/LYMain.c:2698
+#: src/LYMain.c:2656 src/LYMain.c:2700
 #, c-format
 msgid "Lynx: ignoring unrecognized charset=%s\n"
 msgstr ""
 
-#: src/LYMain.c:3215
+#: src/LYMain.c:3217
 #, c-format
 msgid "%s Version %s (%s)"
 msgstr ""
 
-#: src/LYMain.c:3256
+#: src/LYMain.c:3258
 #, c-format
 msgid "Built on %s%s.\n"
 msgstr ""
 
-#: src/LYMain.c:3270
+#: src/LYMain.c:3272
 msgid "Copyrights held by the Lynx Developers Group,"
 msgstr ""
 
-#: src/LYMain.c:3271
+#: src/LYMain.c:3273
 msgid "the University of Kansas, CERN, and other contributors."
 msgstr ""
 
-#: src/LYMain.c:3272
+#: src/LYMain.c:3274
 msgid "Distributed under the GNU General Public License (Version 2)."
 msgstr ""
 
-#: src/LYMain.c:3273
+#: src/LYMain.c:3275
 msgid ""
 "See https://lynx.invisible-island.net/ and the online help for more "
 "information."
 msgstr ""
 
-#: src/LYMain.c:4120
+#: src/LYMain.c:4126
 #, c-format
 msgid "USAGE: %s [options] [file]\n"
 msgstr ""
 
-#: src/LYMain.c:4121
+#: src/LYMain.c:4127
 #, c-format
 msgid "Options are:\n"
 msgstr ""
 
-#: src/LYMain.c:4424
+#: src/LYMain.c:4430
 #, c-format
 msgid "%s: Invalid Option: %s\n"
 msgstr ""
@@ -5583,7 +5638,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/LYStyle.c:939
+#: src/LYStyle.c:941
 #, c-format
 msgid ""
 "\n"
