@@ -1,12 +1,21 @@
--- $LynxId: CHANGES,v 1.1026 2019/08/28 23:17:32 tom Exp $
+-- $LynxId: CHANGES,v 1.1034 2019/12/31 19:44:05 tom Exp $
 ===============================================================================
 Changes since Lynx 2.8 release
 ===============================================================================
 
-2019-08-26 (2.9.0dev.5)
+2019-12-31 (2.9.0dev.5)
+* improved several configure macros, including a fix for clang
+  compiler-warnings, and library order when linking -TD
+* remove a ruler in the user's guide that was added in 2.8.3dev.10 as a
+  conversion aid (report by Edward McGuire) -TD
+* modify HTML DTD to allow <div> in <a> -KH
+* add -socks5-proxy option (Steffen Nurpmeso)
+* if --without-lss-file is used, the configured lss filename is empty and
+  should be ignored (report by Cory Krell) -TD
 * extend table/limit in parsdate.y to 2200 (report by Ian Collier) -TD
-* update fr.po from
+* update eo.po, fr.po, nl.po from
     http://translationproject.org/latest/lynx
+* update config.guess (2019-12-21), config.sub (2019-09-11)
 
 2019-08-26 (2.9.0dev.4)
 * revert change to port-handling in 2.9.0dev.3 changes for gophermap (report by
@@ -1142,7 +1151,7 @@ Changes since Lynx 2.8 release
   The scrollbar, progressbar, sessions and session-cache options are now
   enabled by default.
 * modify scanning in HTRules.c to only trim comments where '#' is either at
-  the beginning of a line, or follows whitespace (patch by Kihara Hideto).
+  the beginning of a line, or follows whitespace -KH
 * correct a place where LYStrExtent2 was used where byte-count is needed
   (patch by Bake Timmons).
 * modify LYExecv() in LYLocal.c to allow win32 applications to use this
