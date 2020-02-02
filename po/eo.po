@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lynx 2.9.0-dev3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-20 19:20-0500\n"
-"PO-Revision-Date: 2020-01-20 19:25-0500\n"
+"POT-Creation-Date: 2020-02-02 14:35-0500\n"
+"PO-Revision-Date: 2020-02-02 14:35-0500\n"
 "Last-Translator: Keith Bowes <zooplah@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -3296,17 +3296,21 @@ msgstr "URL havas nevalidan pordon"
 msgid "Address length looks invalid"
 msgstr "URL-longo ŝajnas nevalida"
 
-#: WWW/Library/Implementation/HTTCP.c:1866
+#: WWW/Library/Implementation/HTTCP.c:1867
+msgid "SOCKS5: no hostname found."
+msgstr "SOCKS5: neniu retnodnomo troveblas."
+
+#: WWW/Library/Implementation/HTTCP.c:1873
 msgid "SOCKS5: hostname too long."
 msgstr "SOCKS5: retnodnomo tro longas."
 
-#: WWW/Library/Implementation/HTTCP.c:1884
+#: WWW/Library/Implementation/HTTCP.c:1891
 #, c-format
 msgid "(for %s at %s) SOCKS5"
 msgstr "(por %s ĉe %s) SOCKS5"
 
-#: WWW/Library/Implementation/HTTCP.c:1911
-#: WWW/Library/Implementation/HTTCP.c:1928
+#: WWW/Library/Implementation/HTTCP.c:1918
+#: WWW/Library/Implementation/HTTCP.c:1935
 #, c-format
 msgid "Unable to locate remote host %s."
 msgstr "Ne eblas loki foran retnodon %s."
@@ -3315,85 +3319,85 @@ msgstr "Ne eblas loki foran retnodon %s."
 #. * but not HTAlert, because typically there will be other
 #. * alerts from the callers.  - kw
 #.
-#: WWW/Library/Implementation/HTTCP.c:1925
+#: WWW/Library/Implementation/HTTCP.c:1932
 #: WWW/Library/Implementation/HTTelnet.c:115
 #, c-format
 msgid "Invalid hostname %s"
 msgstr "Nevalida retnodonomo %s"
 
-#: WWW/Library/Implementation/HTTCP.c:1937
+#: WWW/Library/Implementation/HTTCP.c:1944
 #, c-format
 msgid "Making %s connection to %s"
 msgstr "Faranta konekto-tipon %s al %s"
 
-#: WWW/Library/Implementation/HTTCP.c:1947
+#: WWW/Library/Implementation/HTTCP.c:1954
 msgid "socket failed."
 msgstr "konektingo malsukcesis."
 
-#: WWW/Library/Implementation/HTTCP.c:1961
+#: WWW/Library/Implementation/HTTCP.c:1968
 #, c-format
 msgid "socket failed: family %d addr %s port %s."
 msgstr "konektingo malsukcesis: familio %d adreso %s pordo %s."
 
-#: WWW/Library/Implementation/HTTCP.c:1984
+#: WWW/Library/Implementation/HTTCP.c:1991
 msgid "Could not make connection non-blocking."
 msgstr "Ne eblas fari konekton senbloka."
 
-#: WWW/Library/Implementation/HTTCP.c:2050
+#: WWW/Library/Implementation/HTTCP.c:2057
 msgid "Connection failed (too many retries)."
 msgstr "Konekto malsukcesis (tro da reprovoj.)"
 
-#: WWW/Library/Implementation/HTTCP.c:2245
+#: WWW/Library/Implementation/HTTCP.c:2252
 msgid "Could not restore socket to blocking."
 msgstr "Ne povis restarigi konektingon je bloka."
 
 #. RFC 1928: CONNECT request
-#: WWW/Library/Implementation/HTTCP.c:2277
+#: WWW/Library/Implementation/HTTCP.c:2284
 #, c-format
 msgid "SOCKS5: connecting to %s"
 msgstr "SOCKS5: konektiĝanta al %s"
 
-#: WWW/Library/Implementation/HTTCP.c:2306
+#: WWW/Library/Implementation/HTTCP.c:2313
 msgid "SOCKS server failure"
 msgstr "SOCKS-servila fiaskis"
 
-#: WWW/Library/Implementation/HTTCP.c:2309
+#: WWW/Library/Implementation/HTTCP.c:2316
 msgid "connection not allowed by ruleset"
 msgstr "konekto ne permesata per regularo"
 
-#: WWW/Library/Implementation/HTTCP.c:2312
+#: WWW/Library/Implementation/HTTCP.c:2319
 msgid "network unreachable"
 msgstr "reto neatingebla"
 
-#: WWW/Library/Implementation/HTTCP.c:2315
+#: WWW/Library/Implementation/HTTCP.c:2322
 msgid "host unreachable"
 msgstr "retnodo neatingebla"
 
-#: WWW/Library/Implementation/HTTCP.c:2318
+#: WWW/Library/Implementation/HTTCP.c:2325
 msgid "connection refused"
 msgstr "konekto malakceptita"
 
-#: WWW/Library/Implementation/HTTCP.c:2321
+#: WWW/Library/Implementation/HTTCP.c:2328
 msgid "TTL expired"
 msgstr "Vivdaŭro eksvalidiĝis"
 
-#: WWW/Library/Implementation/HTTCP.c:2324
+#: WWW/Library/Implementation/HTTCP.c:2331
 msgid "command not supported"
 msgstr "komando ne komprenita"
 
-#: WWW/Library/Implementation/HTTCP.c:2327
+#: WWW/Library/Implementation/HTTCP.c:2334
 msgid "address type not supported"
 msgstr "adreso-tipo ne komprenita"
 
-#: WWW/Library/Implementation/HTTCP.c:2330
+#: WWW/Library/Implementation/HTTCP.c:2337
 msgid "unknown SOCKS error code"
 msgstr "nekonata SOCKS-erarkodo"
 
-#: WWW/Library/Implementation/HTTCP.c:2375
+#: WWW/Library/Implementation/HTTCP.c:2382
 msgid "unexpected reply\n"
 msgstr "neatendita respondo\n"
 
-#: WWW/Library/Implementation/HTTCP.c:2452
+#: WWW/Library/Implementation/HTTCP.c:2459
 msgid "Socket read failed (too many tries)."
 msgstr "Legado de konektingo malsukcesis (tro da provoj)."
 
