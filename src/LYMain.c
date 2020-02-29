@@ -1,5 +1,5 @@
 /*
- * $LynxId: LYMain.c,v 1.287 2020/01/21 22:19:23 tom Exp $
+ * $LynxId: LYMain.c,v 1.289 2020/02/24 00:17:10 Keith.Bowes Exp $
  */
 #include <HTUtils.h>
 #include <HTTP.h>
@@ -209,6 +209,7 @@ BOOLEAN bold_name_anchors = FALSE;
 BOOLEAN LYcase_sensitive = CASE_SENSITIVE_ALWAYS_ON;
 BOOLEAN check_mail = CHECKMAIL;
 BOOLEAN child_lynx = FALSE;
+BOOLEAN dump_links_decoded = TRUE;
 BOOLEAN dump_links_inline = FALSE;
 BOOLEAN dump_links_only = FALSE;
 BOOLEAN dump_output_immediately = FALSE;
@@ -3619,6 +3620,10 @@ soon as they are seen)"
    PARSE_INT(
       "link",		4|NEED_INT_ARG,		crawl_count,
       "=NUMBER\nstarting count for lnk#.dat files produced by -crawl"
+   ),
+   PARSE_SET(
+      "list_decoded",	4|TOGGLE_ARG,		dump_links_decoded,
+      "with -dump, forces it to decode URL-encoded links"
    ),
    PARSE_SET(
       "list_inline",	4|TOGGLE_ARG,		dump_links_inline,

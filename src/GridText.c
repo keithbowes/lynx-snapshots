@@ -1,5 +1,5 @@
 /*
- * $LynxId: GridText.c,v 1.321 2020/01/21 22:19:23 tom Exp $
+ * $LynxId: GridText.c,v 1.325 2020/02/25 01:41:00 tom Exp $
  *
  *		Character grid hypertext object
  *		===============================
@@ -1384,7 +1384,7 @@ static int display_line(HTLine *line,
      * the output line wraps, foiling our attempt to just use newlines to
      * advance to the next page.
      */
-    LYmove(scrline + TITLE_LINES - 1, 0);
+    LYmove(scrline + (no_title ? 0 : TITLE_LINES) - 1, 0);
 #endif
 
     /*
@@ -1736,8 +1736,9 @@ static void display_title(HText *text)
 
     /* Update the terminal-emulator title */
     if (update_term_title) {
-        fprintf(stdout, "\033]0;%s%sLynx\007", title, strlen(title) > 0 ? " - " : "");
-        fflush(stdout);
+	CTRACE((tfp, "update_term_title:%s\n", title));
+	fprintf(stderr, "\033]0;%s%sLynx\007", title, *title ? " - " : "");
+	fflush(stderr);
     }
 
     /*
